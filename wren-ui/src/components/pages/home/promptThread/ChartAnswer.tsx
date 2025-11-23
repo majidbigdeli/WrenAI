@@ -37,6 +37,7 @@ const ChartWrapper = styled.div`
   position: relative;
   padding-top: 0;
   transition: padding-top 0.2s ease-out;
+  direction: ltr;
   &.isEditMode {
     padding-top: 72px;
   }

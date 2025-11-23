@@ -23,7 +23,7 @@ export const GlobalConfigProvider = ({ children }) => {
       })
       .catch((error) => {
         console.error('Failed to get user config', error);
-      });
+      }); //TODOSH
   }, [router]);
 
   const value = {
