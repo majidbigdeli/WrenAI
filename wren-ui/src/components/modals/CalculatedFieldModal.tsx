@@ -148,7 +148,7 @@ export default function AddCalculatedFieldModal(props: Props) {
       footer={
         <div className="d-flex justify-space-between align-center">
           <div className="text-sm ml-2">
-            <LinkOutlined className="gray-6 mr-2" />
+            <LinkOutlined className="gray-6 ml-2" />
             <Typography.Link
               type="secondary"
               href="https://docs.getwren.ai/oss/guide/modeling/models#update-primary-key"

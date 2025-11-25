@@ -336,7 +336,7 @@ export default function SidebarSection(_props: Props) {
             onClick={onCollapseBarClick}
           >
             <div className="flex-grow-1">
-              <ReadOutlined className="mr-1" />
+              <ReadOutlined className="ml-1" />
               Learning
             </div>
             <RightOutlined

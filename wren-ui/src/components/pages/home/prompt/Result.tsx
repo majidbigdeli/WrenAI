@@ -79,7 +79,7 @@ const makeProcessing = (text: string) => (props: Props) => {
     <Wrapper>
       <div className="d-flex justify-space-between">
         <span>
-          <LoadingOutlined className="mr-2 geekblue-6 text-lg" spin />
+          <LoadingOutlined className="ml-2 geekblue-6 text-lg" spin />
           {text}
         </span>
         <Button
@@ -92,8 +92,8 @@ const makeProcessing = (text: string) => (props: Props) => {
           onClick={attachLoading(onStop, setLoading)}
           disabled={loading}
         >
-          <StopOutlined className="-mr-1" />
-          Stop
+          <StopOutlined className="-ml-1" />
+          توقف
         </Button>
       </div>
     </Wrapper>
@@ -124,8 +124,8 @@ const makeProcessingError =
             size="small"
             onClick={onClose}
           >
-            <CloseOutlined className="-mr-1" />
-            Close
+            <CloseOutlined className="-ml-1" />
+            بستن
           </Button>
         </div>
         <div className="gray-7">
@@ -146,7 +146,7 @@ const makeProcessingError =
     );
   };
 
-const ErrorIcon = () => <CloseCircleFilled className="mr-2 red-5 text-lg" />;
+const ErrorIcon = () => <CloseCircleFilled className="ml-2 red-5 text-lg" />;
 
 const Failed = makeProcessingError({
   icon: <ErrorIcon />,
@@ -199,7 +199,7 @@ const GeneralAnswer = (props: Props) => {
     <Wrapper>
       <div className="d-flex justify-space-between">
         <div className="d-flex align-start">
-          <MessageOutlined className="mr-2 mt-1 geekblue-6" />
+          <MessageOutlined className="ml-2 mt-1 geekblue-6" />
           <b className="text-semi-bold">{originalQuestion}</b>
         </div>
         <Button
@@ -208,14 +208,14 @@ const GeneralAnswer = (props: Props) => {
           size="small"
           onClick={onClose}
         >
-          <CloseOutlined className="-mr-1" />
-          Close
+          <CloseOutlined className="-ml-1" />
+          بستن
         </Button>
       </div>
       <div className="py-3">
         <div className="bg-gray-2 gray-6 py-2 px-3">
           <div className="d-flex align-center">
-            <BrainSVG className="mr-2 adm-brain-svg" />
+            <BrainSVG className="ml-2 adm-brain-svg" />
             <span className="text-medium ">User Intent Recognized</span>
           </div>
           <div style={{ paddingLeft: 22 }}>{data.intentReasoning}</div>
@@ -229,7 +229,7 @@ const GeneralAnswer = (props: Props) => {
           <MarkdownBlock content={askingStreamTask} />
           {isDone && (
             <div className="gray-6">
-              <InfoCircleOutlined className="mr-2" />
+              <InfoCircleOutlined className="ml-2" />
               For the most accurate semantics, please visit the modeling page.
             </div>
           )}
@@ -247,8 +247,8 @@ const GeneralAnswer = (props: Props) => {
 };
 
 const MisleadingQuery = makeProcessingError({
-  icon: <WarningOutlined className="mr-2 text-lg gold-6" />,
-  title: 'Clarification needed',
+  icon: <WarningOutlined className="ml-2 text-lg gold-6" />,
+  title: 'توضیح لازم است',
 });
 
 const getGeneralAnswerStateComponent = (state: PROCESS_STATE) => {

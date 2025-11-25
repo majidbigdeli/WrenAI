@@ -1,7 +1,14 @@
-import dynamic from 'next/dynamic';
-import Image from 'next/image';
-import { useEffect } from 'react';
-import styled from 'styled-components';
+import { usePreviewDataMutation } from '@/apollo/client/graphql/home.generated';
+import PreviewData from '@/components/dataPreview/PreviewData';
+import { Props as AnswerResultProps } from '@/components/pages/home/promptThread/AnswerResult';
+import usePromptThreadStore from '@/components/pages/home/promptThread/store';
+import { DATA_SOURCE_OPTIONS } from '@/components/pages/setup/utils';
+import useNativeSQL from '@/hooks/useNativeSQL';
+import { BinocularsIcon } from '@/utils/icons';
+import { nextTick } from '@/utils/time';
+import CheckOutlined from '@ant-design/icons/CheckOutlined';
+import CloseOutlined from '@ant-design/icons/CloseOutlined';
+import CodeFilled from '@ant-design/icons/CodeFilled';
 import {
   Alert,
   Button,
@@ -12,18 +19,10 @@ import {
   Switch,
   Typography,
 } from 'antd';
-import CheckOutlined from '@ant-design/icons/CheckOutlined';
-import CloseOutlined from '@ant-design/icons/CloseOutlined';
-import CodeFilled from '@ant-design/icons/CodeFilled';
-import { BinocularsIcon } from '@/utils/icons';
-import { nextTick } from '@/utils/time';
-import useNativeSQL from '@/hooks/useNativeSQL';
-import { DATA_SOURCE_OPTIONS } from '@/components/pages/setup/utils';
-import { Logo } from '@/components/Logo';
-import { Props as AnswerResultProps } from '@/components/pages/home/promptThread/AnswerResult';
-import usePromptThreadStore from '@/components/pages/home/promptThread/store';
-import PreviewData from '@/components/dataPreview/PreviewData';
-import { usePreviewDataMutation } from '@/apollo/client/graphql/home.generated';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import styled from 'styled-components';
 
 const SQLCodeBlock = dynamic(() => import('@/components/code/SQLCodeBlock'), {
   ssr: false,
@@ -92,12 +91,11 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
     if (!nativeSQLResult.nativeSQLMode) {
       message.success(
         <>
-          You copied Wren SQL. This dialect is for the Wren Engine and may not
-          run directly on your database.
+          شما SQL را کپی کردید. این گویش برای موتور است و ممکن است مستقیماً روی پایگاه داده شما اجرا نشود.
           {hasNativeSQL && (
             <>
               {' '}
-              Click “<b>Show original SQL</b>” to get the executable version.
+              برای دریافت نسخه اجرایی، روی «<b>نمایش SQL اصلی</b>» کلیک کنید.
             </>
           )}
         </>,
@@ -110,18 +108,17 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
       <Alert
         banner
         className="mb-3 adm-alert-info"
+        style={{ gap: 4 }}
         message={
           <>
-            You’re viewing Wren SQL by default. If you want to run this query on
-            your own database, click “Show original SQL” to get the exact
-            syntax.
+            شما به طور پیش‌فرض در حال مشاهده‌ی SQL هستید. اگر می‌خواهید این پرس‌وجو را روی پایگاه داده‌ی خودتان اجرا کنید، برای دریافت سینتکس دقیق، روی «نمایش SQL اصلی» کلیک کنید.
             <Typography.Link
               className="underline ml-1"
               href="https://docs.getwren.ai/oss/guide/home/wren_sql"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Learn more about Wren SQL
+              درباره SQL بیشتر بدانید
             </Typography.Link>
           </>
         }
@@ -133,7 +130,7 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
             {nativeSQLResult.nativeSQLMode ? (
               <>
                 <Image
-                  className="mr-2"
+                  className="ml-2"
                   src={DATA_SOURCE_OPTIONS[dataSourceType].logo}
                   alt={DATA_SOURCE_OPTIONS[dataSourceType].label}
                   width="22"
@@ -160,13 +157,13 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
                 <Switch
                   checkedChildren={<CheckOutlined />}
                   unCheckedChildren={<CloseOutlined />}
-                  className="mr-2"
+                  className="ml-2"
                   size="small"
                   checked={nativeSQLResult.nativeSQLMode}
                   loading={nativeSQLResult.loading}
                 />
                 <Text className="gray-8 text-medium text-base">
-                  Show original SQL
+                  نمایش SQL اصلی
                 </Text>
               </div>
             )}
@@ -176,9 +173,10 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
               data-ph-capture-attribute-name="view_sql_copy_sql"
               icon={<CodeFilled />}
               size="small"
+              style={{ gap: 4 }}
               onClick={() => onOpenAdjustSQLModal({ sql, responseId: id })}
             >
-              Adjust SQL
+              SQL بهبود
             </Button>
           </Space>
         </StyledToolBar>
@@ -198,7 +196,7 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
             <BinocularsIcon
               style={{
                 paddingBottom: 2,
-                marginRight: 8,
+                marginLeft: 8,
               }}
             />
           }
@@ -207,7 +205,7 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
           data-ph-capture="true"
           data-ph-capture-attribute-name="view_sql_preview_data"
         >
-          View results
+          مشاهده نتایج
         </Button>
         {previewDataResult?.data?.previewData && (
           <div className="mt-2 mb-3">
@@ -225,7 +223,7 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
               }}
             />
             <div className="text-right">
-              <Text className="text-base gray-6">Showing up to 500 rows</Text>
+              <Text className="text-base gray-6">نمایش تا ۵۰۰ ردیف</Text>
             </div>
           </div>
         )}

@@ -18,7 +18,7 @@ interface Props {}
 interface Attributes {
   play: (id: string, dispatcher: Dispatcher) => void;
 }
-
+//TODOSH
 export default forwardRef<Attributes, Props>(function Guide(_props, ref) {
   const router = useRouter();
   const $driver = useRef<DriverObj>(null);
@@ -31,22 +31,22 @@ export default forwardRef<Attributes, Props>(function Guide(_props, ref) {
     };
   }, [settingsResult?.settings]);
 
-  useEffect(() => {
-    if ($driver.current !== null) return;
-    $driver.current = driver();
-    return () => {
-      $driver.current.destroy();
-      $driver.current = null;
-    };
-  }, []);
+  // useEffect(() => {
+  //   if ($driver.current !== null) return;
+  //   $driver.current = driver();
+  //   return () => {
+  //     $driver.current.destroy();
+  //     $driver.current = null;
+  //   };
+  // }, []);
 
   const play = (id: string, dispatcher: Dispatcher) => {
-    const playStoryWithId = makeStoriesPlayer(
-      $driver.current,
-      router,
-      storyPayload,
-    );
-    playStoryWithId(id, dispatcher);
+    // const playStoryWithId = makeStoriesPlayer(
+    //   $driver.current,
+    //   router,
+    //   storyPayload,
+    // );
+    // playStoryWithId(id, dispatcher);
   };
 
   useImperativeHandle(ref, () => ({ play }), [

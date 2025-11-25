@@ -1,13 +1,13 @@
-import { useEffect, useMemo } from 'react';
-import { keyBy } from 'lodash';
-import styled from 'styled-components';
-import { Form, Modal, Select, Tag } from 'antd';
-import QuestionCircleOutlined from '@ant-design/icons/QuestionCircleOutlined';
-import { ERROR_TEXTS } from '@/utils/error';
+import { useListModelsQuery } from '@/apollo/client/graphql/model.generated';
+import MarkdownEditor from '@/components/editor/MarkdownEditor';
 import useAutoComplete, { convertMention } from '@/hooks/useAutoComplete';
 import { ModalAction } from '@/hooks/useModalAction';
-import MarkdownEditor from '@/components/editor/MarkdownEditor';
-import { useListModelsQuery } from '@/apollo/client/graphql/model.generated';
+import { ERROR_TEXTS } from '@/utils/error';
+import QuestionCircleOutlined from '@ant-design/icons/QuestionCircleOutlined';
+import { Form, Modal, Select, Tag } from 'antd';
+import { keyBy } from 'lodash';
+import { useEffect, useMemo } from 'react';
+import styled from 'styled-components';
 
 const MultiSelect = styled(Select)`
   .ant-select-selector {
@@ -22,6 +22,12 @@ const MultiSelect = styled(Select)`
 
 const TagText = styled.div`
   line-height: 16px;
+`;
+
+const FormItem = styled(Form.Item)`
+  .ant-form-item-label {
+    text-align: right !important;
+  }
 `;
 
 type Props = ModalAction<{
@@ -113,10 +119,11 @@ export default function AdjustReasoningStepsModal(props: Props) {
 
   return (
     <Modal
-      title="Adjust steps"
+      title="بهبود مراحل"
       width={640}
       visible={visible}
-      okText="Regenerate answer"
+      okText="بازسازی پاسخ"
+      cancelText="انصراف"
       onOk={submit}
       onCancel={onClose}
       confirmLoading={loading}
@@ -126,8 +133,8 @@ export default function AdjustReasoningStepsModal(props: Props) {
       afterClose={reset}
     >
       <Form form={form} preserve={false} layout="vertical">
-        <Form.Item
-          label="Selected models"
+        <FormItem
+          label="مدل های منتخب"
           name="tables"
           required={false}
           rules={[
@@ -138,35 +145,34 @@ export default function AdjustReasoningStepsModal(props: Props) {
           ]}
           extra={
             <div className="text-sm gray-6 mt-1">
-              Select the tables needed to answer your question.{' '}
+              جداول مورد نیاز برای پاسخ به سوال خود را انتخاب کنید.{' '}
               <span className="gray-7">
-                Tables not selected won't be used in SQL generation.
+                جداولی که انتخاب نشده باشند، در تولید SQL استفاده نخواهند شد.
               </span>
             </div>
           }
         >
           <MultiSelect
             mode="multiple"
-            placeholder="Select models"
+            placeholder="مدل ها را انتخاب کنید"
             options={modelOptions}
             tagRender={tagRender}
           />
-        </Form.Item>
-        <Form.Item
-          label="Reasoning steps"
+        </FormItem>
+        <FormItem
+          label="مراحل استدلال"
           className="pb-0"
           extra={
             <div className="text-sm gray-6 mt-1">
-              <QuestionCircleOutlined className="mr-1" />
-              Protip: Use @ to choose model in the textarea.
+              <QuestionCircleOutlined className="ml-1" />
+              نکته: برای انتخاب مدل در ناحیه متن از @ استفاده کنید.
             </div>
           }
         >
           <div className="text-sm gray-6 mb-1">
-            Edit the reasoning logic below. Each step should build toward
-            answering the question accurately.
+            منطق استدلال زیر را ویرایش کنید. هر مرحله باید در جهت پاسخ دقیق به سوال باشد.
           </div>
-          <Form.Item
+          <FormItem
             noStyle
             name="sqlGenerationReasoning"
             required={false}
@@ -182,8 +188,8 @@ export default function AdjustReasoningStepsModal(props: Props) {
             ]}
           >
             <MarkdownEditor maxLength={6000} mentions={mentions} />
-          </Form.Item>
-        </Form.Item>
+          </FormItem>
+        </FormItem>
       </Form>
     </Modal>
   );

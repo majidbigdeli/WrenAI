@@ -41,6 +41,7 @@ const OverflowContainer = styled.div`
 
 const LinkButton = styled(Button)`
   color: var(--gray-7);
+  gap: 4px;
 `;
 
 const StyledTextArea = styled(Mentions)`
@@ -49,6 +50,8 @@ const StyledTextArea = styled(Mentions)`
 
   textarea {
     padding: 16px 16px 16px 20px;
+    text-align: left;
+    direction: ltr;
   }
 `;
 
@@ -69,7 +72,7 @@ const MentionOption = (props: Mention) => {
         <div className="d-flex align-center gray-8">
           {props.icon}
           <Typography.Text
-            className="gray-8 mr-2"
+            className="gray-8 ml-2"
             style={{ maxWidth: 240 }}
             ellipsis
           >
@@ -79,7 +82,7 @@ const MentionOption = (props: Mention) => {
         {props.meta && (
           <div className="gray-6">
             <Typography.Text
-              className="gray-6 text-sm mr-1"
+              className="gray-6 text-sm ml-1"
               style={{ maxWidth: 240 }}
               ellipsis
             >
@@ -209,23 +212,24 @@ export default function MarkdownEditor(props: Props) {
       tabIndex={-1}
     >
       <div className="bg-gray-3 px-2 py-1 d-flex align-center justify-space-between">
-        <div className="adm-markdown-editor-length gray-6 text-sm mr-2">
-          {maxLength ? (
-            <>
-              {value?.length} / {maxLength} characters
-            </>
-          ) : (
-            <>{value?.length} characters</>
-          )}
-        </div>
+       
         <LinkButton
           icon={isPreviewMode ? <EditOutlined /> : <ReadOutlined />}
           type="link"
           size="small"
           onClick={() => setIsPreviewMode(!isPreviewMode)}
         >
-          {isPreviewMode ? 'Edit mode' : 'Read mode'}
+          {isPreviewMode ? 'حالت ویرایش' : 'حالت خواندن'}
         </LinkButton>
+         <div className="adm-markdown-editor-length gray-6 text-sm ml-2">
+          {maxLength ? (
+            <>
+              {value?.length} / {maxLength} کاراکتر
+            </>
+          ) : (
+            <>{value?.length} کاراکتر</>
+          )}
+        </div>
       </div>
       <OverflowContainer className={clsx({ 'p-4': isPreviewMode })}>
         {isPreviewMode ? (

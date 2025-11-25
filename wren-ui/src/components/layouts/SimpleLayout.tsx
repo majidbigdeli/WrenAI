@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import HeaderBar from '@/components/HeaderBar';
+// import HeaderBar from '@/components/HeaderBar';
 import PageLoading from '@/components/PageLoading';
 import { useWithOnboarding } from '@/hooks/useCheckOnboarding';
 import clsx from 'clsx';
@@ -21,7 +21,7 @@ export default function SimpleLayout(props: Props) {
         'overflow-hidden': pageLoading,
       })}
     >
-      <HeaderBar />
+      {/* <HeaderBar /> */}
       <Content className="adm-content">{children}</Content>
       <PageLoading visible={pageLoading} />
     </Layout>

@@ -16,19 +16,19 @@ const getDeployStatus = (deploying: boolean, status: SyncStatus) => {
     {
       [SyncStatus.IN_PROGRESS]: (
         <Space size={[4, 0]}>
-          <LoadingOutlined className="mr-1 gray-1" />
+          <LoadingOutlined className="ml-1 gray-1" />
           <Text className="gray-1">Deploying...</Text>
         </Space>
       ),
       [SyncStatus.SYNCRONIZED]: (
         <Space size={[4, 0]}>
-          <CheckCircleOutlined className="mr-1 green-7" />
+          <CheckCircleOutlined className="ml-1 green-7" />
           <Text className="gray-1">Synced</Text>
         </Space>
       ),
       [SyncStatus.UNSYNCRONIZED]: (
         <Space size={[4, 0]}>
-          <WarningOutlined className="mr-1 gold-6" />
+          <WarningOutlined className="ml-1 gold-6" />
           <Text className="gray-1">Undeployed changes</Text>
         </Space>
       ),

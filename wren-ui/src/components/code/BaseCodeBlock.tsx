@@ -41,6 +41,7 @@ export const Block = styled.div<{
   inline?: boolean;
   backgroundColor?: string;
 }>`
+  direction:ltr;
   position: relative;
   white-space: pre;
   font-size: 13px;

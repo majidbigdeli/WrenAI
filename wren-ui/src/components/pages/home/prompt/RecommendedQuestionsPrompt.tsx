@@ -115,12 +115,11 @@ export default function RecommendedQuestionsPrompt(props: Props) {
   return (
     <div className="bg-gray-2 px-10 py-6">
       <div className="d-flex align-center mb-3">
-        <Logo size={24} color="var(--gray-8)" />
         <div className="text-md text-medium gray-8 mx-3">
-          Know more about your data.
+          اطلاعات بیشتری در مورد داده‌های خود کسب کنید.
         </div>
         <div className="text-medium gray-7">
-          Try asking some of the following questions
+          سعی کنید برخی از سوالات زیر را بپرسید
         </div>
       </div>
       <Space
@@ -147,7 +146,7 @@ export default function RecommendedQuestionsPrompt(props: Props) {
                 size="small"
                 icon={isExpanded ? <MinusOutlined /> : <ColumnHeightOutlined />}
               >
-                {isExpanded ? 'Collapse' : 'Expand all'}
+                {isExpanded ? 'جمع کردن' : 'بازکردن همه'}
               </Button>
             </div>
           )}

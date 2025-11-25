@@ -58,7 +58,7 @@ export default function ThreadTree(props: Props) {
   } = props;
 
   const getThreadGroupNode = createTreeGroupNode({
-    groupName: 'Threads',
+    groupName: 'موضوعات',
     groupKey: 'threads',
     actions: [
       {
@@ -66,10 +66,11 @@ export default function ThreadTree(props: Props) {
         render: () => (
           <GroupActionButton
             size="small"
-            icon={<PlusOutlined />}
+            icon={<PlusOutlined style={{ transform: "translateY(2px)" }} />}
             onClick={() => router.push(Path.Home)}
+            style={{ gap: 4 }}
           >
-            New
+            جدید
           </GroupActionButton>
         ),
       },

@@ -65,7 +65,7 @@ export const ModelDropdown = makeDropdown((props: Props) => {
     {
       label: (
         <>
-          <EditOutlined className="mr-2" />
+          <EditOutlined className="ml-2" />
           Update Columns
         </>
       ),
@@ -114,7 +114,7 @@ export const ColumnDropdown = makeDropdown((props: Props) => {
     {
       label: (
         <>
-          <EditOutlined className="mr-2" />
+          <EditOutlined className="ml-2" />
           Edit
         </>
       ),
@@ -140,7 +140,7 @@ export const DashboardDropdown = makeDropdown((props: Props) => {
     isSupportCached && {
       label: (
         <>
-          <DatabaseOutlined className="mr-2" />
+          <DatabaseOutlined className="ml-2" />
           Cache settings
         </>
       ),
@@ -150,7 +150,7 @@ export const DashboardDropdown = makeDropdown((props: Props) => {
     {
       label: (
         <>
-          <ReloadOutlined className="mr-2" />
+          <ReloadOutlined className="ml-2" />
           {isSupportCached ? 'Refresh all caches' : 'Refresh all'}
         </>
       ),
@@ -167,12 +167,12 @@ export const DashboardItemDropdown = makeDropdown((props: Props) => {
     {
       label: isHideLegend ? (
         <>
-          <EyeOutlined className="mr-2" />
+          <EyeOutlined className="ml-2" />
           Show categories
         </>
       ) : (
         <>
-          {<EyeInvisibleOutlined className="mr-2" />}
+          {<EyeInvisibleOutlined className="ml-2" />}
           Hide categories
         </>
       ),
@@ -182,7 +182,7 @@ export const DashboardItemDropdown = makeDropdown((props: Props) => {
     {
       label: (
         <>
-          <ReloadOutlined className="mr-2" />
+          <ReloadOutlined className="ml-2" />
           {isSupportCached ? 'Refresh cache' : 'Refresh'}
         </>
       ),
@@ -214,7 +214,7 @@ export const SQLPairDropdown = makeDropdown(
       {
         label: (
           <>
-            <EyeOutlined className="mr-2" />
+            <EyeOutlined className="ml-2" />
             View
           </>
         ),
@@ -228,7 +228,7 @@ export const SQLPairDropdown = makeDropdown(
       {
         label: (
           <>
-            <EditOutlined className="mr-2" />
+            <EditOutlined className="ml-2" />
             Edit
           </>
         ),
@@ -273,7 +273,7 @@ export const InstructionDropdown = makeDropdown(
       {
         label: (
           <>
-            <EyeOutlined className="mr-2" />
+            <EyeOutlined className="ml-2" />
             View
           </>
         ),
@@ -287,7 +287,7 @@ export const InstructionDropdown = makeDropdown(
       {
         label: (
           <>
-            <EditOutlined className="mr-2" />
+            <EditOutlined className="ml-2" />
             Edit
           </>
         ),
@@ -330,7 +330,7 @@ export const AdjustAnswerDropdown = makeDropdown(
     const { onMoreClick, data } = props;
     const items: ItemType[] = [
       {
-        label: 'Adjust steps',
+        label: 'تنطیم مراحل',
         icon: <EditSVG />,
         disabled: !data.sqlGenerationReasoning,
         key: 'adjust-steps',
@@ -341,7 +341,7 @@ export const AdjustAnswerDropdown = makeDropdown(
           }),
       },
       {
-        label: 'Adjust SQL',
+        label: 'تنطیم SQL',
         icon: <CodeFilled className="text-base" />,
         disabled: !data.sql,
         key: 'adjust-sql',

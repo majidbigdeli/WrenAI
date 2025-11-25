@@ -159,7 +159,7 @@ export const getLineageOptions = (data: {
         <div className="d-flex align-center">
           {getNodeTypeIcon(
             { nodeType: field.nodeType, type: field.type },
-            { className: 'mr-1 flex-shrink-0', title: field.type },
+            { className: 'ml-1 flex-shrink-0', title: field.type },
           )}
           <div
             // only show column full title when it's not disabled

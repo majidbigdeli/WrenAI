@@ -222,7 +222,7 @@ paths:
                       "mark": {
                         "tooltip": true
                       },
-                      "font": "Roboto, Arial, Noto Sans, sans-serif",
+                      "font": "YekanBakhFaRegular, Roboto, Arial, Noto Sans, sans-serif",
                       "padding": {
                         "top": 30,
                         "bottom": 20,
