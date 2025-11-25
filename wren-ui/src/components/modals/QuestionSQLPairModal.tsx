@@ -209,7 +209,7 @@ export default function QuestionSQLPairModal(props: Props) {
               className="text-sm ml-2 d-flex justify-space-between align-center"
               style={{ width: 300 }}
             >
-              <InfoCircleOutlined className="mr-2 text-sm gray-7" />
+              <InfoCircleOutlined className="ml-2 text-sm gray-7" />
               <Typography.Text
                 type="secondary"
                 className="text-sm gray-7 text-left"

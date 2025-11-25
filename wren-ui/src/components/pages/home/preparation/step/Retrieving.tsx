@@ -20,13 +20,13 @@ export default function Retrieving(props: Props) {
   const data = tables.map((table) => ({ name: table }));
 
   const title = isAdjustment
-    ? 'User-selected models applied'
-    : 'Retrieving top 10 model candidates';
+    ? 'مدل‌های انتخاب‌شده توسط کاربر اعمال شدند'
+    : 'بازیابی 10 کاندیدای برتر مدل';
 
   const modelDescription = isAdjustment ? (
-    <>{tables.length} models applied</>
+    <>{tables.length} مدل اعمال شد</>
   ) : (
-    <>Top {tables.length} model candidates identified</>
+    <>برترین ${tables.length} کاندیدای مدل شناسایی شده‌اند</>
   );
 
   return (

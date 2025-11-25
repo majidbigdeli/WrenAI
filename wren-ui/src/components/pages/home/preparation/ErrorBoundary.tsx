@@ -44,7 +44,7 @@ export default function ErrorBoundary({ children, error }: Props) {
                 size="small"
                 onClick={() => fixItModal.openModal({ sql: error.invalidSql })}
               >
-                Fix it
+                درستش کن
               </Button>
               <FixSQLModal
                 {...fixItModal.state}

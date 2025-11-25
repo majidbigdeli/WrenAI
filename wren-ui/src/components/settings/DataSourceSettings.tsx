@@ -120,7 +120,7 @@ const DataSourcePanel = (props: Props) => {
     <>
       <div className="d-flex align-center">
         <Image
-          className="mr-2"
+          className="ml-2"
           src={current.logo}
           alt={current.label}
           width="24"
@@ -142,7 +142,7 @@ const DataSourcePanel = (props: Props) => {
         )}
 
         <div className="py-2 text-right">
-          <Button className="mr-2" style={{ width: 80 }} onClick={reset}>
+          <Button className="ml-2" style={{ width: 80 }} onClick={reset}>
             Cancel
           </Button>
           <Button

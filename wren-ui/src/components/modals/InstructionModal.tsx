@@ -59,7 +59,8 @@ export default function InstructionModal(props: Props) {
       visible={visible}
       width={720}
       cancelButtonProps={{ disabled: loading }}
-      okText="Submit"
+      okText="ارسال"
+      cancelText='انصراف'
       onOk={onSubmitButton}
       afterClose={() => form.resetFields()}
     >

@@ -99,16 +99,16 @@ export default function ButtonItem(props: IterableComponent<Props>) {
       <div className="d-flex align-center" style={{ width: '100%' }}>
         {logo ? (
           <Image
-            className="mr-2"
+            className="ml-2"
             src={logo}
             alt={label}
             width="40"
             height="40"
           />
         ) : IconComponent ? (
-          <StyledIcon component={IconComponent} className="mr-2" />
+          <StyledIcon component={IconComponent} className="ml-2" />
         ) : (
-          <PlainImage className="mr-2" />
+          <PlainImage className="ml-2" />
         )}
         {label}
       </div>

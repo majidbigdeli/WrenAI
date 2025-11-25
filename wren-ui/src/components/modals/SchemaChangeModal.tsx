@@ -117,7 +117,8 @@ const PanelHeader = (props) => {
           {!!onResolve && (
             <Popconfirm
               title="Are you sure?"
-              okText="Confirm"
+              okText="تایید"
+              cancelText='انصراف'
               okButtonProps={{ danger: true }}
               onConfirm={resolve}
               onCancel={(event) => event.stopPropagation()}
@@ -130,7 +131,7 @@ const PanelHeader = (props) => {
                 loading={isResolving}
                 icon={<FileDoneOutlined />}
               >
-                Resolve
+                اعمال
               </Button>
             </Popconfirm>
           )}
@@ -271,7 +272,7 @@ export default function SchemaChangeModal(props: Props) {
     <Modal
       title={
         <>
-          <WarningOutlined className="orange-5 mr-2" />
+          <WarningOutlined className="orange-5 ml-2" />
           Schema Changes
         </>
       }

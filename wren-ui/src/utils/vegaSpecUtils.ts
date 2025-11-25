@@ -47,7 +47,7 @@ const DEFAULT_COLOR = colorScheme[2];
 // Configuration object identical to handler.ts
 const config: Config = {
   mark: { tooltip: true },
-  font: 'Roboto, Arial, Noto Sans, sans-serif',
+  font: 'YekanBakhFaRegular, Roboto, Arial, Noto Sans, sans-serif',
   padding: {
     top: 30,
     bottom: 20,
@@ -65,7 +65,7 @@ const config: Config = {
     gridColor: COLOR.GRAY_5,
     titleColor: COLOR.GRAY_9,
     labelColor: COLOR.GRAY_8,
-    labelFont: ' Roboto, Arial, Noto Sans, sans-serif',
+    labelFont: 'YekanBakhFaRegular, Roboto, Arial, Noto Sans, sans-serif',
   },
   axisX: { labelAngle: -45 },
   line: {

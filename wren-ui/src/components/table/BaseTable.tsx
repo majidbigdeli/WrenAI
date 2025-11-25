@@ -27,7 +27,7 @@ export const COLUMN = {
     render: (type) => {
       return (
         <div className="d-flex align-center">
-          {getColumnTypeIcon({ type }, { className: 'mr-2' })}
+          {getColumnTypeIcon({ type }, { className: 'ml-2' })}
           {type}
         </div>
       );

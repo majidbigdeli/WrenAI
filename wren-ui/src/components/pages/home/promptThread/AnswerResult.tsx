@@ -1,42 +1,40 @@
-import { useEffect, useMemo } from 'react';
-import { isEmpty, debounce } from 'lodash';
-import clsx from 'clsx';
-import { Button, Typography, Tabs, Tag, Tooltip } from 'antd';
-import styled from 'styled-components';
-import CheckCircleFilled from '@ant-design/icons/CheckCircleFilled';
-import CodeFilled from '@ant-design/icons/CodeFilled';
-import PieChartFilled from '@ant-design/icons/PieChartFilled';
-import MessageOutlined from '@ant-design/icons/MessageOutlined';
-import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
-import { RobotSVG } from '@/utils/svgs';
-import { ANSWER_TAB_KEYS } from '@/utils/enum';
-import { canGenerateAnswer } from '@/hooks/useAskPrompt';
-import usePromptThreadStore from './store';
-import { RecommendedQuestionsProps } from '@/components/pages/home/promptThread';
-import RecommendedQuestions, {
-  getRecommendedQuestionProps,
-} from '@/components/pages/home/RecommendedQuestions';
-import ViewBlock from '@/components/pages/home/promptThread/ViewBlock';
-import ViewSQLTabContent from '@/components/pages/home/promptThread/ViewSQLTabContent';
-import TextBasedAnswer, {
-  getAnswerIsFinished,
-} from '@/components/pages/home/promptThread/TextBasedAnswer';
-import ChartAnswer from '@/components/pages/home/promptThread/ChartAnswer';
-import Preparation from '@/components/pages/home/preparation';
 import {
   AskingTaskStatus,
   ThreadResponse,
-  ThreadResponseAnswerDetail,
-  ThreadResponseAnswerStatus,
   ThreadResponseAdjustment,
   ThreadResponseAdjustmentType,
+  ThreadResponseAnswerDetail,
+  ThreadResponseAnswerStatus,
 } from '@/apollo/client/graphql/__types__';
+import Preparation from '@/components/pages/home/preparation';
+import { RecommendedQuestionsProps } from '@/components/pages/home/promptThread';
+import ChartAnswer from '@/components/pages/home/promptThread/ChartAnswer';
+import TextBasedAnswer, {
+  getAnswerIsFinished,
+} from '@/components/pages/home/promptThread/TextBasedAnswer';
+import ViewSQLTabContent from '@/components/pages/home/promptThread/ViewSQLTabContent';
+import RecommendedQuestions, {
+  getRecommendedQuestionProps,
+} from '@/components/pages/home/RecommendedQuestions';
+import { canGenerateAnswer } from '@/hooks/useAskPrompt';
+import { ANSWER_TAB_KEYS } from '@/utils/enum';
+import CheckCircleFilled from '@ant-design/icons/CheckCircleFilled';
+import CodeFilled from '@ant-design/icons/CodeFilled';
+import MessageOutlined from '@ant-design/icons/MessageOutlined';
+import PieChartFilled from '@ant-design/icons/PieChartFilled';
+import ShareAltOutlined from '@ant-design/icons/ShareAltOutlined';
+import { Tabs, Tag, Typography } from 'antd';
+import clsx from 'clsx';
+import { debounce, isEmpty } from 'lodash';
+import { useEffect, useMemo } from 'react';
+import styled from 'styled-components';
+import usePromptThreadStore from './store';
 
 const { Title, Text } = Typography;
 
 const adjustmentType = {
-  [ThreadResponseAdjustmentType.APPLY_SQL]: 'User-provided SQL applied',
-  [ThreadResponseAdjustmentType.REASONING]: 'Reasoning steps adjusted',
+  [ThreadResponseAdjustmentType.APPLY_SQL]: 'SQL ارائه شده توسط کاربر اعمال شد',
+  [ThreadResponseAdjustmentType.REASONING]: 'مراحل استدلال بهبود یافت',
 };
 
 const knowledgeTooltip = (
@@ -137,7 +135,7 @@ const QuestionTitle = (props) => {
       className={clsx('d-flex bg-gray-1 rounded mt-0', className)}
       level={4}
     >
-      <MessageOutlined className="geekblue-5 mt-1 mr-3" />
+      <MessageOutlined className="geekblue-5 mt-1 ml-3" />
       <Text className="text-medium gray-8">{question}</Text>
     </Title>
   );
@@ -169,7 +167,7 @@ const AdjustmentInformation = (props: {
       <div className="d-flex align-center gx-2">
         <ShareAltOutlined className="gray-7" />
         <div className="flex-grow-1 gray-7">
-          Adjusted answer
+          بهبود پاسخ
           <Tag className="gray-6 border border-gray-5 bg-gray-3 ml-3 text-medium">
             {adjustmentType[adjustment.type]}
           </Tag>
@@ -303,9 +301,9 @@ export default function AnswerResult(props: Props) {
               <Tabs.TabPane
                 key={ANSWER_TAB_KEYS.ANSWER}
                 tab={
-                  <div className="select-none">
+                  <div className="select-none align-center d-flex">
                     <CheckCircleFilled className="ml-2" />
-                    <Text>Answer</Text>
+                    <Text>پاسخ</Text>
                   </div>
                 }
               >
@@ -315,9 +313,9 @@ export default function AnswerResult(props: Props) {
             <Tabs.TabPane
               key={ANSWER_TAB_KEYS.VIEW_SQL}
               tab={
-                <div className="select-none">
+                <div className="select-none align-center d-flex">
                   <CodeFilled className="ml-2" />
-                  <Text>View SQL</Text>
+                  <Text>مشاهده SQL</Text>
                 </div>
               }
             >
@@ -326,10 +324,10 @@ export default function AnswerResult(props: Props) {
             <Tabs.TabPane
               key="chart"
               tab={
-                <div className="select-none">
+                <div className="select-none align-center d-flex">
                   <PieChartFilled className="ml-2" />
                   <Text>
-                    Chart
+                    نمودار
                   </Text>
                 </div>
               }
@@ -337,45 +335,6 @@ export default function AnswerResult(props: Props) {
               <ChartAnswer {...props} />
             </Tabs.TabPane>
           </StyledTabs>
-          <div className="mt-2 d-flex align-center">
-            <Tooltip
-              overlayInnerStyle={{ width: 'max-content' }}
-              placement="topLeft"
-              title={knowledgeTooltip}
-            >
-              <Button
-                type="link"
-                size="small"
-                className="mr-2"
-                onClick={() =>
-                  onOpenSaveToKnowledgeModal(
-                    {
-                      question: rephrasedQuestion,
-                      sql,
-                    },
-                    { isCreateMode: true },
-                  )
-                }
-                data-guideid="save-to-knowledge"
-              >
-                <div className="d-flex align-center">
-                  <RobotSVG className="ml-2" />
-                  Save to knowledge
-                </div>
-              </Button>
-            </Tooltip>
-            <ViewBlock
-              view={view}
-              onClick={() =>
-                onOpenSaveAsViewModal(
-                  { sql, responseId: id },
-                  {
-                    rephrasedQuestion: questionForSaveAsView,
-                  },
-                )
-              }
-            />
-          </div>
           {renderRecommendedQuestions(
             isLastThreadResponse,
             recommendedQuestionProps,

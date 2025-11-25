@@ -114,7 +114,8 @@ function EditableRelationTable(props: EditableRelationTableProps) {
           />
           <Popconfirm
             title="Confirm to delete?"
-            okText="Delete"
+            okText="حذف"
+            cancelText='انصراف'
             okButtonProps={{ danger: true }}
             onConfirm={() => onDeleteRow(modelName, record)}
           >
@@ -141,7 +142,7 @@ function EditableRelationTable(props: EditableRelationTableProps) {
             title="Add relationship"
           >
             <PlusOutlined />
-            Add
+            افزودن
           </Button>
         )}
         rowKey={(record: RelationsDataType) =>
@@ -312,7 +313,7 @@ export default function DefineRelations(props: Props) {
         </Col>
         <Col className="text-right" span={12}>
           <Button
-            className="mr-4 gray-7 adm-onboarding-btn"
+            className="ml-4 gray-7 adm-onboarding-btn"
             type="text"
             size="large"
             onClick={onSkip}

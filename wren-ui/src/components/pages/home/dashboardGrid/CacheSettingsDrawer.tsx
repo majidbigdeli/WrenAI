@@ -255,7 +255,7 @@ export default function CacheSettingsDrawer(props: Props) {
       footer={
         <Space className="d-flex justify-end">
           <Button onClick={onClose} disabled={loading}>
-            Cancel
+            انصراف
           </Button>
           <Button
             type="primary"
@@ -263,7 +263,7 @@ export default function CacheSettingsDrawer(props: Props) {
             loading={loading}
             disabled={loading}
           >
-            Submit
+            ارسال
           </Button>
         </Space>
       }

@@ -164,7 +164,7 @@ describe('vegaSpecUtils', () => {
       expect(enhancedSpec.config).toEqual(
         expect.objectContaining({
           mark: { tooltip: true },
-          font: 'Roboto, Arial, Noto Sans, sans-serif',
+          font: 'YekanBakhFaRegular, Roboto, Arial, Noto Sans, sans-serif',
           bar: { color: '#1570EF' },
           axisX: { labelAngle: -45 },
         }),

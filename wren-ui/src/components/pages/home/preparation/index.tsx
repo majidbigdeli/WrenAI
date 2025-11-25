@@ -91,9 +91,9 @@ export default function Preparation(props: Props) {
                   alt="Answer Preparation Steps"
                   width={24}
                   height={24}
-                  className="mr-1"
+                  className="ml-1"
                 />
-                Answer preparation steps
+                مراحل آماده سازی را پاسخ دهید
               </Typography.Title>
               <PreparationStatus {...props} preparedTask={preparedTask} />
             </div>
