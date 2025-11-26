@@ -55,7 +55,8 @@ export default function SaveAsViewModal(props: Props) {
           >
             <InfoCircleOutlined className="ml-2 text-sm gray-6" />
             <Text type="secondary" className="text-sm gray-6 text-left">
-            پس از ذخیره، مطمئن شوید که برای استقرار تمام نماهای ذخیره شده، به «صفحه مدل‌سازی» بروید.
+              پس از ذخیره، مطمئن شوید که برای استقرار تمام نماهای ذخیره شده، به
+              «صفحه مدل‌سازی» بروید.
             </Text>
           </div>
           <div>

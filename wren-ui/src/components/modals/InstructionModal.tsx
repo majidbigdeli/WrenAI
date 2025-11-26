@@ -60,7 +60,7 @@ export default function InstructionModal(props: Props) {
       width={720}
       cancelButtonProps={{ disabled: loading }}
       okText="ارسال"
-      cancelText='انصراف'
+      cancelText="انصراف"
       onOk={onSubmitButton}
       afterClose={() => form.resetFields()}
     >

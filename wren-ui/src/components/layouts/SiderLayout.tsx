@@ -12,7 +12,7 @@ const basicStyle = css`
   overflow: auto;
 `;
 
-const StyledContentLayout = styled(Layout) <{ color?: string }>`
+const StyledContentLayout = styled(Layout)<{ color?: string }>`
   position: relative;
   ${basicStyle}
   ${(props) => props.color && `background-color: var(--${props.color});`}

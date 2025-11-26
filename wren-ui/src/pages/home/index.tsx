@@ -44,13 +44,11 @@ const SampleQuestionsInstruction = (props) => {
   );
 };
 
-function RecommendedQuestionsInstruction(props) {
-  const { onSelect, loading } = props;
+function RecommendedQuestionsInstruction(_) {
 
   const {
     buttonProps,
     generating,
-    recommendedQuestions,
     showRetry,
     showRecommendedQuestionsPromptMode,
   } = useRecommendedQuestionsInstruction();

@@ -20,10 +20,10 @@ type Props = ModalAction<AdjustSQLFormValues, AdjustSQLFormValues> & {
 };
 
 const FormItem = styled(Form.Item)`
- .ant-form-item-label{
-  text-align:start
- }
-`
+  .ant-form-item-label {
+    text-align: start;
+  }
+`;
 
 export default function AdjustSQLModal(props: Props) {
   const { defaultValue, loading, onClose, onSubmit, visible } = props;
@@ -141,7 +141,10 @@ export default function AdjustSQLModal(props: Props) {
       okButtonProps={{ disabled: previewSqlResult.loading }}
       afterClose={() => handleReset()}
       footer={
-        <div className="d-flex justify-space-between align-center" style={{ flex: 1 }}>
+        <div
+          className="d-flex justify-space-between align-center"
+          style={{ flex: 1 }}
+        >
           <div
             className="text-sm ml-2 d-flex justify-space-between align-center"
             style={{ width: 300 }}
@@ -151,7 +154,8 @@ export default function AdjustSQLModal(props: Props) {
               type="secondary"
               className="text-sm gray-7 text-right"
             >
-              عبارت SQL مورد استفاده در اینجا از <b>SQL</b> پیروی می‌کند، که بر مبنای ANSI SQL بوده و برای AI بهینه‌سازی شده است.{` `}
+              عبارت SQL مورد استفاده در اینجا از <b>SQL</b> پیروی می‌کند، که بر
+              مبنای ANSI SQL بوده و برای AI بهینه‌سازی شده است.{` `}
               <Typography.Link
                 type="secondary"
                 href="https://docs.getwren.ai/oss/guide/home/wren_sql"
@@ -162,7 +166,7 @@ export default function AdjustSQLModal(props: Props) {
               </Typography.Link>
             </Typography.Text>
           </div>
-          <div className='d-flex g-2'>
+          <div className="d-flex g-2">
             <Button onClick={onClose}>انصراف</Button>
             <Button
               type="primary"

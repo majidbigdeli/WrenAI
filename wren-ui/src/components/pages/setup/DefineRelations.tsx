@@ -115,7 +115,7 @@ function EditableRelationTable(props: EditableRelationTableProps) {
           <Popconfirm
             title="Confirm to delete?"
             okText="حذف"
-            cancelText='انصراف'
+            cancelText="انصراف"
             okButtonProps={{ danger: true }}
             onConfirm={() => onDeleteRow(modelName, record)}
           >

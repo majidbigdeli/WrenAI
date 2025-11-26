@@ -118,7 +118,7 @@ const PanelHeader = (props) => {
             <Popconfirm
               title="Are you sure?"
               okText="تایید"
-              cancelText='انصراف'
+              cancelText="انصراف"
               okButtonProps={{ danger: true }}
               onConfirm={resolve}
               onCancel={(event) => event.stopPropagation()}

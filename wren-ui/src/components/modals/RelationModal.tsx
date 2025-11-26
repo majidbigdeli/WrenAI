@@ -99,7 +99,7 @@ export default function RelationModal(props: Props) {
       width={750}
       visible={visible}
       okText="ارسال"
-      cancelText='انصراف'
+      cancelText="انصراف"
       onOk={submit}
       onCancel={onClose}
       confirmLoading={loading}

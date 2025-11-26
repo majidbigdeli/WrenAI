@@ -27,9 +27,9 @@ const StyledBadge = styled(Badge)`
     display: none;
   }
 `;
-const TimelineItem=styled(Timeline.Item)`
+const TimelineItem = styled(Timeline.Item)`
   direction: ltr;
-`
+`;
 
 const retrievingNextStates = ProcessStateMachine.getAllNextStates(
   PROCESS_STATE.SEARCHING,
@@ -92,7 +92,7 @@ export default function PreparationSteps(
   return (
     <Timeline className={className}>
       {showRetrieving && (
-        <TimelineItem  dot={getProcessDot(retrieving)}>
+        <TimelineItem dot={getProcessDot(retrieving)}>
           <Retrieving
             loading={retrieving}
             tables={retrievedTables}

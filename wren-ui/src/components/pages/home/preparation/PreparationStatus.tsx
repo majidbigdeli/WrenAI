@@ -49,7 +49,7 @@ export default function PreparationStatus(
         onClick={onCancel}
         loading={stopLoading}
       >
-        انصراف  
+        انصراف
       </Button>
     );
   } else if (preparedTask.status === AskingTaskStatus.STOPPED) {
@@ -64,7 +64,7 @@ export default function PreparationStatus(
           onClick={onReRun}
           loading={reRunLoading}
         >
-        اجرا مجدد
+          اجرا مجدد
         </Button>
       </Space>
     );

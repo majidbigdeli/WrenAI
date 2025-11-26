@@ -45,7 +45,7 @@ const Toolbar = (props: { dataSource: string; onClick: () => void }) => {
       </span>
       <Button className="px-0" type="link" size="small" onClick={onClick}>
         <SelectOutlined />
-   وارد کردن از SQL {name}
+        وارد کردن از SQL {name}
       </Button>
     </div>
   );
@@ -214,14 +214,15 @@ export default function QuestionSQLPairModal(props: Props) {
                 type="secondary"
                 className="text-sm gray-7 text-left"
               >
-                عبارت SQL مورد استفاده در اینجا از <b>SQL</b> پیروی می‌کند، که بر مبنای ANSI SQL بوده و برای AI بهینه‌سازی شده است.{` `}
+                عبارت SQL مورد استفاده در اینجا از <b>SQL</b> پیروی می‌کند، که
+                بر مبنای ANSI SQL بوده و برای AI بهینه‌سازی شده است.{` `}
                 <Typography.Link
                   type="secondary"
                   href="https://docs.getwren.ai/oss/guide/home/wren_sql"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-              درباره سینتکس بیشتر بدانید.
+                  درباره سینتکس بیشتر بدانید.
                 </Typography.Link>
               </Typography.Text>
             </div>
@@ -248,7 +249,7 @@ export default function QuestionSQLPairModal(props: Props) {
               >
                 <span>سوال</span>
                 <div className="gray-8 text-sm">
-     بگذارید هوش مصنوعی یک سوال منطبق برای این عبارت SQL ایجاد کند.
+                  بگذارید هوش مصنوعی یک سوال منطبق برای این عبارت SQL ایجاد کند.
                   <Button
                     className="ml-2"
                     size="small"
