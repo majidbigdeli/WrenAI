@@ -175,10 +175,7 @@ export class ProjectRepository
 
 
   public async getByUniqueId(uniqueId: string): Promise<Project | null> {
-    const row = await this.knex('project')
-      .where('unique_id', uniqueId)   // 👈 اسم ستون واقعی در DB
-      .first();
-
+    const row = await this.findOneBy({ uniqueId })
     return row || null;
   }
 
