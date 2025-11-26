@@ -1,7 +1,8 @@
 export enum Path {
-  Home = '/managerAssit',
-  HomeDashboard = '/managerAssit/dashboard',
-  Thread = '/managerAssit/[id]',
+  ManagerAssist="/managerAssist",
+  Home = '/home',
+  HomeDashboard = '/home/dashboard',
+  Thread = '/home/[id]',
   Modeling = '/modeling',
   Onboarding = '/setup',
   OnboardingConnection = '/setup/connection',

@@ -11,6 +11,7 @@ const resolveAlias = {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withLess({
+  basePath: '/managerAssist',
   output: 'standalone',
   staticPageGenerationTimeout: 1000,
   compiler: {
@@ -37,12 +38,7 @@ const nextConfig = withLess({
         source: '/setup',
         destination: '/setup/connection',
         permanent: true,
-      },
-      {
-        source: '/home',
-        destination: '/managerAssit',
-        permanent: true,
-      },
+      }
     ];
   },
 });
