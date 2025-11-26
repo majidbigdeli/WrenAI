@@ -31,23 +31,15 @@ export interface DomainInfoDto {
 export async function getDomainInfoByHost(
     host: string,
 ): Promise<DomainInfoDto> {
-    // آدرس سرویس WCF (همون که تو DomainInfoManagerApiClient بود)
     const endpoint =
         process.env.DOMAIN_INFO_API_URL ||
-        'http://localhost:7014/DomainInfoManagerApi';
+        'http://192.168.34.184:7014/DomainInfoManagerApi';
 
-    // urlی که به متد GetDomainInfo می‌دی؛
-    // بسته به سرویس خودت می‌تونه http یا https و شاید path اضافه بخواد
+    //host = "salanati.com";
     const urlParam = `${host}`;
 
     const soapEnvelope = `
 <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
-  <s:Header>
-    <Action s:mustUnderstand="1"
-            xmlns="http://schemas.microsoft.com/ws/2005/05/addressing/none">
-      http://tempuri.org/IDomainInfoManagerApi/GetDomainInfo
-    </Action>
-  </s:Header>
   <s:Body>
     <GetDomainInfo xmlns="http://tempuri.org/">
       <url>${urlParam}</url>

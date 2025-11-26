@@ -23,7 +23,7 @@ import { RecommendQuestionResultStatus } from './askingService';
 import { IMDLService } from './mdlService';
 import { ProjectRecommendQuestionBackgroundTracker } from '../backgrounds';
 import { ITelemetry } from '../telemetry/telemetry';
-import { getConfig } from '../config';
+import { getConfig, HOST_PROJECT_UNIQUE_ID_MAP } from '../config';
 import { buildMsSqlConnectionInfoFromDomainInfo, getDomainInfoByHost } from './domainInfoClient';
 
 const config = getConfig();
@@ -188,14 +188,23 @@ export class ProjectService implements IProjectService {
 
   public async getCurrentProjectByHost() {
     if (this.requestHost) {
-      // از متد جدید repository (یا findOneBy) استفاده کن
-      const project = await this.projectRepository.getProjectByHost(this.requestHost);
+
+      const hostKey = this.requestHost.toLowerCase();
+      var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
+
+      if (!cachedUniqueId) {
+        const domainInfo = await getDomainInfoByHost(this.requestHost);
+        cachedUniqueId = domainInfo.DomainId;
+        HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
+      }
+
+      const project = await this.projectRepository.getByUniqueId(cachedUniqueId);
       if (project) {
         return project;
       }
     }
 
-    return null;
+    throw new Error('No project found');
     // fallback
     //return await this.projectRepository.getCurrentProject();
   }
@@ -259,6 +268,8 @@ export class ProjectService implements IProjectService {
         DataSourceName.MSSQL,
         finalConnectionInfo,
       ),
+      uniqueId: domainInfo.DomainId,
+      host:domainInfo.Url,
     };
     logger.debug('Creating project...');
     const project = await this.projectRepository.createOne(projectValue);
