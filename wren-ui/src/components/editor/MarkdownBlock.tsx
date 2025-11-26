@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 const ReactMarkdownBlock = styled(ReactMarkdown)`
+  direction: ltr;
   h1,
   h2,
   h3,

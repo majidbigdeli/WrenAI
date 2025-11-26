@@ -8,6 +8,7 @@ import { parseGraphQLError } from '@/utils/errorHandler';
 import ErrorCollapse from '@/components/ErrorCollapse';
 import PreviewData from '@/components/dataPreview/PreviewData';
 import { usePreviewSqlMutation } from '@/apollo/client/graphql/sql.generated';
+import styled from 'styled-components';
 
 interface AdjustSQLFormValues {
   responseId: number;
@@ -17,6 +18,12 @@ interface AdjustSQLFormValues {
 type Props = ModalAction<AdjustSQLFormValues, AdjustSQLFormValues> & {
   loading?: boolean;
 };
+
+const FormItem = styled(Form.Item)`
+ .ant-form-item-label{
+  text-align:start
+ }
+`
 
 export default function AdjustSQLModal(props: Props) {
   const { defaultValue, loading, onClose, onSubmit, visible } = props;
@@ -127,12 +134,14 @@ export default function AdjustSQLModal(props: Props) {
       maskClosable={false}
       onCancel={onClose}
       visible={visible}
+      okText="ارسال"
+      cancelText="انصراف"
       width={640}
       cancelButtonProps={{ disabled: confirmLoading }}
       okButtonProps={{ disabled: previewSqlResult.loading }}
       afterClose={() => handleReset()}
       footer={
-        <div className="d-flex justify-space-between align-center">
+        <div className="d-flex justify-space-between align-center" style={{ flex: 1 }}>
           <div
             className="text-sm ml-2 d-flex justify-space-between align-center"
             style={{ width: 300 }}
@@ -140,36 +149,35 @@ export default function AdjustSQLModal(props: Props) {
             <InfoCircleOutlined className="ml-2 text-sm gray-7" />
             <Typography.Text
               type="secondary"
-              className="text-sm gray-7 text-left"
+              className="text-sm gray-7 text-right"
             >
-              The SQL statement used here follows <b>Wren SQL</b>, which is
-              based on ANSI SQL and optimized for Wren AI.{` `}
+              عبارت SQL مورد استفاده در اینجا از <b>SQL</b> پیروی می‌کند، که بر مبنای ANSI SQL بوده و برای AI بهینه‌سازی شده است.{` `}
               <Typography.Link
                 type="secondary"
                 href="https://docs.getwren.ai/oss/guide/home/wren_sql"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Learn more about the syntax.
+                درباره سینتکس بیشتر بدانید.
               </Typography.Link>
             </Typography.Text>
           </div>
-          <div>
-            <Button onClick={onClose}>Cancel</Button>
+          <div className='d-flex g-2'>
+            <Button onClick={onClose}>انصراف</Button>
             <Button
               type="primary"
               onClick={onSubmitButton}
               loading={confirmLoading}
             >
-              Submit
+              ارسال
             </Button>
           </div>
         </div>
       }
     >
       <Form form={form} preserve={false} layout="vertical">
-        <Form.Item
-          label="SQL statement"
+        <FormItem
+          label="دستور SQL"
           name="sql"
           required
           rules={[
@@ -180,18 +188,18 @@ export default function AdjustSQLModal(props: Props) {
           ]}
         >
           <SQLEditor autoComplete autoFocus />
-        </Form.Item>
+        </FormItem>
       </Form>
       <div className="my-3">
         <Typography.Text className="d-block gray-7 mb-2">
-          Data preview (50 rows)
+          پیش‌نمایش داده‌ها (۵۰ ردیف)
         </Typography.Text>
         <Button
           onClick={onPreviewData}
           loading={previewing}
           disabled={disabled}
         >
-          Preview data
+          پیش‌نمایش داده‌ها
         </Button>
         {showPreview && (
           <div className="my-3">

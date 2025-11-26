@@ -51,7 +51,7 @@ export default function GroupTreeTitle({
     <>
       <span className="d-inline-flex align-center">
         {title}
-        <span className="adm-treeNode-group-count ml-1 text-xs flex-grow-0">
+        <span className="adm-treeNode-group-count mr-1 text-xs flex-grow-0">
           ({quotaUsage})
         </span>
         {appendSlot}

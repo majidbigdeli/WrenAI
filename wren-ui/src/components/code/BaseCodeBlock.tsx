@@ -77,7 +77,7 @@ export const Block = styled.div<{
   }
 `;
 
-export const CopyText = styled(Typography.Text)<{ $hasVScrollbar: boolean }>`
+export const CopyText = styled(Typography.Text) <{ $hasVScrollbar: boolean }>`
   position: absolute;
   top: 0;
   right: ${(props) => (props.$hasVScrollbar ? '20px' : '0')};
@@ -190,18 +190,21 @@ export const createCodeBlock = (HighlightRules: any) => {
               <CopyText
                 $hasVScrollbar={hasVerticalScrollbar}
                 copyable={{
+                  tooltips: ['کپی', 'کپی شد'],
                   onCopy,
                   icon: [
                     <Button
                       key="copy-icon"
+
                       icon={<CopyOutlined />}
                       size="small"
-                      style={{ backgroundColor: 'transparent' }}
+                      style={{ backgroundColor: 'transparent', display: "block" }}
                     />,
                     <Button
                       key="copied-icon"
                       icon={<CheckOutlined className="green-6" />}
                       size="small"
+                      style={{ display: "block" }}
                     />,
                   ],
                   text: code,

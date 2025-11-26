@@ -19,7 +19,6 @@ const StyledSidebarTree = styled(SidebarTree)`
   .adm-treeNode {
     &.adm-treeNode__thread {
       padding: 0px 16px 0px 4px !important;
-
       .ant-tree-title {
         flex-grow: 1;
         display: inline-flex;
@@ -68,7 +67,7 @@ export default function ThreadTree(props: Props) {
             size="small"
             icon={<PlusOutlined style={{ transform: "translateY(2px)" }} />}
             onClick={() => router.push(Path.Home)}
-            style={{ gap: 4 }}
+            className='g-1'
           >
             جدید
           </GroupActionButton>
