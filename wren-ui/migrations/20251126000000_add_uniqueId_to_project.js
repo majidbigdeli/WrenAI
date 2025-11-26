@@ -3,7 +3,8 @@
  */
 exports.up = function (knex) {
   return knex.schema.table('project', (table) => {
-    table.string('host', 500).nullable();
+    table.uuid('unique_id').notNullable().unique()
+      ;
   });
 };
 
@@ -12,6 +13,6 @@ exports.up = function (knex) {
  */
 exports.down = function (knex) {
   return knex.schema.table('project', (table) => {
-    table.dropColumn('host');
+    table.dropColumn('unique_id');
   });
 };

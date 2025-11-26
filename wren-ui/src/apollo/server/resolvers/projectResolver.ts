@@ -252,7 +252,6 @@ export class ProjectResolver {
 
       const { type, properties } = HARDCODED_MSSQL_DATASOURCE;
       const { displayName, ...connectionInfo } = properties;
-
       await ctx.projectService.createProject({
         displayName,
         type,
