@@ -1,64 +1,64 @@
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import { useSearchParams } from 'next/navigation';
-import { forwardRef, useEffect, useMemo, useRef } from 'react';
-import { message } from 'antd';
-import styled from 'styled-components';
-import { MORE_ACTION, NODE_TYPE } from '@/utils/enum';
-import { editCalculatedField } from '@/utils/modelingHelper';
-import SiderLayout from '@/components/layouts/SiderLayout';
-import MetadataDrawer from '@/components/pages/modeling/MetadataDrawer';
-import EditMetadataModal from '@/components/pages/modeling/EditMetadataModal';
-import CalculatedFieldModal from '@/components/modals/CalculatedFieldModal';
-import ModelDrawer from '@/components/pages/modeling/ModelDrawer';
-import RelationModal, {
-  RelationFormValues,
-} from '@/components/modals/RelationModal';
-import useDrawerAction from '@/hooks/useDrawerAction';
-import useModalAction from '@/hooks/useModalAction';
-import useRelationshipModal from '@/hooks/useRelationshipModal';
-import { convertFormValuesToIdentifier } from '@/hooks/useCombineFieldOptions';
-import { ClickPayload } from '@/components/diagram/Context';
-import { DeployStatusContext } from '@/components/deploy/Context';
-import { DIAGRAM } from '@/apollo/client/graphql/diagram';
-import { LIST_MODELS } from '@/apollo/client/graphql/model';
-import { useDiagramQuery } from '@/apollo/client/graphql/diagram.generated';
-import { useDeployStatusQuery } from '@/apollo/client/graphql/deploy.generated';
-import { useDeleteViewMutation } from '@/apollo/client/graphql/view.generated';
-import {
-  useCreateModelMutation,
-  useDeleteModelMutation,
-  useUpdateModelMutation,
-} from '@/apollo/client/graphql/model.generated';
-import {
-  useUpdateModelMetadataMutation,
-  useUpdateViewMetadataMutation,
-} from '@/apollo/client/graphql/metadata.generated';
-import {
-  useCreateCalculatedFieldMutation,
-  useUpdateCalculatedFieldMutation,
-  useDeleteCalculatedFieldMutation,
-} from '@/apollo/client/graphql/calculatedField.generated';
-import {
-  useCreateRelationshipMutation,
-  useDeleteRelationshipMutation,
-  useUpdateRelationshipMutation,
-} from '@/apollo/client/graphql/relationship.generated';
-import * as events from '@/utils/events';
+// import dynamic from 'next/dynamic';
+// import { useRouter } from 'next/router';
+// import { useSearchParams } from 'next/navigation';
+// import { forwardRef } from 'react';
+// import { message } from 'antd';
+// import styled from 'styled-components';
+// import { MORE_ACTION, NODE_TYPE } from '@/utils/enum';
+// import { editCalculatedField } from '@/utils/modelingHelper';
+// import SiderLayout from '@/components/layouts/SiderLayout';
+// import MetadataDrawer from '@/components/pages/modeling/MetadataDrawer';
+// import EditMetadataModal from '@/components/pages/modeling/EditMetadataModal';
+// import CalculatedFieldModal from '@/components/modals/CalculatedFieldModal';
+// import ModelDrawer from '@/components/pages/modeling/ModelDrawer';
+// import RelationModal, {
+//   RelationFormValues,
+// } from '@/components/modals/RelationModal';
+// import useDrawerAction from '@/hooks/useDrawerAction';
+// import useModalAction from '@/hooks/useModalAction';
+// import useRelationshipModal from '@/hooks/useRelationshipModal';
+// import { convertFormValuesToIdentifier } from '@/hooks/useCombineFieldOptions';
+// import { ClickPayload } from '@/components/diagram/Context';
+// import { DeployStatusContext } from '@/components/deploy/Context';
+// import { DIAGRAM } from '@/apollo/client/graphql/diagram';
+// import { LIST_MODELS } from '@/apollo/client/graphql/model';
+// import { useDiagramQuery } from '@/apollo/client/graphql/diagram.generated';
+// import { useDeployStatusQuery } from '@/apollo/client/graphql/deploy.generated';
+// import { useDeleteViewMutation } from '@/apollo/client/graphql/view.generated';
+// import {
+//   useCreateModelMutation,
+//   useDeleteModelMutation,
+//   useUpdateModelMutation,
+// } from '@/apollo/client/graphql/model.generated';
+// import {
+//   useUpdateModelMetadataMutation,
+//   useUpdateViewMetadataMutation,
+// } from '@/apollo/client/graphql/metadata.generated';
+// import {
+//   useCreateCalculatedFieldMutation,
+//   useUpdateCalculatedFieldMutation,
+//   useDeleteCalculatedFieldMutation,
+// } from '@/apollo/client/graphql/calculatedField.generated';
+// import {
+//   useCreateRelationshipMutation,
+//   useDeleteRelationshipMutation,
+//   useUpdateRelationshipMutation,
+// } from '@/apollo/client/graphql/relationship.generated';
+// import * as events from '@/utils/events';
 
-const Diagram = dynamic(() => import('@/components/diagram'), { ssr: false });
+// const Diagram = dynamic(() => import('@/components/diagram'), { ssr: false });
 // https://github.com/vercel/next.js/issues/4957#issuecomment-413841689
-const ForwardDiagram = forwardRef(function ForwardDiagram(props: any, ref) {
-  return <Diagram {...props} forwardRef={ref} />;
-});
+// const ForwardDiagram = forwardRef(function ForwardDiagram(props: any, ref) {
+//   return <Diagram {...props} forwardRef={ref} />;
+// });
 
-const DiagramWrapper = styled.div`
-  position: relative;
-  height: 100%;
-`;
+// const DiagramWrapper = styled.div`
+//   position: relative;
+//   height: 100%;
+// `;
 
 export default function Modeling() {
-  return <></>
+  return <></>;
   // const router = useRouter();
   // const searchParams = useSearchParams();
   // const diagramRef = useRef(null);

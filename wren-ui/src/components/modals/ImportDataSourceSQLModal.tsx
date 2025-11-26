@@ -86,7 +86,7 @@ export default function ImportDataSourceSQLModal(props: Props) {
       onCancel={onClose}
       onOk={submit}
       okText="تبدیل"
-      cancelText='انصراف'
+      cancelText="انصراف"
       visible={visible}
       width={600}
       cancelButtonProps={{ disabled: loading }}

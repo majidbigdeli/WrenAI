@@ -170,7 +170,8 @@ export default function AdjustReasoningStepsModal(props: Props) {
           }
         >
           <div className="text-sm gray-6 mb-1">
-            منطق استدلال زیر را ویرایش کنید. هر مرحله باید در جهت پاسخ دقیق به سوال باشد.
+            منطق استدلال زیر را ویرایش کنید. هر مرحله باید در جهت پاسخ دقیق به
+            سوال باشد.
           </div>
           <FormItem
             noStyle

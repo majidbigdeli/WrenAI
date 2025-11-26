@@ -74,7 +74,7 @@ export default function Home(props: Props) {
       <StyledTreeNodeLink
         className={clsx({
           'adm-treeNode--selected': router.pathname === Path.HomeDashboard,
-          "d-flex align-center": true
+          'd-flex align-center': true,
         })}
         href={Path.HomeDashboard}
       >

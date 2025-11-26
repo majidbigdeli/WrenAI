@@ -1,14 +1,13 @@
-import { useState, useMemo } from 'react';
-import clsx from 'clsx';
-import styled from 'styled-components';
-import { Space, Button, Row, Col } from 'antd';
-import ColumnHeightOutlined from '@ant-design/icons/ColumnHeightOutlined';
-import MinusOutlined from '@ant-design/icons/MinusOutlined';
 import EllipsisWrapper from '@/components/EllipsisWrapper';
-import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
-import { Logo } from '@/components/Logo';
-import { makeIterable } from '@/utils/iteration';
 import { GroupedQuestion } from '@/hooks/useRecommendedQuestionsInstruction';
+import { makeIterable } from '@/utils/iteration';
+import ColumnHeightOutlined from '@ant-design/icons/ColumnHeightOutlined';
+import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
+import MinusOutlined from '@ant-design/icons/MinusOutlined';
+import { Button, Col, Row, Space } from 'antd';
+import clsx from 'clsx';
+import { useMemo, useState } from 'react';
+import styled from 'styled-components';
 
 const CategorySectionBlock = styled.div`
   background: var(--gray-1);

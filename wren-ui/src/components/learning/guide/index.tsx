@@ -1,15 +1,12 @@
-import { driver } from 'driver.js';
+import { useGetSettingsQuery } from '@/apollo/client/graphql/settings.generated';
 import { useRouter } from 'next/router';
 import {
   forwardRef,
-  useEffect,
   useImperativeHandle,
   useMemo,
-  useRef,
+  useRef
 } from 'react';
 import { Dispatcher, DriverObj } from './utils';
-import { makeStoriesPlayer } from './stories';
-import { useGetSettingsQuery } from '@/apollo/client/graphql/settings.generated';
 
 import 'driver.js/dist/driver.css';
 
@@ -40,7 +37,8 @@ export default forwardRef<Attributes, Props>(function Guide(_props, ref) {
   //   };
   // }, []);
 
-  const play = (id: string, dispatcher: Dispatcher) => {
+  const play = (_: string, __: Dispatcher) => {
+    //id: string, dispatcher: Dispatcher
     // const playStoryWithId = makeStoriesPlayer(
     //   $driver.current,
     //   router,

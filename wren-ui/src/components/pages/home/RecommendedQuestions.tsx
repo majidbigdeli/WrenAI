@@ -94,7 +94,7 @@ export default function RecommendedQuestions(props: Props) {
         <BulbOutlined className="ml-1 gray-6" />
         <b className="text-semi-bold text-sm gray-7">سوالات پیشنهادی</b>
       </div>
-      <div className="pl-1 gray-8" dir='ltr'>
+      <div className="pl-1 gray-8" dir="ltr">
         <StyledSkeleton
           active
           loading={loading}

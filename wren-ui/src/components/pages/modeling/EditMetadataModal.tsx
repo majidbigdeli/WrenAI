@@ -43,7 +43,7 @@ export default function EditMetadataModal(props: Props) {
       width={800}
       visible={visible}
       okText="ارسال"
-      cancelText='انصراف'
+      cancelText="انصراف"
       onOk={submit}
       onCancel={onClose}
       confirmLoading={loading}

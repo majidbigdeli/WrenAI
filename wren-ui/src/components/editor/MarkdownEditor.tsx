@@ -212,7 +212,6 @@ export default function MarkdownEditor(props: Props) {
       tabIndex={-1}
     >
       <div className="bg-gray-3 px-2 py-1 d-flex align-center justify-space-between">
-       
         <LinkButton
           icon={isPreviewMode ? <EditOutlined /> : <ReadOutlined />}
           type="link"
@@ -221,7 +220,7 @@ export default function MarkdownEditor(props: Props) {
         >
           {isPreviewMode ? 'حالت ویرایش' : 'حالت خواندن'}
         </LinkButton>
-         <div className="adm-markdown-editor-length gray-6 text-sm ml-2">
+        <div className="adm-markdown-editor-length gray-6 text-sm ml-2">
           {maxLength ? (
             <>
               {value?.length} / {maxLength} کاراکتر

@@ -141,7 +141,7 @@ export const DashboardDropdown = makeDropdown((props: Props) => {
       label: (
         <>
           <DatabaseOutlined className="ml-2" />
-     تنظیمات حافظه پنهان
+          تنظیمات حافظه پنهان
         </>
       ),
       key: MORE_ACTION.CACHE_SETTINGS,
@@ -151,7 +151,9 @@ export const DashboardDropdown = makeDropdown((props: Props) => {
       label: (
         <>
           <ReloadOutlined className="ml-2" />
-          {isSupportCached ? 'تمام حافظه‌های پنهان را به‌روزرسانی کنید' : 'بروزرسانی همه'}
+          {isSupportCached
+            ? 'تمام حافظه‌های پنهان را به‌روزرسانی کنید'
+            : 'بروزرسانی همه'}
         </>
       ),
       key: MORE_ACTION.REFRESH,
@@ -332,7 +334,7 @@ export const AdjustAnswerDropdown = makeDropdown(
       {
         label: 'بهبود مراحل',
         icon: <EditSVG />,
-        className:'g-1',
+        className: 'g-1',
         disabled: !data.sqlGenerationReasoning,
         key: 'adjust-steps',
         onClick: () =>
@@ -344,7 +346,7 @@ export const AdjustAnswerDropdown = makeDropdown(
       {
         label: 'بهبود SQL',
         icon: <CodeFilled className="text-base" />,
-        className:'g-1',
+        className: 'g-1',
         disabled: !data.sql,
         key: 'adjust-sql',
         onClick: () =>

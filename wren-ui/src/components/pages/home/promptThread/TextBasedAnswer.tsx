@@ -246,7 +246,8 @@ export default function TextBasedAnswer(props: AnswerResultProps) {
             <div className="mt-2 mb-3" data-guideid="text-answer-preview-data">
               {hasPreviewData && (
                 <Text type="secondary" className="text-sm">
-                  با توجه به محدودیت پنجره زمینه، ما تا ۵۰۰ ردیف نتیجه را برای تولید پاسخ بازیابی می‌کنیم.
+                  با توجه به محدودیت پنجره زمینه، ما تا ۵۰۰ ردیف نتیجه را برای
+                  تولید پاسخ بازیابی می‌کنیم.
                 </Text>
               )}
               <PreviewData
@@ -262,7 +263,8 @@ export default function TextBasedAnswer(props: AnswerResultProps) {
               <Alert
                 message={
                   <>
-                   برای بررسی منطق گام به گام پرس و جو و تأیید دلیل عدم دسترسی به داده‌ها، روی <b>مشاهده SQL</b> کلیک کنید.
+                    برای بررسی منطق گام به گام پرس و جو و تأیید دلیل عدم دسترسی
+                    به داده‌ها، روی <b>مشاهده SQL</b> کلیک کنید.
                   </>
                 }
                 type="info"

@@ -27,17 +27,20 @@ export const makeDeleteModal =
           Modal.confirm({
             autoFocusButton: null,
             cancelText: 'انصراف',
-            content: config?.content ||
+            content:
+              config?.content ||
               'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 
             // icon: <ExclamationCircleOutlined />,//TODOSH
             icon: <></>,
             okText: 'حذف',
             onOk: onConfirm,
-            title: <div className='d-flex g-1'>
-              <ExclamationCircleOutlined className='gold-6'/>
-              {`آیا مطمئن هستید که می‌خواهید ${config?.itemName} را حذف کنید؟`}
-            </div>,
+            title: (
+              <div className="d-flex g-1">
+                <ExclamationCircleOutlined className="gold-6" />
+                {`آیا مطمئن هستید که می‌خواهید ${config?.itemName} را حذف کنید؟`}
+              </div>
+            ),
             width: 464,
             // ...modalProps,
             okButtonProps: {

@@ -7,6 +7,7 @@
     "build": "NODE_OPTIONS=--max-old-space-size=8192 next build",
     "start": "TZ=UTC next start",
     "lint": "yarn check-types && next lint",
+    "format": "prettier --write --cache .",
     "test": "jest",
     "test:e2e": "npx playwright install chromium && npx playwright test",
     "check-types": "tsc --noEmit",

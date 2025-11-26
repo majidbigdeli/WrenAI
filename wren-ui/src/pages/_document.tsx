@@ -31,7 +31,7 @@ export default class AppDocument extends Document {
 
   render() {
     return (
-      <Html dir='rtl'>
+      <Html dir="rtl">
         <Head>{this.props.styles}</Head>
         <body>
           <Main />

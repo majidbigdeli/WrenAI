@@ -87,7 +87,7 @@ export function FixSQLModal(props: Props) {
       afterClose={reset}
     >
       <Typography.Text className="d-block gray-7 mb-3">
-       دستور SQL زیر نیاز به اصلاح دارد:
+        دستور SQL زیر نیاز به اصلاح دارد:
       </Typography.Text>
       <Form form={form} preserve={false} layout="vertical">
         <Form.Item

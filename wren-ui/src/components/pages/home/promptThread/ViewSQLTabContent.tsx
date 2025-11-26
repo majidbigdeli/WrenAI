@@ -92,7 +92,8 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
     if (!nativeSQLResult.nativeSQLMode) {
       message.success(
         <>
-          شما SQL را کپی کردید. این گویش برای موتور است و ممکن است مستقیماً روی پایگاه داده شما اجرا نشود.
+          شما SQL را کپی کردید. این گویش برای موتور است و ممکن است مستقیماً روی
+          پایگاه داده شما اجرا نشود.
           {hasNativeSQL && (
             <>
               {' '}
@@ -111,7 +112,9 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
         className="mb-3 adm-alert-info g-1"
         message={
           <>
-            شما به طور پیش‌فرض در حال مشاهده‌ی SQL هستید. اگر می‌خواهید این پرس‌وجو را روی پایگاه داده‌ی خودتان اجرا کنید، برای دریافت سینتکس دقیق، روی «نمایش SQL اصلی» کلیک کنید.
+            شما به طور پیش‌فرض در حال مشاهده‌ی SQL هستید. اگر می‌خواهید این
+            پرس‌وجو را روی پایگاه داده‌ی خودتان اجرا کنید، برای دریافت سینتکس
+            دقیق، روی «نمایش SQL اصلی» کلیک کنید.
             {/* <Typography.Link //TODOSH
               className="underline ml-1"
               href="https://docs.getwren.ai/oss/guide/home/wren_sql"
@@ -162,9 +165,7 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
                   checked={nativeSQLResult.nativeSQLMode}
                   loading={nativeSQLResult.loading}
                 />
-                <Text className="gray-8 text-medium text-base">
-                 SQL نمایش
-                </Text>
+                <Text className="gray-8 text-medium text-base">SQL نمایش</Text>
               </div>
             )}
             <Button
@@ -173,7 +174,7 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
               data-ph-capture-attribute-name="view_sql_copy_sql"
               icon={<CodeFilled />}
               size="small"
-              className='g-1'
+              className="g-1"
               onClick={() => onOpenAdjustSQLModal({ sql, responseId: id })}
             >
               SQL بهبود

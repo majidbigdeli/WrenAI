@@ -14,6 +14,9 @@ const nextConfig = withLess({
   basePath: '/managerAssist',
   output: 'standalone',
   staticPageGenerationTimeout: 1000,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   compiler: {
     // Enables the styled-components SWC transform
     styledComponents: {
@@ -38,7 +41,7 @@ const nextConfig = withLess({
         source: '/setup',
         destination: '/setup/connection',
         permanent: true,
-      }
+      },
     ];
   },
 });

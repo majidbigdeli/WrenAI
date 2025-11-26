@@ -65,9 +65,9 @@ export default function ThreadTree(props: Props) {
         render: () => (
           <GroupActionButton
             size="small"
-            icon={<PlusOutlined style={{ transform: "translateY(2px)" }} />}
+            icon={<PlusOutlined style={{ transform: 'translateY(2px)' }} />}
             onClick={() => router.push(Path.Home)}
-            className='g-1'
+            className="g-1"
           >
             جدید
           </GroupActionButton>

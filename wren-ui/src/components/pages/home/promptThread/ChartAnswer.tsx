@@ -173,7 +173,7 @@ export default function ChartAnswer(props: AnswerResultProps) {
       title: 'آیا مطمئن هستید که می‌خواهید نمودار را دوباره ایجاد کنید؟',
       onOk: onRegenerate,
       okText: 'ذخیره',
-      cancelText:"انصراف"
+      cancelText: 'انصراف',
     });
   };
 
@@ -185,7 +185,7 @@ export default function ChartAnswer(props: AnswerResultProps) {
     Modal.confirm({
       title: 'آیا مطمئن هستید که می‌خواهید این نمودار را به داشبورد پین کنید؟',
       okText: 'ذخیره',
-      cancelText:"انصراف",
+      cancelText: 'انصراف',
       onOk: async () =>
         await createDashboardItem({
           variables: {

@@ -37,22 +37,6 @@ const adjustmentType = {
   [ThreadResponseAdjustmentType.REASONING]: 'مراحل استدلال بهبود یافت',
 };
 
-const knowledgeTooltip = (
-  <>
-    Store this answer as a Question-SQL pair to help Wren AI improve SQL
-    generation.
-    <br />
-    <Typography.Link
-      className="gray-1 underline"
-      href="https://docs.getwren.ai/oss/guide/knowledge/question-sql-pairs#save-to-knowledge"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Learn more
-    </Typography.Link>
-  </>
-);
-
 const StyledTabs = styled(Tabs)`
   .ant-tabs-nav {
     margin-bottom: 0;
@@ -189,14 +173,12 @@ const isNeedGenerateAnswer = (answerDetail: ThreadResponseAnswerDetail) => {
 };
 
 export default function AnswerResult(props: Props) {
-  const { threadResponse, isLastThreadResponse, isOpeningQuestion } = props;
+  const { threadResponse, isLastThreadResponse } = props;
 
   const {
-    onOpenSaveAsViewModal,
     onGenerateThreadRecommendedQuestions,
     onGenerateTextBasedAnswer,
     onGenerateChartAnswer,
-    onOpenSaveToKnowledgeModal,
     // recommend questions
     recommendedQuestions,
     showRecommendedQuestions,
@@ -211,8 +193,6 @@ export default function AnswerResult(props: Props) {
     breakdownDetail,
     id,
     question,
-    sql,
-    view,
     adjustment,
   } = threadResponse;
 
@@ -273,17 +253,6 @@ export default function AnswerResult(props: Props) {
     isAnswerPrepared ||
     isBreakdownOnly;
 
-  const rephrasedQuestion =
-    threadResponse?.askingTask?.rephrasedQuestion || question;
-
-  const questionForSaveAsView = useMemo(() => {
-    // use rephrased question for follow-up questions, otherwise use the original question
-
-    if (isOpeningQuestion) return question;
-
-    return rephrasedQuestion;
-  }, [rephrasedQuestion, question, isOpeningQuestion]);
-
   return (
     <div style={resultStyle} data-jsid="answerResult">
       {isAdjustment && <AdjustmentInformation adjustment={adjustment} />}
@@ -326,9 +295,7 @@ export default function AnswerResult(props: Props) {
               tab={
                 <div className="select-none align-center d-flex">
                   <PieChartFilled className="ml-2" />
-                  <Text>
-                    نمودار
-                  </Text>
+                  <Text>نمودار</Text>
                 </div>
               }
             >
