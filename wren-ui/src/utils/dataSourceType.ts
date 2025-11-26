@@ -14,27 +14,27 @@ import RedshiftProperties from '@/components/pages/setup/dataSources/RedshiftPro
 export const getDataSourceImage = (dataSource: DATA_SOURCES | string) => {
   switch (dataSource) {
     case DATA_SOURCES.BIG_QUERY:
-      return '/images/dataSource/bigQuery.svg';
+      return '/managerAssist/images/dataSource/bigQuery.svg';
     case DATA_SOURCES.POSTGRES:
-      return '/images/dataSource/postgreSql.svg';
+      return '/managerAssist/images/dataSource/postgreSql.svg';
     case DATA_SOURCES.MYSQL:
-      return '/images/dataSource/mysql.svg';
+      return '/managerAssist/images/dataSource/mysql.svg';
     case DATA_SOURCES.ORACLE:
-      return '/images/dataSource/oracle.svg';
+      return '/managerAssist/images/dataSource/oracle.svg';
     case DATA_SOURCES.MSSQL:
-      return '/images/dataSource/sqlserver.svg';
+      return '/managerAssist/images/dataSource/sqlserver.svg';
     case DATA_SOURCES.CLICK_HOUSE:
-      return '/images/dataSource/clickhouse.svg';
+      return '/managerAssist/images/dataSource/clickhouse.svg';
     case DATA_SOURCES.DUCKDB:
-      return '/images/dataSource/duckDb.svg';
+      return '/managerAssist/images/dataSource/duckDb.svg';
     case DATA_SOURCES.TRINO:
-      return '/images/dataSource/trino.svg';
+      return '/managerAssist/images/dataSource/trino.svg';
     case DATA_SOURCES.SNOWFLAKE:
-      return '/images/dataSource/snowflake.svg';
+      return '/managerAssist/images/dataSource/snowflake.svg';
     case DATA_SOURCES.ATHENA:
-      return '/images/dataSource/athena.svg';
+      return '/managerAssist/images/dataSource/athena.svg';
     case DATA_SOURCES.REDSHIFT:
-      return '/images/dataSource/redshift.svg';
+      return '/managerAssist/images/dataSource/redshift.svg';
     default:
       return null;
   }

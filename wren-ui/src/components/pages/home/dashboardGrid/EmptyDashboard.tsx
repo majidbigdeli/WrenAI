@@ -63,15 +63,15 @@ const EmptyDashboard = (props: {
             data={[
               {
                 title: '1. ایجاد یک موضوع',
-                image: '/images/dashboard/s1.jpg',
+                image: '/managerAssist/images/dashboard/s1.jpg',
               },
               {
                 title: '2. ایجاد نمودار',
-                image: '/images/dashboard/s2.jpg',
+                image: '/managerAssist/images/dashboard/s2.jpg',
               },
               {
                 title: '3. پین کردن به داشبورد',
-                image: '/images/dashboard/s3.jpg',
+                image: '/managerAssist/images/dashboard/s3.jpg',
               },
             ]}
           />
