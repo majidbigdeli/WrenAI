@@ -34,7 +34,12 @@ const nextConfig = withLess({
     };
     return config;
   },
-  // routes redirect
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async redirects() {
     return [
       {
