@@ -8,7 +8,7 @@ import useModalAction from '@/hooks/useModalAction';
 const { Sider } = Layout;
 
 const basicStyle = css`
-  height: calc(100vh - 48px);
+  height: calc(100vh);
   overflow: auto;
 `;
 
@@ -33,7 +33,7 @@ export default function SiderLayout(props: Props) {
 
   return (
     <SimpleLayout loading={loading}>
-      <Layout className="adm-layout">
+      <Layout className="adm-layout h-full">
         <StyledSider width={280}>
           <Sidebar {...sidebar} onOpenSettings={settings.openModal} />
         </StyledSider>

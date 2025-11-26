@@ -173,7 +173,7 @@ export default function TextBasedAnswer(props: AnswerResultProps) {
         icon={<EditOutlined />}
         onClick={(event) => event.stopPropagation()}
       >
-        Adjust the answer
+        بهبود پاسخ
         <CaretDownOutlined
           className="ml-1"
           rotate={adjustResultsDropdown.visible ? 180 : 0}
@@ -216,10 +216,10 @@ export default function TextBasedAnswer(props: AnswerResultProps) {
               icon={<ReloadOutlined />}
               size="small"
               type="link"
-              title="Regenerate answer"
+              title="بازسازی پاسخ"
               onClick={onRegenerateAnswer}
             >
-              Regenerate
+              بازسازی
             </Button>
           </div>
         )}
@@ -231,7 +231,7 @@ export default function TextBasedAnswer(props: AnswerResultProps) {
                 <BinocularsIcon
                   style={{
                     paddingBottom: 2,
-                    marginRight: 8,
+                    marginLeft: 8,
                   }}
                 />
               }
@@ -240,14 +240,14 @@ export default function TextBasedAnswer(props: AnswerResultProps) {
               data-ph-capture="true"
               data-ph-capture-attribute-name="cta_text-answer_preview_data"
             >
-              View results
+              مشاهده نتایج
             </Button>
 
             <div className="mt-2 mb-3" data-guideid="text-answer-preview-data">
               {hasPreviewData && (
                 <Text type="secondary" className="text-sm">
-                  Considering the limit of the context window, we retrieve up to
-                  500 rows of results to generate the answer.
+                  با توجه به محدودیت پنجره زمینه، ما تا ۵۰۰ ردیف نتیجه را برای
+                  تولید پاسخ بازیابی می‌کنیم.
                 </Text>
               )}
               <PreviewData
@@ -263,8 +263,8 @@ export default function TextBasedAnswer(props: AnswerResultProps) {
               <Alert
                 message={
                   <>
-                    Click <b>View SQL</b> to review the step-by-step query logic
-                    and verify why the data is unavailable.
+                    برای بررسی منطق گام به گام پرس و جو و تأیید دلیل عدم دسترسی
+                    به داده‌ها، روی <b>مشاهده SQL</b> کلیک کنید.
                   </>
                 }
                 type="info"

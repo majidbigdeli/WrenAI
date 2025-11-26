@@ -87,13 +87,13 @@ export default function Preparation(props: Props) {
             <div className="flex-grow-1 d-flex align-center justify-space-between gx-2 select-none">
               <Typography.Title level={5} className="gray-8 text-medium mb-0">
                 <Image
-                  src="/images/icon/message-ai.svg"
+                  src="/managerAssist/images/icon/message-ai.svg"
                   alt="Answer Preparation Steps"
                   width={24}
                   height={24}
-                  className="mr-1"
+                  className="ml-1"
                 />
-                Answer preparation steps
+                مراحل آماده سازی را پاسخ دهید
               </Typography.Title>
               <PreparationStatus {...props} preparedTask={preparedTask} />
             </div>

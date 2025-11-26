@@ -17,6 +17,7 @@ import {
   CreateThreadInput,
   CreateThreadResponseInput,
 } from '@/apollo/client/graphql/__types__';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
   onCreateResponse: (
@@ -42,8 +43,7 @@ interface Attributes {
 const PromptStyle = styled.div`
   position: fixed;
   width: 680px;
-  left: 50%;
-  margin-left: calc(-340px + 133px);
+  align-self: center;
   bottom: 18px;
   z-index: 999;
   box-shadow:
@@ -63,6 +63,8 @@ export default forwardRef<Attributes, Props>(function Prompt(props, ref) {
     inputProps,
   } = props;
   const askProcessState = useAskProcessState();
+   const searchParams = useSearchParams()
+  const questionQuery = searchParams.get('questionQuery')
 
   const {
     originalQuestion,
@@ -81,6 +83,7 @@ export default forwardRef<Attributes, Props>(function Prompt(props, ref) {
     }),
     [data],
   );
+
   const error = useMemo(() => askingTask?.error || null, [askingTask?.error]);
   const [showResult, setShowResult] = useState(false);
   const [question, setQuestion] = useState('');
@@ -106,6 +109,12 @@ export default forwardRef<Attributes, Props>(function Prompt(props, ref) {
         askProcessState.transitionTo(PROCESS_STATE.FAILED);
     }
   }, [error]);
+
+  useEffect(()=>{
+    if(questionQuery){
+      submitAsk(questionQuery)
+    }
+  },[questionQuery])
 
   // create thread response for recommended question
   const selectRecommendedQuestion = async (payload: {

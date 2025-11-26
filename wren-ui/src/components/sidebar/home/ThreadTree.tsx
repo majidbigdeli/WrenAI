@@ -19,7 +19,6 @@ const StyledSidebarTree = styled(SidebarTree)`
   .adm-treeNode {
     &.adm-treeNode__thread {
       padding: 0px 16px 0px 4px !important;
-
       .ant-tree-title {
         flex-grow: 1;
         display: inline-flex;
@@ -58,7 +57,7 @@ export default function ThreadTree(props: Props) {
   } = props;
 
   const getThreadGroupNode = createTreeGroupNode({
-    groupName: 'Threads',
+    groupName: 'موضوعات',
     groupKey: 'threads',
     actions: [
       {
@@ -66,10 +65,11 @@ export default function ThreadTree(props: Props) {
         render: () => (
           <GroupActionButton
             size="small"
-            icon={<PlusOutlined />}
+            icon={<PlusOutlined style={{ transform: 'translateY(2px)' }} />}
             onClick={() => router.push(Path.Home)}
+            className="g-1"
           >
-            New
+            جدید
           </GroupActionButton>
         ),
       },

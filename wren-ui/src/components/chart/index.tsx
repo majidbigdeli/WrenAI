@@ -187,21 +187,21 @@ export default function Chart(props: VegaLiteProps) {
       {isAdditionalShow && (
         <div className="adm-chart-additional d-flex justify-content-between align-center">
           {!!onReload && (
-            <Tooltip title="Regenerate chart">
+            <Tooltip title="بازسازی نمودار">
               <button onClick={onReload}>
                 <ReloadOutlined />
               </button>
             </Tooltip>
           )}
           {!!onEdit && (
-            <Tooltip title="Edit chart">
+            <Tooltip title="ویرایش نمودار">
               <button onClick={onEdit}>
                 <EditOutlined />
               </button>
             </Tooltip>
           )}
           {!!onPin && (
-            <Tooltip title="Pin chart to dashboard">
+            <Tooltip title="پین کردن نمودار به داشبورد">
               <button onClick={onPin}>
                 <PushPinOutlined />
               </button>

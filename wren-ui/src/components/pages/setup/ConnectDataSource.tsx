@@ -61,7 +61,7 @@ export default function ConnectDataSource(props: Props) {
           <Col span={12}>
             <DataSource className="d-inline-block px-4 py-2 bg-gray-2 gray-8">
               <Image
-                className="mr-2"
+                className="ml-2"
                 src={current.logo}
                 alt={dataSource}
                 width="40"

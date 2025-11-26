@@ -91,10 +91,10 @@ export default function RecommendedQuestions(props: Props) {
   return (
     <div className={clsx('bg-gray-2 rounded p-3', className)}>
       <div className="mb-2">
-        <BulbOutlined className="mr-1 gray-6" />
-        <b className="text-semi-bold text-sm gray-7">Recommended questions</b>
+        <BulbOutlined className="ml-1 gray-6" />
+        <b className="text-semi-bold text-sm gray-7">سوالات پیشنهادی</b>
       </div>
-      <div className="pl-1 gray-8">
+      <div className="pl-1 gray-8" dir="ltr">
         <StyledSkeleton
           active
           loading={loading}

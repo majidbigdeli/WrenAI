@@ -120,7 +120,7 @@ export default function FieldSelect(props: IterableComponent<Props>) {
       data-testid="common__lineage-field-block"
     >
       <FieldHeader className="py-1 px-3">
-        <ModelIcon className="mr-1 flex-shrink-0" />
+        <ModelIcon className="ml-1 flex-shrink-0" />
         <div
           className="text-truncate flex-grow-1"
           title={displayName || referenceName}

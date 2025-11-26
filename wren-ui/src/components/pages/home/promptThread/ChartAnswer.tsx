@@ -37,6 +37,7 @@ const ChartWrapper = styled.div`
   position: relative;
   padding-top: 0;
   transition: padding-top 0.2s ease-out;
+  direction: ltr;
   &.isEditMode {
     padding-top: 72px;
   }
@@ -169,8 +170,10 @@ export default function ChartAnswer(props: AnswerResultProps) {
 
   const onReload = () => {
     Modal.confirm({
-      title: 'Are you sure you want to regenerate the chart?',
+      title: 'آیا مطمئن هستید که می‌خواهید نمودار را دوباره ایجاد کنید؟',
       onOk: onRegenerate,
+      okText: 'ذخیره',
+      cancelText: 'انصراف',
     });
   };
 
@@ -180,8 +183,9 @@ export default function ChartAnswer(props: AnswerResultProps) {
 
   const onPin = () => {
     Modal.confirm({
-      title: 'Are you sure you want to pin this chart to the dashboard?',
-      okText: 'Save',
+      title: 'آیا مطمئن هستید که می‌خواهید این نمودار را به داشبورد پین کنید؟',
+      okText: 'ذخیره',
+      cancelText: 'انصراف',
       onOk: async () =>
         await createDashboardItem({
           variables: {
@@ -211,7 +215,7 @@ export default function ChartAnswer(props: AnswerResultProps) {
   const regenerateBtn = (
     <div className="text-center mt-4">
       <Button icon={<ReloadOutlined />} onClick={onReload}>
-        Regenerate
+        بازسازی
       </Button>
     </div>
   );
@@ -238,8 +242,9 @@ export default function ChartAnswer(props: AnswerResultProps) {
       loading={loading}
       paragraph={{ rows: 4 }}
       title={false}
+      style={{ direction: 'ltr' }}
     >
-      <div className="text-md gray-10 p-6">
+      <div className="text-md gray-10 p-6" style={{ direction: 'ltr' }}>
         {chartDetail?.description}
         {chartSpec ? (
           <ChartWrapper
@@ -266,14 +271,14 @@ export default function ChartAnswer(props: AnswerResultProps) {
                   {isAdjusted && (
                     <div className="d-flex flex-column">
                       <Button className="ml-4 mb-2" onClick={onResetAdjustment}>
-                        Reset
+                        بازنشانی
                       </Button>
                       <Button
                         className="ml-4"
                         type="primary"
                         onClick={onAdjustChart}
                       >
-                        Adjust
+                        بهبود
                       </Button>
                     </div>
                   )}

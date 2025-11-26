@@ -1,22 +1,21 @@
-import { ComponentRef, useMemo, useRef } from 'react';
-import { useRouter } from 'next/router';
-import { Button, Typography } from 'antd';
-import { Logo } from '@/components/Logo';
-import { Path } from '@/utils/enum';
-import SiderLayout from '@/components/layouts/SiderLayout';
-import Prompt from '@/components/pages/home/prompt';
-import DemoPrompt from '@/components/pages/home/prompt/DemoPrompt';
-import useHomeSidebar from '@/hooks/useHomeSidebar';
-import useAskPrompt from '@/hooks/useAskPrompt';
-import useRecommendedQuestionsInstruction from '@/hooks/useRecommendedQuestionsInstruction';
-import RecommendedQuestionsPrompt from '@/components/pages/home/prompt/RecommendedQuestionsPrompt';
+import { CreateThreadInput } from '@/apollo/client/graphql/__types__';
 import {
-  useSuggestedQuestionsQuery,
   useCreateThreadMutation,
+  useSuggestedQuestionsQuery,
   useThreadLazyQuery,
 } from '@/apollo/client/graphql/home.generated';
 import { useGetSettingsQuery } from '@/apollo/client/graphql/settings.generated';
-import { CreateThreadInput } from '@/apollo/client/graphql/__types__';
+import SiderLayout from '@/components/layouts/SiderLayout';
+import { Logo } from '@/components/Logo';
+import Prompt from '@/components/pages/home/prompt';
+import DemoPrompt from '@/components/pages/home/prompt/DemoPrompt';
+import useAskPrompt from '@/hooks/useAskPrompt';
+import useHomeSidebar from '@/hooks/useHomeSidebar';
+import useRecommendedQuestionsInstruction from '@/hooks/useRecommendedQuestionsInstruction';
+import { Path } from '@/utils/enum';
+import { Button, Typography } from 'antd';
+import { useRouter } from 'next/router';
+import { ComponentRef, useMemo, useRef } from 'react';
 
 const { Text } = Typography;
 
@@ -28,7 +27,7 @@ const Wrapper = ({ children }) => {
     >
       <Logo size={48} color="var(--gray-8)" />
       <div className="text-md text-medium gray-8 mt-3">
-        Know more about your data
+        اطلاعات بیشتری در مورد داده‌های خود کسب کنید.
       </div>
       {children}
     </div>
@@ -45,13 +44,11 @@ const SampleQuestionsInstruction = (props) => {
   );
 };
 
-function RecommendedQuestionsInstruction(props) {
-  const { onSelect, loading } = props;
+function RecommendedQuestionsInstruction(_) {
 
   const {
     buttonProps,
     generating,
-    recommendedQuestions,
     showRetry,
     showRecommendedQuestionsPromptMode,
   } = useRecommendedQuestionsInstruction();
@@ -61,11 +58,11 @@ function RecommendedQuestionsInstruction(props) {
       className="d-flex align-center flex-column pt-10"
       style={{ margin: 'auto' }}
     >
-      <RecommendedQuestionsPrompt
+      {/* <RecommendedQuestionsPrompt //TODOSH
         recommendedQuestions={recommendedQuestions}
         onSelect={onSelect}
         loading={loading}
-      />
+      /> */}
       <div className="py-12" />
     </div>
   ) : (
@@ -73,14 +70,14 @@ function RecommendedQuestionsInstruction(props) {
       <Button className="mt-6" {...buttonProps} />
       {generating && (
         <Text className="mt-3 text-sm gray-6">
-          Thinking of good questions for you... (about 1 minute)
+          دارم به سوالات خوبی برای شما فکر می‌کنم... (حدود ۱ دقیقه)
         </Text>
       )}
       {!generating && showRetry && (
         <Text className="mt-3 text-sm gray-6 text-center">
-          We couldn't think of questions right now.
+          الان نمی‌توانستیم به سوالات فکر کنیم.
           <br />
-          Let's try again later.
+          بیایید بعداً دوباره امتحان کنیم.
         </Text>
       )}
     </Wrapper>

@@ -116,7 +116,7 @@ export default function HomeThread() {
     useUpdateThreadResponseMutation({
       onError: (error) => console.error(error),
       onCompleted: (data) => {
-        message.success('Successfully updated the SQL statement');
+        message.success('دستور SQL با موفقیت به‌روزرسانی شد.');
         // trigger generate answer after sql statement updated
         onGenerateThreadResponseAnswer(data.updateThreadResponse.id);
       },
@@ -168,7 +168,7 @@ export default function HomeThread() {
       awaitRefetchQueries: true,
       onError: (error) => console.error(error),
       onCompleted: () => {
-        message.success('Successfully created question-sql pair.');
+        message.success('جفت question-sql با موفقیت ایجاد شد.');
       },
     });
 

@@ -43,7 +43,7 @@ export const useWithOnboarding = () => {
           return;
         }
 
-        router.push(newPath);
+        router.push(newPath); //TODOSH
         return;
       }
 

@@ -126,7 +126,7 @@ export default function Settings(props: Props) {
       <Layout style={{ height: '100%' }}>
         <StyledSider width={310} className="border-r border-gray-4">
           <div className="gray-9 text-bold py-3 px-5">
-            <SettingOutlined className="mr-2" />
+            <SettingOutlined className="ml-2" />
             Settings
           </div>
           <div className="p-3 flex-grow-1">
@@ -138,14 +138,14 @@ export default function Settings(props: Props) {
           </div>
           {!!productVersion && (
             <div className="gray-7 d-flex align-center p-3 px-5">
-              <InfoCircleOutlined className="mr-2 text-sm" />
+              <InfoCircleOutlined className="ml-2 text-sm" />
               Wren AI version: {productVersion}
             </div>
           )}
         </StyledSider>
         <Content className="d-flex flex-column">
           <div className="d-flex align-center gray-9 border-b border-gray-4 text-bold py-3 px-4">
-            <current.icon className="mr-2" />
+            <current.icon className="ml-2" />
             {current.label}
           </div>
           <div className="flex-grow-1" style={{ overflowY: 'auto' }}>

@@ -11,8 +11,12 @@ const resolveAlias = {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withLess({
+  basePath: '/managerAssist',
   output: 'standalone',
   staticPageGenerationTimeout: 1000,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   compiler: {
     // Enables the styled-components SWC transform
     styledComponents: {
@@ -29,9 +33,6 @@ const nextConfig = withLess({
       ...resolveAlias,
     };
     return config;
-  },
-  typescript: {
-    ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

@@ -74,11 +74,12 @@ export default function Home(props: Props) {
       <StyledTreeNodeLink
         className={clsx({
           'adm-treeNode--selected': router.pathname === Path.HomeDashboard,
+          'd-flex align-center': true,
         })}
         href={Path.HomeDashboard}
       >
-        <FundViewOutlined className="mr-2" />
-        <span className="text-medium">Dashboard</span>
+        <FundViewOutlined className="ml-2" />
+        <span className="text-medium">داشبورد</span>
       </StyledTreeNodeLink>
       <ThreadTree
         threads={threads}

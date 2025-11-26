@@ -27,6 +27,9 @@ const StyledBadge = styled(Badge)`
     display: none;
   }
 `;
+const TimelineItem = styled(Timeline.Item)`
+  direction: ltr;
+`;
 
 const retrievingNextStates = ProcessStateMachine.getAllNextStates(
   PROCESS_STATE.SEARCHING,
@@ -89,31 +92,31 @@ export default function PreparationSteps(
   return (
     <Timeline className={className}>
       {showRetrieving && (
-        <Timeline.Item dot={getProcessDot(retrieving)}>
+        <TimelineItem dot={getProcessDot(retrieving)}>
           <Retrieving
             loading={retrieving}
             tables={retrievedTables}
             isAdjustment={preparedTask.isAdjustment}
           />
-        </Timeline.Item>
+        </TimelineItem>
       )}
       {showOrganizing && (
-        <Timeline.Item dot={getProcessDot(organizing)}>
+        <TimelineItem dot={getProcessDot(organizing)}>
           <Organizing
             loading={organizing}
             stream={sqlGenerationReasoning}
             isAdjustment={preparedTask.isAdjustment}
           />
-        </Timeline.Item>
+        </TimelineItem>
       )}
       {showGenerating && (
-        <Timeline.Item dot={getProcessDot(generating || correcting)}>
+        <TimelineItem dot={getProcessDot(generating || correcting)}>
           <Generating
             generating={generating}
             correcting={correcting}
             loading={wrapping}
           />
-        </Timeline.Item>
+        </TimelineItem>
       )}
     </Timeline>
   );

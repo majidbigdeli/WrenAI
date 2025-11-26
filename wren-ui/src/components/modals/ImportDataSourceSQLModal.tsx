@@ -85,7 +85,8 @@ export default function ImportDataSourceSQLModal(props: Props) {
       maskClosable={false}
       onCancel={onClose}
       onOk={submit}
-      okText="Convert"
+      okText="تبدیل"
+      cancelText="انصراف"
       visible={visible}
       width={600}
       cancelButtonProps={{ disabled: loading }}

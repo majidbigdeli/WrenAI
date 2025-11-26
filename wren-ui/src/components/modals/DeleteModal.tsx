@@ -26,16 +26,23 @@ export const makeDeleteModal =
         onClick={() =>
           Modal.confirm({
             autoFocusButton: null,
-            cancelText: 'Cancel',
+            cancelText: 'انصراف',
             content:
               config?.content ||
-              'This will be permanently deleted, please confirm you want to delete it.',
-            icon: <ExclamationCircleOutlined />,
-            okText: 'Delete',
+              'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
+
+            // icon: <ExclamationCircleOutlined />,//TODOSH
+            icon: <></>,
+            okText: 'حذف',
             onOk: onConfirm,
-            title: `Are you sure you want to delete this ${config?.itemName}?`,
+            title: (
+              <div className="d-flex g-1">
+                <ExclamationCircleOutlined className="gold-6" />
+                {`آیا مطمئن هستید که می‌خواهید ${config?.itemName} را حذف کنید؟`}
+              </div>
+            ),
             width: 464,
-            ...modalProps,
+            // ...modalProps,
             okButtonProps: {
               ...modalProps.okButtonProps,
               danger: true,
@@ -51,7 +58,7 @@ const DefaultDeleteButton = (props) => {
   const { icon = null, disabled, ...restProps } = props;
   return (
     <a className={disabled ? '' : 'red-5'} {...restProps}>
-      {icon}Delete
+      {icon} حذف
     </a>
   );
 };
@@ -60,57 +67,57 @@ export default makeDeleteModal(DefaultDeleteButton);
 
 // Customize delete modal
 export const DeleteThreadModal = makeDeleteModal(DefaultDeleteButton, {
-  icon: <DeleteOutlined className="mr-2" />,
-  itemName: 'thread',
+  icon: <DeleteOutlined className="ml-2" />,
+  itemName: 'موضوع',
   content:
-    'This will permanently delete all results history in this thread, please confirm you want to delete it.',
+    'این کار تمام تاریخچه نتایج این تاپیک را برای همیشه حذف می‌کند، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
 
 export const DeleteViewModal = makeDeleteModal(DefaultDeleteButton, {
-  icon: <DeleteOutlined className="mr-2" />,
-  itemName: 'view',
+  icon: <DeleteOutlined className="ml-2" />,
+  itemName: 'نما',
   content:
-    'This will be permanently deleted, please confirm you want to delete it.',
+    'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
 
 export const DeleteModelModal = makeDeleteModal(DefaultDeleteButton, {
-  icon: <DeleteOutlined className="mr-2" />,
-  itemName: 'model',
+  icon: <DeleteOutlined className="ml-2" />,
+  itemName: 'مدل',
   content:
-    'This will be permanently deleted, please confirm you want to delete it.',
+    'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
 
 export const DeleteCalculatedFieldModal = makeDeleteModal(DefaultDeleteButton, {
-  icon: <DeleteOutlined className="mr-2" />,
+  icon: <DeleteOutlined className="ml-2" />,
   itemName: 'calculated field',
   content:
-    'This will be permanently deleted, please confirm you want to delete it.',
+    'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
 
 export const DeleteRelationshipModal = makeDeleteModal(DefaultDeleteButton, {
-  icon: <DeleteOutlined className="mr-2" />,
+  icon: <DeleteOutlined className="ml-2" />,
   itemName: 'relationship',
   content:
-    'This will be permanently deleted, please confirm you want to delete it.',
+    'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
 
 export const DeleteDashboardItemModal = makeDeleteModal(DefaultDeleteButton, {
-  icon: <DeleteOutlined className="mr-2" />,
+  icon: <DeleteOutlined className="ml-2" />,
   itemName: 'dashboard item',
   content:
-    'This will be permanently deleted, please confirm you want to delete it.',
+    'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
 
 export const DeleteQuestionSQLPairModal = makeDeleteModal(DefaultDeleteButton, {
-  icon: <DeleteOutlined className="mr-2" />,
+  icon: <DeleteOutlined className="ml-2" />,
   itemName: 'question-SQL pair',
   content:
-    'This action is permanent and cannot be undone. Are you sure you want to proceed?',
+    'این اقدام دائمی است و قابل بازگشت نیست. آیا مطمئن هستید که می‌خواهید ادامه دهید؟',
 });
 
 export const DeleteInstructionModal = makeDeleteModal(DefaultDeleteButton, {
-  icon: <DeleteOutlined className="mr-2" />,
+  icon: <DeleteOutlined className="ml-2" />,
   itemName: 'instruction',
   content:
-    'This action is permanent and cannot be undone. Are you sure you want to proceed?',
+    'این اقدام دائمی است و قابل بازگشت نیست. آیا مطمئن هستید که می‌خواهید ادامه دهید؟',
 });

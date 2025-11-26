@@ -41,6 +41,7 @@ export const Block = styled.div<{
   inline?: boolean;
   backgroundColor?: string;
 }>`
+  direction: ltr;
   position: relative;
   white-space: pre;
   font-size: 13px;
@@ -189,18 +190,23 @@ export const createCodeBlock = (HighlightRules: any) => {
               <CopyText
                 $hasVScrollbar={hasVerticalScrollbar}
                 copyable={{
+                  tooltips: ['کپی', 'کپی شد'],
                   onCopy,
                   icon: [
                     <Button
                       key="copy-icon"
                       icon={<CopyOutlined />}
                       size="small"
-                      style={{ backgroundColor: 'transparent' }}
+                      style={{
+                        backgroundColor: 'transparent',
+                        display: 'block',
+                      }}
                     />,
                     <Button
                       key="copied-icon"
                       icon={<CheckOutlined className="green-6" />}
                       size="small"
+                      style={{ display: 'block' }}
                     />,
                   ],
                   text: code,

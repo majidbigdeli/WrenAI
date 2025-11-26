@@ -1,15 +1,10 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Button } from 'antd';
-import styled from 'styled-components';
 import { Path } from '@/utils/enum';
-import { DiscordIcon, GithubIcon } from '@/utils/icons';
-import SettingOutlined from '@ant-design/icons/SettingOutlined';
-import Home, { Props as HomeSidebarProps } from './Home';
-import Modeling, { Props as ModelingSidebarProps } from './Modeling';
-import Knowledge from './Knowledge';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import APIManagement from './APIManagement';
-import LearningSection from '@/components/learning';
+import Home, { Props as HomeSidebarProps } from './Home';
+import Knowledge from './Knowledge';
+import Modeling, { Props as ModelingSidebarProps } from './Modeling';
 
 const Layout = styled.div`
   position: relative;
@@ -23,21 +18,6 @@ const Layout = styled.div`
 const Content = styled.div`
   flex-grow: 1;
   overflow-y: auto;
-`;
-
-const StyledButton = styled(Button)`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding-left: 16px;
-  padding-right: 16px;
-  color: var(--gray-8) !important;
-  border-radius: 0;
-
-  &:hover,
-  &:focus {
-    background-color: var(--gray-4);
-  }
 `;
 
 type Props = (ModelingSidebarProps | HomeSidebarProps) & {
@@ -75,13 +55,7 @@ const DynamicSidebar = (
 };
 
 export default function Sidebar(props: Props) {
-  const { onOpenSettings } = props;
   const router = useRouter();
-
-  const onSettingsClick = (event) => {
-    onOpenSettings && onOpenSettings();
-    event.target.blur();
-  };
 
   return (
     <Layout className="d-flex flex-column">

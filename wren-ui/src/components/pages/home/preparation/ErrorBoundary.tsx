@@ -23,14 +23,12 @@ export default function ErrorBoundary({ children, error }: Props) {
     <Timeline className="px-1 -mb-4">
       <Timeline.Item dot={<CloseCircleFilled className="red-5" />}>
         <Typography.Text className="gray-8">
-          {hasInvalidSql
-            ? 'Failed to generate SQL statement'
-            : error.shortMessage}
+          {hasInvalidSql ? 'تولید دستور SQL ناموفق بود' : error.shortMessage}
         </Typography.Text>
         <div className="gray-7 text-sm mt-1">
           <div>
             {hasInvalidSql
-              ? 'We tried to generate SQL based on your question but encountered a small issue. Help us fix it!'
+              ? 'ما سعی کردیم بر اساس سوال شما SQL تولید کنیم اما با یک مشکل کوچک مواجه شدیم. در رفع آن به ما کمک کنید!'
               : error.message}
           </div>
           {hasInvalidSql && (
@@ -44,7 +42,7 @@ export default function ErrorBoundary({ children, error }: Props) {
                 size="small"
                 onClick={() => fixItModal.openModal({ sql: error.invalidSql })}
               >
-                Fix it
+                درستش کن
               </Button>
               <FixSQLModal
                 {...fixItModal.state}

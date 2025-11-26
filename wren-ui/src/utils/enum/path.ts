@@ -1,4 +1,5 @@
 export enum Path {
+  ManagerAssist = '/managerAssist',
   Home = '/home',
   HomeDashboard = '/home/dashboard',
   Thread = '/home/[id]',

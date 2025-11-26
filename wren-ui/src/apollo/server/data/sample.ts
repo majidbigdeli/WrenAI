@@ -1135,18 +1135,17 @@ export const sampleDatasets: Record<string, SampleDataset> = {
     ],
     questions: [
       {
-        question:
-          'Which are the top 3 cities with the highest number of orders?',
+        question: 'سه شهر برتر با بیشترین تعداد سفارش کدامند؟',
         label: 'Ranking',
       },
       {
         question:
-          'What is the average score of reviews submitted for orders placed by customers in each city?',
+          'میانگین امتیاز نظرات ارسالی برای سفارش‌های ثبت شده توسط مشتریان در هر شهر چقدر است؟',
         label: 'Aggregation',
       },
       {
         question:
-          'What is the total value of payments made by customers from each state?',
+          'ارزش کل پرداخت‌های انجام شده توسط مشتریان از هر ایالت چقدر است؟',
         label: 'Aggregation',
       },
     ],

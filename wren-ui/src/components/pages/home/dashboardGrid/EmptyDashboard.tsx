@@ -1,8 +1,7 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { Row, Col } from 'antd';
 import { Logo } from '@/components/Logo';
 import { makeIterable } from '@/utils/iteration';
+import { Col, Row } from 'antd';
+import Image from 'next/image';
 
 const StepTemplate = (props: { title: string; image: string }) => {
   return (
@@ -46,33 +45,33 @@ const EmptyDashboard = (props: {
       >
         <Logo size={48} color="var(--gray-8)" />
         <div className="text-lg text-medium text-center gray-8 mt-3">
-          No charts have been added yet
+          هنوز هیچ نموداری اضافه نشده است
         </div>
         <div className="gray-7">
-          Follow these steps to pin charts to your dashboard.{' '}
-          <Link
+          برای پین کردن نمودارها به داشبورد خود، این مراحل را دنبال کنید.{' '}
+          {/* <Link
             className="gray-8 underline"
             href="https://docs.getwren.ai/oss/guide/home/dashboard"
             rel="noopener noreferrer"
             target="_blank"
           >
-            Learn more
-          </Link>
+            بیشتر بدانید
+          </Link> */}
         </div>
         <Row className="mt-4" gutter={[16, 16]}>
           <StepIterator
             data={[
               {
-                title: '1. Create a thread',
-                image: '/images/dashboard/s1.jpg',
+                title: '1. ایجاد یک موضوع',
+                image: '/managerAssist/images/dashboard/s1.jpg',
               },
               {
-                title: '2. Generate a chart',
-                image: '/images/dashboard/s2.jpg',
+                title: '2. ایجاد نمودار',
+                image: '/managerAssist/images/dashboard/s2.jpg',
               },
               {
-                title: '3. Pin to dashboard',
-                image: '/images/dashboard/s3.jpg',
+                title: '3. پین کردن به داشبورد',
+                image: '/managerAssist/images/dashboard/s3.jpg',
               },
             ]}
           />

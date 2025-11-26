@@ -41,11 +41,11 @@ const Toolbar = (props: { dataSource: string; onClick: () => void }) => {
     <div className="d-flex justify-space-between align-center px-1">
       <span className="d-flex align-center gx-2">
         <Logo size={16} />
-        Wren SQL
+        SQL
       </span>
       <Button className="px-0" type="link" size="small" onClick={onClick}>
         <SelectOutlined />
-        Import from {name} SQL
+        وارد کردن از SQL {name}
       </Button>
     </div>
   );
@@ -209,31 +209,31 @@ export default function QuestionSQLPairModal(props: Props) {
               className="text-sm ml-2 d-flex justify-space-between align-center"
               style={{ width: 300 }}
             >
-              <InfoCircleOutlined className="mr-2 text-sm gray-7" />
+              <InfoCircleOutlined className="ml-2 text-sm gray-7" />
               <Typography.Text
                 type="secondary"
                 className="text-sm gray-7 text-left"
               >
-                The SQL statement used here follows <b>Wren SQL</b>, which is
-                based on ANSI SQL and optimized for Wren AI.{` `}
+                عبارت SQL مورد استفاده در اینجا از <b>SQL</b> پیروی می‌کند، که
+                بر مبنای ANSI SQL بوده و برای AI بهینه‌سازی شده است.{` `}
                 <Typography.Link
                   type="secondary"
                   href="https://docs.getwren.ai/oss/guide/home/wren_sql"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Learn more about the syntax.
+                  درباره سینتکس بیشتر بدانید.
                 </Typography.Link>
               </Typography.Text>
             </div>
             <div>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button onClick={onClose}>انصراف</Button>
               <Button
                 type="primary"
                 onClick={onSubmitButton}
                 loading={confirmLoading}
               >
-                Submit
+                ارسال
               </Button>
             </div>
           </div>
@@ -247,9 +247,9 @@ export default function QuestionSQLPairModal(props: Props) {
                 className="d-flex justify-space-between"
                 style={{ width: '100%' }}
               >
-                <span>Question</span>
+                <span>سوال</span>
                 <div className="gray-8 text-sm">
-                  Let AI create a matching question for this SQL statement.
+                  بگذارید هوش مصنوعی یک سوال منطبق برای این عبارت SQL ایجاد کند.
                   <Button
                     className="ml-2"
                     size="small"
@@ -257,7 +257,7 @@ export default function QuestionSQLPairModal(props: Props) {
                     onClick={onGenerateQuestion}
                     disabled={disabled}
                   >
-                    <span className="text-sm">Generate question</span>
+                    <span className="text-sm">ایجاد سوال</span>
                   </Button>
                 </div>
               </div>
@@ -275,7 +275,7 @@ export default function QuestionSQLPairModal(props: Props) {
             <Input />
           </Form.Item>
           <Form.Item
-            label="SQL statement"
+            label="دستور SQL"
             name="sql"
             required
             rules={[
@@ -305,14 +305,14 @@ export default function QuestionSQLPairModal(props: Props) {
         </StyledForm>
         <div className="my-3">
           <Typography.Text className="d-block gray-7 mb-2">
-            Data preview (50 rows)
+            پیش‌نمایش داده‌ها (۵۰ ردیف)
           </Typography.Text>
           <Button
             onClick={onPreviewData}
             loading={previewing}
             disabled={disabled}
           >
-            Preview data
+            پیش‌نمایش داده‌ها
           </Button>
           {showPreview && (
             <div className="my-3">

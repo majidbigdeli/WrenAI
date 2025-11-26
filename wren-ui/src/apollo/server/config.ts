@@ -65,14 +65,14 @@ const defaultConfig = {
   persistCredentialDir: `${process.cwd()}/.tmp`,
 
   // wren engine
-  wrenEngineEndpoint: 'http://localhost:8080',
+  wrenEngineEndpoint: 'http://192.168.11.215:5556',
 
   // wren AI
-  wrenAIEndpoint: 'http://localhost:5555',
+  wrenAIEndpoint: 'http://192.168.11.215:5555',
 
   // ibis server
   experimentalEngineRustVersion: true,
-  ibisServerEndpoint: 'http://127.0.0.1:8000',
+  ibisServerEndpoint: 'http://192.168.11.215:5557',
 
   // encryption
   encryptionPassword: 'sementic',

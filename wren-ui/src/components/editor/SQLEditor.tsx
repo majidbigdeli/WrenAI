@@ -109,6 +109,9 @@ export default function SQLEditor(props: Props) {
     >
       {!!toolbar && <Toolbar>{toolbar}</Toolbar>}
       <AceEditor
+        style={{
+          direction: 'ltr',
+        }}
         mode="sql"
         width="100%"
         height="300px"
