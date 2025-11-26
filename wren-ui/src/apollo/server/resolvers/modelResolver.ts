@@ -201,7 +201,7 @@ export class ModelResolver {
 
   public async checkModelSync(_root: any, _args: any, ctx: IContext) {
     const { id } = await ctx.projectService.getCurrentProject();
-    const { manifest } = await ctx.mdlService.makeCurrentModelMDL();
+    const { manifest } = await ctx.mdlService.makeCurrentModelMDL(id);
     const currentHash = ctx.deployService.createMDLHash(manifest, id);
     const lastDeploy = await ctx.deployService.getLastDeployment(id);
     const lastDeployHash = lastDeploy?.hash;
@@ -228,7 +228,7 @@ export class ModelResolver {
         version,
       });
     }
-    const { manifest } = await ctx.mdlService.makeCurrentModelMDL();
+    const { manifest } = await ctx.mdlService.makeCurrentModelMDL(project.id);
     const deployRes = await ctx.deployService.deploy(
       manifest,
       project.id,
@@ -897,7 +897,7 @@ export class ModelResolver {
       throw new Error('Model not found');
     }
     const project = await ctx.projectService.getCurrentProject();
-    const { manifest } = await ctx.mdlService.makeCurrentModelMDL();
+    const { manifest } = await ctx.mdlService.makeCurrentModelMDL(project.id);
     const modelColumns = await ctx.modelColumnRepository.findColumnsByModelIds([
       model.id,
     ]);
@@ -918,8 +918,8 @@ export class ModelResolver {
     if (!view) {
       throw new Error('View not found');
     }
-    const { manifest } = await ctx.mdlService.makeCurrentModelMDL();
     const project = await ctx.projectService.getCurrentProject();
+    const { manifest } = await ctx.mdlService.makeCurrentModelMDL(project.id);
 
     const data = (await ctx.queryService.preview(view.statement, {
       project,
@@ -963,7 +963,7 @@ export class ModelResolver {
     if (project.sampleDataset) {
       throw new Error(`Doesn't support Native SQL`);
     }
-    const { manifest } = await ctx.mdlService.makeCurrentModelMDL();
+    const { manifest } = await ctx.mdlService.makeCurrentModelMDL(project.id);
 
     // get sql statement of a response
     const response = await ctx.askingService.getResponse(responseId);
