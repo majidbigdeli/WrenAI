@@ -33,7 +33,7 @@ export default function useSetupModels() {
   };
 
   const onBack = () => {
-    router.push(Path.OnboardingConnection);
+    router.push(Path.Home);
   };
 
   const onNext = (data: { selectedTables: string[] }) => {

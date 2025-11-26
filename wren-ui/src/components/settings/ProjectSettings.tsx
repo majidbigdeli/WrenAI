@@ -39,7 +39,7 @@ export default function ProjectSettings(props: Props) {
       onOk: async () => {
         await resetCurrentProject();
         client.clearStore();
-        router.push(Path.OnboardingConnection);
+        router.push(Path.Home);
       },
     });
   };

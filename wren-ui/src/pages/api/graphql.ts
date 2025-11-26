@@ -14,6 +14,8 @@ import {
 } from '@/apollo/server/utils/error';
 import { TelemetryEvent } from '@/apollo/server/telemetry/telemetry';
 import { components } from '@/common';
+import { ProjectService } from '@/apollo/server/services/projectService';
+import { DashboardService } from '@server/services/dashboardService';
 
 const serverConfig = getConfig();
 const logger = getLogger('APOLLO');
@@ -53,12 +55,10 @@ const bootstrapServer = async () => {
     wrenAIAdaptor,
 
     // services
-    projectService,
     queryService,
     askingService,
     deployService,
     mdlService,
-    dashboardService,
     sqlPairService,
 
     instructionService,
@@ -66,18 +66,19 @@ const bootstrapServer = async () => {
     projectRecommendQuestionBackgroundTracker,
     threadRecommendQuestionBackgroundTracker,
     dashboardCacheBackgroundTracker,
+    metadataService,
   } = components;
 
-  const modelService = new ModelService({
-    projectService,
-    modelRepository,
-    modelColumnRepository,
-    relationRepository,
-    viewRepository,
-    mdlService,
-    wrenEngineAdaptor,
-    queryService,
-  });
+  // const modelService = new ModelService({
+  //   projectService,
+  //   modelRepository,
+  //   modelColumnRepository,
+  //   relationRepository,
+  //   viewRepository,
+  //   mdlService,
+  //   wrenEngineAdaptor,
+  //   queryService,
+  // });
 
   // initialize services
   await Promise.all([
@@ -125,44 +126,78 @@ const bootstrapServer = async () => {
       return defaultApolloErrorHandler(error);
     },
     introspection: process.env.NODE_ENV !== 'production',
-    context: (): IContext => ({
-      config: serverConfig,
-      telemetry,
-      // adaptor
-      wrenEngineAdaptor,
-      ibisServerAdaptor: ibisAdaptor,
-      wrenAIAdaptor,
-      // services
-      projectService,
-      modelService,
-      mdlService,
-      deployService,
-      askingService,
-      queryService,
-      dashboardService,
-      sqlPairService,
-      instructionService,
-      // repository
-      projectRepository,
-      modelRepository,
-      modelColumnRepository,
-      modelNestedColumnRepository,
-      relationRepository,
-      viewRepository,
-      deployRepository: deployLogRepository,
-      schemaChangeRepository,
-      learningRepository,
-      dashboardRepository,
-      dashboardItemRepository,
-      sqlPairRepository,
-      instructionRepository,
-      apiHistoryRepository,
-      dashboardItemRefreshJobRepository,
-      // background trackers
-      projectRecommendQuestionBackgroundTracker,
-      threadRecommendQuestionBackgroundTracker,
-      dashboardCacheBackgroundTracker,
-    }),
+    context: ({ req }): IContext => {
+
+      const rawHost = req.headers.host || '';
+      const hostOnly = rawHost.split(':')[0];
+      const scopedProjectService = new ProjectService({
+        projectRepository,
+        metadataService,  // اگر از components گرفتیش
+        mdlService,
+        wrenAIAdaptor,
+        telemetry,
+        requestHost: hostOnly,
+      });
+
+      const scopedModelService = new ModelService({
+        projectService: scopedProjectService,
+        modelRepository,
+        modelColumnRepository,
+        relationRepository,
+        viewRepository,
+        mdlService,
+        wrenEngineAdaptor,
+        queryService,
+      });
+
+      const scopedDashboardService = new DashboardService({
+        projectService: scopedProjectService,
+        dashboardItemRepository,
+        dashboardRepository,
+      });
+
+      return {
+        config: serverConfig,
+        telemetry,
+        // adaptor
+        wrenEngineAdaptor,
+        ibisServerAdaptor: ibisAdaptor,
+        wrenAIAdaptor,
+        // services
+        projectService: scopedProjectService,
+        modelService: scopedModelService,
+        mdlService,
+        deployService,
+        askingService,
+        queryService,
+        dashboardService: scopedDashboardService,
+        sqlPairService,
+        instructionService,
+        // repository
+        projectRepository,
+        modelRepository,
+        modelColumnRepository,
+        modelNestedColumnRepository,
+        relationRepository,
+        viewRepository,
+        deployRepository: deployLogRepository,
+        schemaChangeRepository,
+        learningRepository,
+        dashboardRepository,
+        dashboardItemRepository,
+        sqlPairRepository,
+        instructionRepository,
+        apiHistoryRepository,
+        dashboardItemRefreshJobRepository,
+        // background trackers
+        projectRecommendQuestionBackgroundTracker,
+        threadRecommendQuestionBackgroundTracker,
+        dashboardCacheBackgroundTracker,
+
+        requestHost: hostOnly,
+
+      }
+    },
   });
   await apolloServer.start();
   return apolloServer;

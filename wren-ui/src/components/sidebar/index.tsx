@@ -86,7 +86,7 @@ export default function Sidebar(props: Props) {
   return (
     <Layout className="d-flex flex-column">
       <DynamicSidebar {...props} pathname={router.pathname} />
-      <LearningSection />
+      {/* <LearningSection />
       <div className="border-t border-gray-4 pt-2">
         <StyledButton type="text" block onClick={onSettingsClick}>
           <SettingOutlined className="text-md" />
@@ -116,7 +116,7 @@ export default function Sidebar(props: Props) {
             <GithubIcon className="mr-2" style={{ width: 16 }} /> GitHub
           </Link>
         </StyledButton>
-      </div>
+      </div> */}
     </Layout>
   );
 }
