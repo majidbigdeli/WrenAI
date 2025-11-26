@@ -17,7 +17,7 @@ Spin.setDefaultIndicator(defaultIndicator);
 function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
-    checkAuthentication()
+    // checkAuthentication()
   }, [])
 
   return (
