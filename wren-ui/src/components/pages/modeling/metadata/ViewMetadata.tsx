@@ -53,17 +53,17 @@ export default function ViewMetadata(props: Props) {
 
       <div className="mb-6" data-testid="metadata__sql-statement">
         <Typography.Text className="d-block gray-7 mb-2">
-          SQL statement
+          دستور SQL
         </Typography.Text>
         <SQLCodeBlock code={statement} showLineNumbers maxHeight="300" />
       </div>
 
       <div className="mb-6" data-testid="metadata__preview-data">
         <Typography.Text className="d-block gray-7 mb-2">
-          Data preview (100 rows)
+          پیش‌نمایش داده‌ها (۱۰۰ ردیف)
         </Typography.Text>
         <Button onClick={onPreviewData} loading={previewViewDataResult.loading}>
-          Preview data
+          پیش‌نمایش داده‌ها
         </Button>
         <div className="my-3">
           <PreviewData

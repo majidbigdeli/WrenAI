@@ -92,7 +92,7 @@ const makeProcessing = (text: string) => (props: Props) => {
           onClick={attachLoading(onStop, setLoading)}
           disabled={loading}
         >
-          <StopOutlined className="-ml-1" />
+          <StopOutlined className="ml-1" />
           توقف
         </Button>
       </div>
@@ -124,7 +124,7 @@ const makeProcessingError =
             size="small"
             onClick={onClose}
           >
-            <CloseOutlined className="-ml-1" />
+            <CloseOutlined className="ml-1" />
             بستن
           </Button>
         </div>
@@ -152,7 +152,7 @@ const Failed = makeProcessingError({
   icon: <ErrorIcon />,
 });
 
-const Understanding = makeProcessing('Understanding question');
+const Understanding = makeProcessing('دریافت پرسش');
 
 const IntentionFinished = (props: Props) => {
   const { data, onIntentSQLAnswer } = props;
@@ -208,7 +208,7 @@ const GeneralAnswer = (props: Props) => {
           size="small"
           onClick={onClose}
         >
-          <CloseOutlined className="-ml-1" />
+          <CloseOutlined className="ml-1" />
           بستن
         </Button>
       </div>
@@ -216,7 +216,7 @@ const GeneralAnswer = (props: Props) => {
         <div className="bg-gray-2 gray-6 py-2 px-3">
           <div className="d-flex align-center">
             <BrainSVG className="ml-2 adm-brain-svg" />
-            <span className="text-medium ">User Intent Recognized</span>
+            <span className="text-medium ">مقصود کاربر تشخیص داده شد</span>
           </div>
           <div style={{ paddingLeft: 22 }}>{data.intentReasoning}</div>
         </div>
@@ -230,7 +230,7 @@ const GeneralAnswer = (props: Props) => {
           {isDone && (
             <div className="gray-6">
               <InfoCircleOutlined className="ml-2" />
-              For the most accurate semantics, please visit the modeling page.
+              برای دقیق‌ترین معانی، لطفاً از صفحه مدل‌سازی دیدن کنید.
             </div>
           )}
         </div>

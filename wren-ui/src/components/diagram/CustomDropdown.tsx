@@ -66,7 +66,7 @@ export const ModelDropdown = makeDropdown((props: Props) => {
       label: (
         <>
           <EditOutlined className="ml-2" />
-          Update Columns
+          به‌روزرسانی ستون‌ها
         </>
       ),
       key: MORE_ACTION.UPDATE_COLUMNS,
@@ -115,7 +115,7 @@ export const ColumnDropdown = makeDropdown((props: Props) => {
       label: (
         <>
           <EditOutlined className="ml-2" />
-          Edit
+          ویرایش
         </>
       ),
       key: MORE_ACTION.EDIT,
@@ -141,7 +141,7 @@ export const DashboardDropdown = makeDropdown((props: Props) => {
       label: (
         <>
           <DatabaseOutlined className="ml-2" />
-          Cache settings
+     تنظیمات حافظه پنهان
         </>
       ),
       key: MORE_ACTION.CACHE_SETTINGS,
@@ -151,7 +151,7 @@ export const DashboardDropdown = makeDropdown((props: Props) => {
       label: (
         <>
           <ReloadOutlined className="ml-2" />
-          {isSupportCached ? 'Refresh all caches' : 'Refresh all'}
+          {isSupportCached ? 'تمام حافظه‌های پنهان را به‌روزرسانی کنید' : 'بروزرسانی همه'}
         </>
       ),
       key: MORE_ACTION.REFRESH,
@@ -168,7 +168,7 @@ export const DashboardItemDropdown = makeDropdown((props: Props) => {
       label: isHideLegend ? (
         <>
           <EyeOutlined className="ml-2" />
-          Show categories
+          نمایش دسته‌ها
         </>
       ) : (
         <>
@@ -330,8 +330,9 @@ export const AdjustAnswerDropdown = makeDropdown(
     const { onMoreClick, data } = props;
     const items: ItemType[] = [
       {
-        label: 'تنطیم مراحل',
+        label: 'بهبود مراحل',
         icon: <EditSVG />,
+        className:'g-1',
         disabled: !data.sqlGenerationReasoning,
         key: 'adjust-steps',
         onClick: () =>
@@ -341,8 +342,9 @@ export const AdjustAnswerDropdown = makeDropdown(
           }),
       },
       {
-        label: 'تنطیم SQL',
+        label: 'بهبود SQL',
         icon: <CodeFilled className="text-base" />,
+        className:'g-1',
         disabled: !data.sql,
         key: 'adjust-sql',
         onClick: () =>

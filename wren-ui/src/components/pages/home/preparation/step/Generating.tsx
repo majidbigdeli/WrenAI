@@ -13,20 +13,20 @@ export default function Generating(props: Props) {
   return (
     <>
       <Typography.Text className="gray-8">
-        Generating SQL statement
+        تولید دستور SQL
       </Typography.Text>
       <div className="gray-7 text-sm mt-1">
         {generating || correcting ? (
           <div className="d-flex align-center gx-2">
-            {correcting ? 'Correcting SQL statement' : 'Generating'}
+            {correcting ? 'اصلاح دستور SQL' : 'تولید'}
             <Spinner className="gray-6" size={12} />
           </div>
         ) : (
           <>
-            <div>Successfully generated SQL statement</div>
+            <div>دستور SQL با موفقیت تولید شد</div>
             {loading && (
               <div className="d-flex align-center gx-2 mt-1">
-                Wrapping up <Spinner className="gray-6" size={16} />
+                جمع‌بندی <Spinner className="gray-6" size={16} />
               </div>
             )}
           </>

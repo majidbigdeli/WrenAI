@@ -91,7 +91,7 @@ export default function ModelMetadata(props: Props) {
 
       <div className="mb-6" data-testid="metadata__preview-data">
         <Typography.Text className="d-block gray-7 mb-2">
-          Data preview (100 rows)
+          پیش‌نمایش داده‌ها (۱۰۰ ردیف)
         </Typography.Text>
         <Button
           onClick={onPreviewData}

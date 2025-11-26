@@ -61,11 +61,11 @@ function RecommendedQuestionsInstruction(props) {
       className="d-flex align-center flex-column pt-10"
       style={{ margin: 'auto' }}
     >
-      <RecommendedQuestionsPrompt
+      {/* <RecommendedQuestionsPrompt //TODOSH
         recommendedQuestions={recommendedQuestions}
         onSelect={onSelect}
         loading={loading}
-      />
+      /> */}
       <div className="py-12" />
     </div>
   ) : (

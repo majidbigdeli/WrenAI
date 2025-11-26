@@ -87,11 +87,11 @@ export function FixSQLModal(props: Props) {
       afterClose={reset}
     >
       <Typography.Text className="d-block gray-7 mb-3">
-        The following SQL statement needs to be fixed:
+       دستور SQL زیر نیاز به اصلاح دارد:
       </Typography.Text>
       <Form form={form} preserve={false} layout="vertical">
         <Form.Item
-          label="SQL statement"
+          label="دستور SQL"
           name="sql"
           required
           rules={[
@@ -106,14 +106,14 @@ export function FixSQLModal(props: Props) {
       </Form>
       <div className="my-3">
         <Typography.Text className="d-block gray-7 mb-2">
-          Data preview (50 rows)
+          پیش‌نمایش داده‌ها (۵۰ ردیف)
         </Typography.Text>
         <Button
           onClick={previewData}
           loading={previewLoading}
           disabled={previewLoading}
         >
-          Preview data
+          پیش‌نمایش داده‌ها
         </Button>
         {showPreview && (
           <div className="my-3">

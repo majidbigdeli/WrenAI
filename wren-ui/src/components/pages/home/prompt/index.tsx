@@ -42,8 +42,7 @@ interface Attributes {
 const PromptStyle = styled.div`
   position: fixed;
   width: 680px;
-  left: 50%;
-  margin-left: calc(-340px + 133px);
+  align-self: center;
   bottom: 18px;
   z-index: 999;
   box-shadow:

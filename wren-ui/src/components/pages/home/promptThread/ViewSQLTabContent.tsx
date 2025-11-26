@@ -43,6 +43,7 @@ const StyledToolBar = styled.div`
   padding: 4px 8px;
   border: 1px solid var(--gray-3);
   border-radius: 4px 4px 0px 0px;
+  direction: ltr;
 `;
 
 export default function ViewSQLTabContent(props: AnswerResultProps) {
@@ -95,7 +96,7 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
           {hasNativeSQL && (
             <>
               {' '}
-              برای دریافت نسخه اجرایی، روی «<b>نمایش SQL اصلی</b>» کلیک کنید.
+              برای دریافت نسخه اجرایی، روی «<b>نمایش SQL</b>» کلیک کنید.
             </>
           )}
         </>,
@@ -107,19 +108,18 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
     <div className="text-md gray-10 p-6 pb-4">
       <Alert
         banner
-        className="mb-3 adm-alert-info"
-        style={{ gap: 4 }}
+        className="mb-3 adm-alert-info g-1"
         message={
           <>
             شما به طور پیش‌فرض در حال مشاهده‌ی SQL هستید. اگر می‌خواهید این پرس‌وجو را روی پایگاه داده‌ی خودتان اجرا کنید، برای دریافت سینتکس دقیق، روی «نمایش SQL اصلی» کلیک کنید.
-            <Typography.Link
+            {/* <Typography.Link //TODOSH
               className="underline ml-1"
               href="https://docs.getwren.ai/oss/guide/home/wren_sql"
               target="_blank"
               rel="noopener noreferrer"
             >
               درباره SQL بیشتر بدانید
-            </Typography.Link>
+            </Typography.Link> */}
           </>
         }
         type="info"
@@ -157,13 +157,13 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
                 <Switch
                   checkedChildren={<CheckOutlined />}
                   unCheckedChildren={<CloseOutlined />}
-                  className="ml-2"
+                  className="mr-2"
                   size="small"
                   checked={nativeSQLResult.nativeSQLMode}
                   loading={nativeSQLResult.loading}
                 />
                 <Text className="gray-8 text-medium text-base">
-                  نمایش SQL اصلی
+                 SQL نمایش
                 </Text>
               </div>
             )}
@@ -173,7 +173,7 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
               data-ph-capture-attribute-name="view_sql_copy_sql"
               icon={<CodeFilled />}
               size="small"
-              style={{ gap: 4 }}
+              className='g-1'
               onClick={() => onOpenAdjustSQLModal({ sql, responseId: id })}
             >
               SQL بهبود

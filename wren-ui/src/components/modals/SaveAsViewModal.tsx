@@ -55,14 +55,13 @@ export default function SaveAsViewModal(props: Props) {
           >
             <InfoCircleOutlined className="ml-2 text-sm gray-6" />
             <Text type="secondary" className="text-sm gray-6 text-left">
-              After saving, make sure you go to "Modeling Page" to deploy all
-              saved views.
+            پس از ذخیره، مطمئن شوید که برای استقرار تمام نماهای ذخیره شده، به «صفحه مدل‌سازی» بروید.
             </Text>
           </div>
           <div>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>انصراف</Button>
             <Button type="primary" onClick={submit} loading={loading}>
-              Save
+              ذخیره
             </Button>
           </div>
         </div>
@@ -82,7 +81,7 @@ export default function SaveAsViewModal(props: Props) {
         >
           <Input />
         </Form.Item>
-        <Form.Item label="SQL Statement">
+        <Form.Item label="دستور SQL">
           <SQLCodeBlock code={sql} showLineNumbers maxHeight="300" />
         </Form.Item>
       </Form>

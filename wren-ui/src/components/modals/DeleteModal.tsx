@@ -27,15 +27,19 @@ export const makeDeleteModal =
           Modal.confirm({
             autoFocusButton: null,
             cancelText: 'انصراف',
-            content:
-              config?.content ||
-              'This will be permanently deleted, please confirm you want to delete it.',
-            icon: <ExclamationCircleOutlined />,
+            content: config?.content ||
+              'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
+
+            // icon: <ExclamationCircleOutlined />,//TODOSH
+            icon: <></>,
             okText: 'حذف',
             onOk: onConfirm,
-            title: `آیا مطمئن هستید که می‌خواهید ${config?.itemName} را حذف کنید?`,
+            title: <div className='d-flex g-1'>
+              <ExclamationCircleOutlined className='gold-6'/>
+              {`آیا مطمئن هستید که می‌خواهید ${config?.itemName} را حذف کنید؟`}
+            </div>,
             width: 464,
-            ...modalProps,
+            // ...modalProps,
             okButtonProps: {
               ...modalProps.okButtonProps,
               danger: true,
@@ -51,7 +55,7 @@ const DefaultDeleteButton = (props) => {
   const { icon = null, disabled, ...restProps } = props;
   return (
     <a className={disabled ? '' : 'red-5'} {...restProps}>
-      {icon}حذف
+      {icon} حذف
     </a>
   );
 };
@@ -61,21 +65,21 @@ export default makeDeleteModal(DefaultDeleteButton);
 // Customize delete modal
 export const DeleteThreadModal = makeDeleteModal(DefaultDeleteButton, {
   icon: <DeleteOutlined className="ml-2" />,
-  itemName: 'thread',
+  itemName: 'موضوع',
   content:
     'این کار تمام تاریخچه نتایج این تاپیک را برای همیشه حذف می‌کند، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
 
 export const DeleteViewModal = makeDeleteModal(DefaultDeleteButton, {
   icon: <DeleteOutlined className="ml-2" />,
-  itemName: 'view',
+  itemName: 'نما',
   content:
     'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
 
 export const DeleteModelModal = makeDeleteModal(DefaultDeleteButton, {
   icon: <DeleteOutlined className="ml-2" />,
-  itemName: 'model',
+  itemName: 'مدل',
   content:
     'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
