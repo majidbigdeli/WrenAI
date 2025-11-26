@@ -16,6 +16,8 @@ import { TelemetryEvent } from '@/apollo/server/telemetry/telemetry';
 import { components } from '@/common';
 import { ProjectService } from '@/apollo/server/services/projectService';
 import { DashboardService } from '@server/services/dashboardService';
+import { AskingService } from '@/apollo/server/services';
+import { DashboardCacheBackgroundTracker } from '@/apollo/server/backgrounds';
 
 const serverConfig = getConfig();
 const logger = getLogger('APOLLO');
@@ -49,6 +51,9 @@ const bootstrapServer = async () => {
     instructionRepository,
     apiHistoryRepository,
     dashboardItemRefreshJobRepository,
+    threadRepository,
+    threadResponseRepository,
+    askingTaskRepository,
     // adaptors
     wrenEngineAdaptor,
     ibisAdaptor,
@@ -65,8 +70,9 @@ const bootstrapServer = async () => {
     // background trackers
     projectRecommendQuestionBackgroundTracker,
     threadRecommendQuestionBackgroundTracker,
-    dashboardCacheBackgroundTracker,
+    //dashboardCacheBackgroundTracker,
     metadataService,
+    askingTaskTracker
   } = components;
 
   // const modelService = new ModelService({
@@ -156,6 +162,29 @@ const bootstrapServer = async () => {
         dashboardRepository,
       });
 
+      const scopedAskingService = new AskingService({
+        telemetry,
+        wrenAIAdaptor,
+        deployService,
+        projectService: scopedProjectService,
+        viewRepository,
+        threadRepository,
+        threadResponseRepository,
+        queryService,
+        mdlService,
+        askingTaskTracker,
+        askingTaskRepository,
+      });
+
+      const scopeDashboardCacheBackgroundTracker = new DashboardCacheBackgroundTracker({
+        dashboardRepository,
+        dashboardItemRepository,
+        dashboardItemRefreshJobRepository,
+        projectService: scopedProjectService,
+        deployService,
+        queryService,
+      });
+
       return {
         config: serverConfig,
         telemetry,
@@ -168,7 +197,7 @@ const bootstrapServer = async () => {
         modelService: scopedModelService,
         mdlService,
         deployService,
-        askingService,
+        askingService: scopedAskingService,
         queryService,
         dashboardService: scopedDashboardService,
         sqlPairService,
@@ -192,7 +221,7 @@ const bootstrapServer = async () => {
         // background trackers
         projectRecommendQuestionBackgroundTracker,
         threadRecommendQuestionBackgroundTracker,
-        dashboardCacheBackgroundTracker,
+        dashboardCacheBackgroundTracker: scopeDashboardCacheBackgroundTracker,
 
         requestHost: hostOnly,
 
