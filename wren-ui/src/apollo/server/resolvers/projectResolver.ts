@@ -47,6 +47,22 @@ export enum OnboardingStatusEnum {
   WITH_SAMPLE_DATASET = 'WITH_SAMPLE_DATASET',
 }
 
+const HARDCODED_MSSQL_DATASOURCE: DataSource = {
+  type: DataSourceName.MSSQL,
+  properties: {
+    displayName: 'Production SQL Server', // اسم نمایشی پروژه
+    host: '192.168.1.10',                 // آدرس سرور SQL
+    port: 1433,                           // پورت پیش‌فرض SQL Server
+    user: 'sa',                           // یوزر دیتابیس
+    password: 'YourStrongPassword!',      // پسورد دیتابیس
+    database: 'WrenWarehouse',            // اسم دیتابیس
+    ssl: true,         // اگر SSL داری و cert درست است می‌تونی false بذاری
+    //@ts-ignore
+    trustServerCertificate: true,
+  },
+};
+
+
 export class ProjectResolver {
   constructor() {
     this.getSettings = this.getSettings.bind(this);
@@ -231,11 +247,26 @@ export class ProjectResolver {
   public async getOnboardingStatus(_root: any, _arg: any, ctx: IContext) {
     let project: Project | null;
     try {
-      project = await ctx.projectRepository.getCurrentProject();
+      project = await ctx.projectService.getCurrentProject();
     } catch (_err: any) {
+
+      const { type, properties } = HARDCODED_MSSQL_DATASOURCE;
+      const { displayName, ...connectionInfo } = properties;
+      await ctx.projectService.createProject({
+        displayName,
+        type,
+        connectionInfo,
+      } as ProjectData);
+
+
       return {
-        status: OnboardingStatusEnum.NOT_STARTED,
+        status: OnboardingStatusEnum.ONBOARDING_FINISHED,
       };
+
+
+      // return {
+      //   status: OnboardingStatusEnum.NOT_STARTED,
+      // };
     }
     const { id, sampleDataset } = project;
     if (sampleDataset) {
@@ -262,17 +293,18 @@ export class ProjectResolver {
     },
     ctx: IContext,
   ) {
-    const { type, properties } = args.data;
+    const { type, properties } = HARDCODED_MSSQL_DATASOURCE;
     // Currently only can create one project
-    await this.resetCurrentProject(_root, args, ctx);
+    //await this.resetCurrentProject(_root, { data: HARDCODED_MSSQL_DATASOURCE }, ctx);
 
     const { displayName, ...connectionInfo } = properties;
-    const project = await ctx.projectService.createProject({
-      displayName,
-      type,
-      connectionInfo,
-    } as ProjectData);
-    logger.debug(`Project created.`);
+    const project = await ctx.projectService.getCurrentProject();
+    // const project = await ctx.projectService.createProject({
+    //   displayName,
+    //   type,
+    //   connectionInfo,
+    // } as ProjectData);
+    //logger.debug(`Project created.`);
 
     // init dashboard
     logger.debug('Dashboard init...');
@@ -311,7 +343,7 @@ export class ProjectResolver {
         'Failed to get project tables',
         JSON.stringify(err, null, 2),
       );
-      await ctx.projectRepository.deleteOne(project.id);
+      //await ctx.projectRepository.deleteOne(project.id);
       ctx.telemetry.sendEvent(
         eventName,
         { eventProperties, error: err.message },
@@ -634,7 +666,7 @@ export class ProjectResolver {
 
   private async deploy(ctx: IContext) {
     const project = await ctx.projectService.getCurrentProject();
-    const { manifest } = await ctx.mdlService.makeCurrentModelMDL();
+    const { manifest } = await ctx.mdlService.makeCurrentModelMDL(project.id);
     const deployRes = await ctx.deployService.deploy(manifest, project.id);
 
     // only generating for user's data source

@@ -34,7 +34,9 @@ const nextConfig = withLess({
     };
     return config;
   },
-  // routes redirect
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async redirects() {
     return [
       {

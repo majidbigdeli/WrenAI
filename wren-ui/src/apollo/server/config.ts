@@ -150,6 +150,10 @@ const config = {
     : 1,
 };
 
+export const HOST_PROJECT_UNIQUE_ID_MAP: Record<string, string> = {};
+
+
+
 export function getConfig(): IConfig {
   return { ...defaultConfig, ...pickBy(config) };
 }

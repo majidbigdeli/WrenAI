@@ -81,4 +81,7 @@ export interface IContext {
   projectRecommendQuestionBackgroundTracker: ProjectRecommendQuestionBackgroundTracker;
   threadRecommendQuestionBackgroundTracker: ThreadRecommendQuestionBackgroundTracker;
   dashboardCacheBackgroundTracker: DashboardCacheBackgroundTracker;
+
+  requestHost?: string;
+
 }

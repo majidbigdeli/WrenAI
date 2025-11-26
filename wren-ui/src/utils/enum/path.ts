@@ -5,7 +5,7 @@ export enum Path {
   Thread = '/home/[id]',
   Modeling = '/modeling',
   Onboarding = '/setup',
-  OnboardingConnection = '/setup/connection',
+  //OnboardingConnection = '/setup/connection',
   OnboardingModels = '/setup/models',
   OnboardingRelationships = '/setup/relationships',
   Knowledge = '/knowledge',

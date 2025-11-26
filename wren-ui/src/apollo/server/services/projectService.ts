@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import * as fs from 'fs';
 import path from 'path';
 import { getLogger } from '@server/utils';
-import { IProjectRepository, WREN_AI_CONNECTION_INFO } from '../repositories';
+import { IProjectRepository, MS_SQL_CONNECTION_INFO, WREN_AI_CONNECTION_INFO } from '../repositories';
 import { Project } from '../repositories';
 import {
   CompactTable,
@@ -10,6 +10,7 @@ import {
   RecommendConstraint,
 } from './metadataService';
 import { DataSourceName } from '../types';
+
 import {
   RecommendationQuestion,
   RecommendationQuestionStatus,
@@ -22,7 +23,8 @@ import { RecommendQuestionResultStatus } from './askingService';
 import { IMDLService } from './mdlService';
 import { ProjectRecommendQuestionBackgroundTracker } from '../backgrounds';
 import { ITelemetry } from '../telemetry/telemetry';
-import { getConfig } from '../config';
+import { getConfig, HOST_PROJECT_UNIQUE_ID_MAP } from '../config';
+import { buildMsSqlConnectionInfoFromDomainInfo, getDomainInfoByHost } from './domainInfoClient';
 
 const config = getConfig();
 
@@ -67,6 +69,7 @@ export interface IProjectService {
   ) => Promise<RecommendConstraint[]>;
 
   getCurrentProject: () => Promise<Project>;
+  getCurrentProjectByHost: () => Promise<Project | null>;
   getProjectById: (projectId: number) => Promise<Project>;
   writeCredentialFile: (
     credentials: JSON,
@@ -85,18 +88,22 @@ export class ProjectService implements IProjectService {
   private mdlService: IMDLService;
   private wrenAIAdaptor: IWrenAIAdaptor;
   private projectRecommendQuestionBackgroundTracker: ProjectRecommendQuestionBackgroundTracker;
+  private requestHost?: string;
+
   constructor({
     projectRepository,
     metadataService,
     mdlService,
     wrenAIAdaptor,
     telemetry,
+    requestHost,
   }: {
     projectRepository: IProjectRepository;
     metadataService: IDataSourceMetadataService;
     mdlService: IMDLService;
     wrenAIAdaptor: IWrenAIAdaptor;
     telemetry: ITelemetry;
+    requestHost?: string,
   }) {
     this.projectRepository = projectRepository;
     this.metadataService = metadataService;
@@ -108,6 +115,7 @@ export class ProjectService implements IProjectService {
         telemetry,
         wrenAIAdaptor,
       });
+    this.requestHost = requestHost;
   }
   public async updateProject(
     projectId: number,
@@ -133,7 +141,7 @@ export class ProjectService implements IProjectService {
     if (!project) {
       throw new Error(`Project not found`);
     }
-    const { manifest } = await this.mdlService.makeCurrentModelMDL();
+    const { manifest } = await this.mdlService.makeCurrentModelMDL(project.id);
     const recommendQuestionResult =
       await this.wrenAIAdaptor.generateRecommendationQuestions({
         manifest,
@@ -159,7 +167,7 @@ export class ProjectService implements IProjectService {
   }
 
   public async getProjectRecommendationQuestions() {
-    const project = await this.projectRepository.getCurrentProject();
+    const project = await this.getCurrentProject();
     if (!project) {
       throw new Error(`Project not found`);
     }
@@ -178,8 +186,32 @@ export class ProjectService implements IProjectService {
     return result;
   }
 
+  public async getCurrentProjectByHost() {
+    if (this.requestHost) {
+
+      const hostKey = this.requestHost.toLowerCase();
+      var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
+
+      if (!cachedUniqueId) {
+        const domainInfo = await getDomainInfoByHost(this.requestHost);
+        cachedUniqueId = domainInfo.DomainId;
+        HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
+      }
+
+      const project = await this.projectRepository.getByUniqueId(cachedUniqueId);
+      if (project) {
+        return project;
+      }
+    }
+
+    throw new Error('No project found');
+    // fallback
+    //return await this.projectRepository.getCurrentProject();
+  }
+
   public async getCurrentProject() {
-    return await this.projectRepository.getCurrentProject();
+    return this.getCurrentProjectByHost();
+    //return await this.projectRepository.getCurrentProject();
   }
 
   public async getProjectById(projectId: number) {
@@ -211,15 +243,33 @@ export class ProjectService implements IProjectService {
   }
 
   public async createProject(projectData: ProjectData) {
+
+    let finalDisplayName = projectData.displayName;
+    let finalConnectionInfo = projectData.connectionInfo;
+
+    //if (projectData.type === DataSourceName.MSSQL && this.requestHost) {
+    const domainInfo = await getDomainInfoByHost(this.requestHost);
+
+    const mssqlConn: MS_SQL_CONNECTION_INFO =
+      buildMsSqlConnectionInfoFromDomainInfo(domainInfo);
+
+    finalConnectionInfo = mssqlConn;
+    // اگر دوست داری اسم پروژه از روی دامنه یا کاتالوگ باشه:
+    finalDisplayName = domainInfo.DbCatalogName || finalDisplayName;
+    //}
+
+
     const projectValue = {
-      displayName: projectData.displayName,
-      type: projectData.type,
+      displayName: finalDisplayName,
+      type: DataSourceName.MSSQL,
       catalog: 'wrenai',
       schema: 'public',
       connectionInfo: encryptConnectionInfo(
-        projectData.type,
-        projectData.connectionInfo,
+        DataSourceName.MSSQL,
+        finalConnectionInfo,
       ),
+      uniqueId: domainInfo.DomainId,
+      host:domainInfo.Url,
     };
     logger.debug('Creating project...');
     const project = await this.projectRepository.createOne(projectValue);
