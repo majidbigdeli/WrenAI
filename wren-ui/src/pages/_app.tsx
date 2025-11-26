@@ -7,16 +7,23 @@ import { GlobalConfigProvider } from '@/hooks/useGlobalConfig';
 import { PostHogProvider } from 'posthog-js/react';
 import { ApolloProvider } from '@apollo/client';
 import { defaultIndicator } from '@/components/PageLoading';
+import { useEffect } from 'react';
+import { checkAuthentication } from '@/utils/checkAuthentication';
 
 require('../styles/index.less');
 
 Spin.setDefaultIndicator(defaultIndicator);
 
 function App({ Component, pageProps }: AppProps) {
+
+  useEffect(() => {
+    checkAuthentication()
+  }, [])
+
   return (
     <>
       <Head>
-        <title>Rayan AI</title>
+        <title>دستیار مدیر</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GlobalConfigProvider>
