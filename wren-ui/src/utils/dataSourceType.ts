@@ -36,8 +36,11 @@ export const getDataSourceImage = (dataSource: DATA_SOURCES | string) => {
       return '/images/dataSource/athena.svg';
     case DATA_SOURCES.REDSHIFT:
       return '/images/dataSource/redshift.svg';
+<<<<<<< HEAD
     case DATA_SOURCES.DATABRICKS:
       return '/images/dataSource/databricks.svg';
+=======
+>>>>>>> 888ba1b7 (revert basePath)
     default:
       return null;
   }
