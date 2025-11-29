@@ -107,7 +107,7 @@ export default function Dashboard() {
     <SiderLayout loading={false} color="gray-3" sidebar={homeSidebar}>
       <LoadingWrapper loading={loading}>
         <>
-          <EmptyDashboard show={dashboardItems.length === 0}>
+          <EmptyDashboard show={dashboardItems.length === 0 || true}>
             <DashboardHeader
               isSupportCached={isSupportCached}
               schedule={data?.dashboard?.schedule as Schedule}

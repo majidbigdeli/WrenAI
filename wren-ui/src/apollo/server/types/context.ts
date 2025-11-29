@@ -83,5 +83,4 @@ export interface IContext {
   dashboardCacheBackgroundTracker: DashboardCacheBackgroundTracker;
 
   requestHost?: string;
-
 }
