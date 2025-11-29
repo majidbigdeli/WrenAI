@@ -72,7 +72,7 @@ const bootstrapServer = async () => {
     threadRecommendQuestionBackgroundTracker,
     //dashboardCacheBackgroundTracker,
     metadataService,
-    askingTaskTracker
+    askingTaskTracker,
   } = components;
 
   // const modelService = new ModelService({
@@ -133,12 +133,11 @@ const bootstrapServer = async () => {
     },
     introspection: process.env.NODE_ENV !== 'production',
     context: ({ req }): IContext => {
-
       const rawHost = req.headers.host || '';
       const hostOnly = rawHost.split(':')[0];
       const scopedProjectService = new ProjectService({
         projectRepository,
-        metadataService,  // اگر از components گرفتیش
+        metadataService, // اگر از components گرفتیش
         mdlService,
         wrenAIAdaptor,
         telemetry,
@@ -176,14 +175,15 @@ const bootstrapServer = async () => {
         askingTaskRepository,
       });
 
-      const scopeDashboardCacheBackgroundTracker = new DashboardCacheBackgroundTracker({
-        dashboardRepository,
-        dashboardItemRepository,
-        dashboardItemRefreshJobRepository,
-        projectService: scopedProjectService,
-        deployService,
-        queryService,
-      });
+      const scopeDashboardCacheBackgroundTracker =
+        new DashboardCacheBackgroundTracker({
+          dashboardRepository,
+          dashboardItemRepository,
+          dashboardItemRefreshJobRepository,
+          projectService: scopedProjectService,
+          deployService,
+          queryService,
+        });
 
       return {
         config: serverConfig,
@@ -224,8 +224,7 @@ const bootstrapServer = async () => {
         dashboardCacheBackgroundTracker: scopeDashboardCacheBackgroundTracker,
 
         requestHost: hostOnly,
-
-      }
+      };
     },
   });
   await apolloServer.start();

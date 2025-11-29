@@ -7,17 +7,17 @@ import { getIconSource } from '@/utils/getIconSource';
 
 const PromptButton = styled(Button)`
   min-width: 72px;
-  padding: 4px; 
+  padding: 4px;
   border-radius: 8px;
 `;
-const StyledInputTextArea=styled(Input.TextArea)`
+const StyledInputTextArea = styled(Input.TextArea)`
   border: none;
-  top:3px;
-  &:focus{
+  top: 3px;
+  &:focus {
     border: none !important;
     box-shadow: unset;
   }
-`
+`;
 interface Props {
   question: string;
   isProcessing: boolean;
@@ -79,9 +79,16 @@ export default function PromptInput(props: Props) {
       />
       <PromptButton
         type="primary"
-        color='white'
+        color="white"
         size="middle"
-        icon={<Image src={getIconSource('typeprompt-outlined')} alt='typeprompt-outlined' width={18} height={18} />}
+        icon={
+          <Image
+            src={getIconSource('typeprompt-outlined')}
+            alt="typeprompt-outlined"
+            width={18}
+            height={18}
+          />
+        }
         onClick={handleAsk}
         disabled={isDisabled}
       >

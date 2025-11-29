@@ -160,25 +160,23 @@ export interface Project {
 export interface IProjectRepository extends IBasicRepository<Project> {
   //getCurrentProject: () => Promise<Project>;
   //getProjectByHost: (host: string) => Promise<Project | null>
-  getByUniqueId: (host: string) => Promise<Project | null>
-
+  getByUniqueId: (host: string) => Promise<Project | null>;
 }
 
 export class ProjectRepository
   extends BaseRepository<Project>
-  implements IProjectRepository {
+  implements IProjectRepository
+{
   private jsonTypeColumns = ['questions', 'questions_error', 'connection_info'];
 
   constructor(knexPg: Knex) {
     super({ knexPg, tableName: 'project' });
   }
 
-
   public async getByUniqueId(uniqueId: string): Promise<Project | null> {
-    const row = await this.findOneBy({ uniqueId })
+    const row = await this.findOneBy({ uniqueId });
     return row || null;
   }
-
 
   public async getCurrentProject() {
     const projects = await this.findAll({

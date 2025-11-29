@@ -53,17 +53,16 @@ const HARDCODED_MSSQL_DATASOURCE: DataSource = {
   type: DataSourceName.MSSQL,
   properties: {
     displayName: 'Production SQL Server', // اسم نمایشی پروژه
-    host: '192.168.1.10',                 // آدرس سرور SQL
-    port: 1433,                           // پورت پیش‌فرض SQL Server
-    user: 'sa',                           // یوزر دیتابیس
-    password: 'YourStrongPassword!',      // پسورد دیتابیس
-    database: 'WrenWarehouse',            // اسم دیتابیس
-    ssl: true,         // اگر SSL داری و cert درست است می‌تونی false بذاری
+    host: '192.168.1.10', // آدرس سرور SQL
+    port: 1433, // پورت پیش‌فرض SQL Server
+    user: 'sa', // یوزر دیتابیس
+    password: 'YourStrongPassword!', // پسورد دیتابیس
+    database: 'WrenWarehouse', // اسم دیتابیس
+    ssl: true, // اگر SSL داری و cert درست است می‌تونی false بذاری
     //@ts-ignore
     trustServerCertificate: true,
   },
 };
-
 
 export class ProjectResolver {
   constructor() {
@@ -260,7 +259,6 @@ export class ProjectResolver {
         await this.deploy(ctx);
       }
     } catch (_err: any) {
-
       const { type, properties } = HARDCODED_MSSQL_DATASOURCE;
       const { displayName, ...connectionInfo } = properties;
       await ctx.projectService.createProject({
@@ -269,12 +267,11 @@ export class ProjectResolver {
         connectionInfo,
       } as ProjectData);
 
-      await this.deploy(ctx)
+      await this.deploy(ctx);
 
       return {
         status: OnboardingStatusEnum.ONBOARDING_FINISHED,
       };
-
 
       // return {
       //   status: OnboardingStatusEnum.NOT_STARTED,

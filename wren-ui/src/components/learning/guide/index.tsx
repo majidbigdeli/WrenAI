@@ -1,11 +1,6 @@
 import { useGetSettingsQuery } from '@/apollo/client/graphql/settings.generated';
 import { useRouter } from 'next/router';
-import {
-  forwardRef,
-  useImperativeHandle,
-  useMemo,
-  useRef
-} from 'react';
+import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
 import { Dispatcher, DriverObj } from './utils';
 
 import 'driver.js/dist/driver.css';

@@ -45,7 +45,6 @@ const SampleQuestionsInstruction = (props) => {
 };
 
 function RecommendedQuestionsInstruction(_) {
-
   const {
     buttonProps,
     generating,

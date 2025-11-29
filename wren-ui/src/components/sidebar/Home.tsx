@@ -40,7 +40,7 @@ export const StyledSidebarTree = styled(SidebarTree)`
   }
 `;
 
-const SideBarHead = styled("div")`{
+const SideBarHead = styled('div')`{
   background-color: white;
   height: 64px;
   width: 100%;
@@ -48,7 +48,7 @@ const SideBarHead = styled("div")`{
   justify-content: center;
   align-items: center;
   border: 2px solid #F1F3F8;
-}`
+}`;
 
 export default function Home(props: Props) {
   const { data, onSelect, onRename, onDelete } = props;
@@ -84,12 +84,16 @@ export default function Home(props: Props) {
   return (
     <>
       <SideBarHead>
-        <Image className="ml-2"
+        <Image
+          className="ml-2"
           src={getIconSource('agent-filled')}
           alt={'agent-filled'}
           width="18"
-          height="18" />
-        <Typography className="text-bold" style={{ fontSize: 18 }}>دستیار مدیر</Typography>
+          height="18"
+        />
+        <Typography className="text-bold" style={{ fontSize: 18 }}>
+          دستیار مدیر
+        </Typography>
       </SideBarHead>
       <StyledTreeNodeLink
         className={clsx({
@@ -98,11 +102,13 @@ export default function Home(props: Props) {
         })}
         href={Path.HomeDashboard}
       >
-        <Image className="ml-2"
+        <Image
+          className="ml-2"
           src={getIconSource('category-outlined')}
           alt={'category-outlined'}
           width="18"
-          height="18" />
+          height="18"
+        />
         <span className="text-medium">داشبورد</span>
       </StyledTreeNodeLink>
       <ThreadTree
