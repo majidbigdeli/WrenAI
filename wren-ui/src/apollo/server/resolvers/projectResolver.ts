@@ -258,6 +258,7 @@ export class ProjectResolver {
         connectionInfo,
       } as ProjectData);
 
+     await this.deploy(ctx)
 
       return {
         status: OnboardingStatusEnum.ONBOARDING_FINISHED,
