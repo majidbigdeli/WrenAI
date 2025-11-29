@@ -606,7 +606,9 @@ export class ModelService implements IModelService {
     data: CheckCalculatedFieldCanQueryData,
   ) {
     const project = await this.projectService.getCurrentProject();
-    const { mdlBuilder } = await this.mdlService.makeCurrentModelMDL(project.id);
+    const { mdlBuilder } = await this.mdlService.makeCurrentModelMDL(
+      project.id,
+    );
     const { referenceName, expression, lineage } = data;
     const inputFieldId = lineage[lineage.length - 1];
     const dataType = await this.inferCalculatedFieldDataType(

@@ -65,8 +65,8 @@ export default forwardRef<Attributes, Props>(function Prompt(props, ref) {
     inputProps,
   } = props;
   const askProcessState = useAskProcessState();
-   const searchParams = useSearchParams()
-  const questionQuery = searchParams.get('questionQuery')
+  const searchParams = useSearchParams();
+  const questionQuery = searchParams.get('questionQuery');
 
   const {
     originalQuestion,
@@ -112,11 +112,11 @@ export default forwardRef<Attributes, Props>(function Prompt(props, ref) {
     }
   }, [error]);
 
-  useEffect(()=>{
-    if(questionQuery){
-      submitAsk(questionQuery)
+  useEffect(() => {
+    if (questionQuery) {
+      submitAsk(questionQuery);
     }
-  },[questionQuery])
+  }, [questionQuery]);
 
   // create thread response for recommended question
   const selectRecommendedQuestion = async (payload: {

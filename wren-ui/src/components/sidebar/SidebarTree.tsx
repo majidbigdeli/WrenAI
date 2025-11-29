@@ -59,7 +59,7 @@ const StyledTree = styled(Tree)`
     .ant-tree-treenode {
       background-color: transparent;
       transition: background-color ease-out 0.12s;
-      border-radius: 8px;      
+      border-radius: 8px;
 
       &-selected {
         color: var(--geekblue-6);
@@ -206,7 +206,7 @@ export const StyledTreeNodeLink = styled(Link)`
   display: block;
   cursor: pointer;
   user-select: none;
-  border-bottom: 2px solid #F1F3F8;
+  border-bottom: 2px solid #f1f3f8;
   padding: 12px 16px;
   line-height: 28px;
   color: var(--gray-8);

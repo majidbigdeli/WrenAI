@@ -64,7 +64,7 @@ export default function ThreadTree(props: Props) {
         render: () => (
           <GroupActionButton
             size="middle"
-            icon={<MagicPencilOutlined className="gray-8"/>}
+            icon={<MagicPencilOutlined className="gray-8" />}
             onClick={() => router.push(Path.Home)}
             className="g-1 bg-gray-1"
           >

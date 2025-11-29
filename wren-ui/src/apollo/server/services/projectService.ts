@@ -2,7 +2,11 @@ import crypto from 'crypto';
 import * as fs from 'fs';
 import path from 'path';
 import { getLogger } from '@server/utils';
-import { IProjectRepository, MS_SQL_CONNECTION_INFO, WREN_AI_CONNECTION_INFO } from '../repositories';
+import {
+  IProjectRepository,
+  MS_SQL_CONNECTION_INFO,
+  WREN_AI_CONNECTION_INFO,
+} from '../repositories';
 import { Project } from '../repositories';
 import {
   CompactTable,
@@ -24,7 +28,10 @@ import { IMDLService } from './mdlService';
 import { ProjectRecommendQuestionBackgroundTracker } from '../backgrounds';
 import { ITelemetry } from '../telemetry/telemetry';
 import { getConfig, HOST_PROJECT_UNIQUE_ID_MAP } from '../config';
-import { buildMsSqlConnectionInfoFromDomainInfo, getDomainInfoByHost } from './domainInfoClient';
+import {
+  buildMsSqlConnectionInfoFromDomainInfo,
+  getDomainInfoByHost,
+} from './domainInfoClient';
 
 const config = getConfig();
 
@@ -103,7 +110,7 @@ export class ProjectService implements IProjectService {
     mdlService: IMDLService;
     wrenAIAdaptor: IWrenAIAdaptor;
     telemetry: ITelemetry;
-    requestHost?: string,
+    requestHost?: string;
   }) {
     this.projectRepository = projectRepository;
     this.metadataService = metadataService;
@@ -188,7 +195,6 @@ export class ProjectService implements IProjectService {
 
   public async getCurrentProjectByHost() {
     if (this.requestHost) {
-
       const hostKey = this.requestHost.toLowerCase();
       var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
 
@@ -198,7 +204,8 @@ export class ProjectService implements IProjectService {
         HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
       }
 
-      const project = await this.projectRepository.getByUniqueId(cachedUniqueId);
+      const project =
+        await this.projectRepository.getByUniqueId(cachedUniqueId);
       if (project) {
         return project;
       }
@@ -243,7 +250,6 @@ export class ProjectService implements IProjectService {
   }
 
   public async createProject(projectData: ProjectData) {
-
     let finalDisplayName = projectData.displayName;
     let finalConnectionInfo = projectData.connectionInfo;
 
@@ -258,7 +264,6 @@ export class ProjectService implements IProjectService {
     finalDisplayName = domainInfo.DbCatalogName || finalDisplayName;
     //}
 
-
     const projectValue = {
       displayName: finalDisplayName,
       type: DataSourceName.MSSQL,
@@ -269,7 +274,7 @@ export class ProjectService implements IProjectService {
         finalConnectionInfo,
       ),
       uniqueId: domainInfo.DomainId,
-      host:domainInfo.Url,
+      host: domainInfo.Url,
     };
     logger.debug('Creating project...');
     const project = await this.projectRepository.createOne(projectValue);
