@@ -57,7 +57,6 @@ const StyledTree = styled(Tree)`
     }
 
     .ant-tree-treenode {
-      padding: 0 16px;
       background-color: transparent;
       transition: background-color ease-out 0.12s;
 
@@ -109,7 +108,6 @@ const StyledTree = styled(Tree)`
 
         &--group {
           color: var(--gray-8);
-          margin-top: 16px;
 
           font-size: 14px;
           font-weight: 500;
@@ -206,8 +204,8 @@ export const StyledTreeNodeLink = styled(Link)`
   display: block;
   cursor: pointer;
   user-select: none;
-  margin-top: 16px;
-  padding: 0 16px;
+  border-bottom: 2px solid #F1F3F8;
+  padding: 12px 16px;
   line-height: 28px;
   color: var(--gray-8);
   &:hover {

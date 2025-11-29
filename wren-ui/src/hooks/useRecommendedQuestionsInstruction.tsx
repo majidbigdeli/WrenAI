@@ -91,7 +91,7 @@ export default function useRecommendedQuestionsInstruction() {
             RecommendedQuestionsTaskStatus.FAILED
         ) {
           message.error(
-            `We couldn't regenerate questions right now. Let's try again later.`,
+            `الان نمی‌توانیم سوالات را دوباره ایجاد کنیم. بعداً دوباره امتحان می‌کنیم.`,
           );
         }
       } else {
@@ -129,7 +129,7 @@ export default function useRecommendedQuestionsInstruction() {
       return {
         ...baseProps,
         icon: <ReloadOutlined />,
-        children: 'Regenerate',
+        children: 'بازسازی',
       };
     }
 
@@ -141,10 +141,10 @@ export default function useRecommendedQuestionsInstruction() {
         <Icon component={CopilotSVG} className="geekblue-6" />
       ),
       children: generating
-        ? 'Generating questions'
+        ? 'تولید سوالات'
         : showRetry
-          ? 'Retry'
-          : 'What could I ask?',
+          ? 'تلاش محدد'
+          : 'چی بپرسم؟',
     };
   }, [generating, isRegenerate, showRetry, showRecommendedQuestionsPromptMode]);
 

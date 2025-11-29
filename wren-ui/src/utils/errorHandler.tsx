@@ -457,7 +457,7 @@ const errorHandler = (error: ErrorResponse) => {
   // networkError
   if (error.networkError) {
     message.error(
-      'No internet. Please check your network connection and try again.',
+      'اینترنت قطع است. لطفاً اتصال شبکه خود را بررسی کرده و دوباره امتحان کنید.',
     );
   }
 

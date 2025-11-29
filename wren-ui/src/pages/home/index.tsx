@@ -22,11 +22,11 @@ const { Text } = Typography;
 const Wrapper = ({ children }) => {
   return (
     <div
-      className="d-flex align-center justify-center flex-column"
+      className="d-flex align-center justify-center flex-column g-3"
       style={{ height: '100%' }}
     >
       <Logo size={48} color="var(--gray-8)" />
-      <div className="text-md text-medium gray-8 mt-3">
+      <div className="text-md text-medium gray-8">
         اطلاعات بیشتری در مورد داده‌های خود کسب کنید.
       </div>
       {children}
@@ -67,7 +67,7 @@ function RecommendedQuestionsInstruction(_) {
     </div>
   ) : (
     <Wrapper>
-      <Button className="mt-6" {...buttonProps} />
+      <Button className="mt-6 g-1" {...buttonProps} />
       {generating && (
         <Text className="mt-3 text-sm gray-6">
           دارم به سوالات خوبی برای شما فکر می‌کنم... (حدود ۱ دقیقه)
@@ -75,7 +75,7 @@ function RecommendedQuestionsInstruction(_) {
       )}
       {!generating && showRetry && (
         <Text className="mt-3 text-sm gray-6 text-center">
-          الان نمی‌توانستیم به سوالات فکر کنیم.
+          الان نمی‌توانستم به سوالات فکر کنیم.
           <br />
           بیایید بعداً دوباره امتحان کنیم.
         </Text>

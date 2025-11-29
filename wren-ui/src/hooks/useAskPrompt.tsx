@@ -338,8 +338,8 @@ export default function useAskPrompt(threadId?: number) {
     onStoreThreadQuestions,
     inputProps: {
       placeholder: threadId
-        ? 'برای بررسی داده‌هایتان، سوالات تکمیلی بپرسید'
-        : 'بپرسید تا داده‌های شما را بررسی کنیم',
+        ? 'برای بررسی داده‌هایتان، سوالات تکمیلی بنویسید'
+        : 'سؤال‌تان را بنویسید تا با داده‌ها بررسی کنم…',
     },
   };
 }
