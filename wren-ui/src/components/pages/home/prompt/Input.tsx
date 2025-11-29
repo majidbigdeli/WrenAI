@@ -75,6 +75,7 @@ export default function PromptInput(props: Props) {
         onInput={syncInputValue}
         onPressEnter={inputEnter}
         disabled={isDisabled}
+        placeholder='سؤال‌تان را بنویسید (مثال: گزارش فروش ماهانه)'
         {...inputProps}
       />
       <PromptButton
