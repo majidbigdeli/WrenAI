@@ -44,6 +44,7 @@ const PromptStyle = styled.div`
   position: fixed;
   width: 680px;
   height: 60px;
+  border-radius: 8px !important;
   align-self: center;
   bottom: 18px;
   z-index: 999;
