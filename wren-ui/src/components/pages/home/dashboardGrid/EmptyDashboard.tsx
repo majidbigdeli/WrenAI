@@ -41,10 +41,10 @@ const EmptyDashboard = (props: {
     return (
       <div
         className="d-flex align-center justify-center flex-column -mt-8"
-        style={{ height: '100%' }}
+        style={{ height: '100%', gap: 8 }}
       >
         <Logo size={48} color="var(--gray-8)" />
-        <div className="text-lg text-medium text-center gray-8 mt-3">
+        <div className="text-lg text-medium text-center gray-8">
           هنوز هیچ نموداری اضافه نشده است
         </div>
         <div className="gray-7">
@@ -62,7 +62,7 @@ const EmptyDashboard = (props: {
           <StepIterator
             data={[
               {
-                title: '1. ایجاد یک موضوع',
+                title: '1. ایجاد یک گفتگو',
                 image: '/images/dashboard/s1.jpg',
               },
               {

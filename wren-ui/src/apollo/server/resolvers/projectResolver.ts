@@ -36,6 +36,8 @@ import DataSourceSchemaDetector, {
 } from '@server/managers/dataSourceSchemaDetector';
 import { encryptConnectionInfo } from '../dataSource';
 import { TelemetryEvent } from '../telemetry/telemetry';
+import { HOST_PROJECT_UNIQUE_ID_MAP } from '../config';
+import { getDomainInfoByHost } from '../services/domainInfoClient';
 
 const logger = getLogger('DataSourceResolver');
 logger.level = 'debug';
@@ -248,6 +250,15 @@ export class ProjectResolver {
     let project: Project | null;
     try {
       project = await ctx.projectService.getCurrentProject();
+      const hostKey = ctx.requestHost.toLowerCase();
+      var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
+
+      if (!cachedUniqueId) {
+        const domainInfo = await getDomainInfoByHost(ctx.requestHost);
+        cachedUniqueId = domainInfo.DomainId;
+        HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
+        await this.deploy(ctx);
+      }
     } catch (_err: any) {
 
       const { type, properties } = HARDCODED_MSSQL_DATASOURCE;
@@ -258,6 +269,7 @@ export class ProjectResolver {
         connectionInfo,
       } as ProjectData);
 
+      await this.deploy(ctx)
 
       return {
         status: OnboardingStatusEnum.ONBOARDING_FINISHED,

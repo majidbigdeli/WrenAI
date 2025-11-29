@@ -1,9 +1,3 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { DataNode } from 'antd/lib/tree';
-import { Path } from '@/utils/enum';
-import { useParams, useRouter } from 'next/navigation';
-import PlusOutlined from '@ant-design/icons/PlusOutlined';
 import SidebarTree, {
   sidebarCommonStyle,
 } from '@/components/sidebar/SidebarTree';
@@ -11,14 +5,19 @@ import {
   createTreeGroupNode,
   GroupActionButton,
 } from '@/components/sidebar/utils';
+import { Path } from '@/utils/enum';
+import { DataNode } from 'antd/lib/tree';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import TreeTitle from './TreeTitle';
+import { MagicPencilOutlined } from '@/utils/svgs/MagicPencilOutlined';
 
 const StyledSidebarTree = styled(SidebarTree)`
   ${sidebarCommonStyle}
-
+  padding: 12px 16px;
   .adm-treeNode {
     &.adm-treeNode__thread {
-      padding: 0px 16px 0px 4px !important;
       .ant-tree-title {
         flex-grow: 1;
         display: inline-flex;
@@ -57,19 +56,19 @@ export default function ThreadTree(props: Props) {
   } = props;
 
   const getThreadGroupNode = createTreeGroupNode({
-    groupName: 'موضوعات',
+    groupName: 'گفتگوها',
     groupKey: 'threads',
     actions: [
       {
         key: 'new-thread',
         render: () => (
           <GroupActionButton
-            size="small"
-            icon={<PlusOutlined style={{ transform: 'translateY(2px)' }} />}
+            size="middle"
+            icon={<MagicPencilOutlined className="gray-8"/>}
             onClick={() => router.push(Path.Home)}
-            className="g-1"
+            className="g-1 bg-gray-1"
           >
-            جدید
+            گفتگو جدید
           </GroupActionButton>
         ),
       },

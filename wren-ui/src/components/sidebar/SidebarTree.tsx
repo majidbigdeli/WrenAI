@@ -57,13 +57,13 @@ const StyledTree = styled(Tree)`
     }
 
     .ant-tree-treenode {
-      padding: 0 16px;
       background-color: transparent;
       transition: background-color ease-out 0.12s;
+      border-radius: 8px;      
 
       &-selected {
         color: var(--geekblue-6);
-        background-color: var(--gray-4);
+        background-color: var(--gray-1);
       }
 
       .ant-tree-switcher {
@@ -100,6 +100,7 @@ const StyledTree = styled(Tree)`
           display: inline-flex;
           flex-wrap: nowrap;
           min-width: 1px;
+          padding: 4px;
         }
 
         &--relation,
@@ -109,7 +110,6 @@ const StyledTree = styled(Tree)`
 
         &--group {
           color: var(--gray-8);
-          margin-top: 16px;
 
           font-size: 14px;
           font-weight: 500;
@@ -178,7 +178,7 @@ const StyledTree = styled(Tree)`
           }
         }
         .anticon {
-          padding: 2px;
+          padding: 5px;
           cursor: inherit;
         }
         &--disabled {
@@ -206,8 +206,8 @@ export const StyledTreeNodeLink = styled(Link)`
   display: block;
   cursor: pointer;
   user-select: none;
-  margin-top: 16px;
-  padding: 0 16px;
+  border-bottom: 2px solid #F1F3F8;
+  padding: 12px 16px;
   line-height: 28px;
   color: var(--gray-8);
   &:hover {

@@ -39,7 +39,7 @@ const UploadPrivateKey = (props: {
       } catch (error) {
         console.error('Failed to handle file', error);
         message.error(
-          'Failed to handle file. Please upload a valid private key file.',
+          'مدیریت فایل ناموفق بود. لطفاً یک فایل کلید خصوصی معتبر بارگذاری کنید.',
         );
       }
     }

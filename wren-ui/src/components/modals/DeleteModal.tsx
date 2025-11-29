@@ -68,7 +68,7 @@ export default makeDeleteModal(DefaultDeleteButton);
 // Customize delete modal
 export const DeleteThreadModal = makeDeleteModal(DefaultDeleteButton, {
   icon: <DeleteOutlined className="ml-2" />,
-  itemName: 'موضوع',
+  itemName: 'گفتگو',
   content:
     'این کار تمام تاریخچه نتایج این تاپیک را برای همیشه حذف می‌کند، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 });
