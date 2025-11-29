@@ -91,7 +91,7 @@ export default function Home(props: Props) {
           width="18"
           height="18"
         />
-        <Typography className="text-bold" style={{ fontSize: 18 }}>
+        <Typography className="text-bold gray-9" style={{ fontSize: 18 }}>
           دستیار مدیر
         </Typography>
       </SideBarHead>

@@ -43,6 +43,16 @@ const nextConfig = withLess({
         destination: '/setup/connection',
         permanent: true,
       },
+      {
+        source: '/home/:path*',
+        destination: '/managerAssist/home/:path*',
+        permanent: true,
+      },
+      {
+        source: '/managerAssist',
+        destination: '/managerAssist/home',
+        permanent: true,
+      },
     ];
   },
 });

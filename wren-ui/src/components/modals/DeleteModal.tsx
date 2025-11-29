@@ -70,7 +70,7 @@ export const DeleteThreadModal = makeDeleteModal(DefaultDeleteButton, {
   icon: <DeleteOutlined className="ml-2" />,
   itemName: 'گفتگو',
   content:
-    'این کار تمام تاریخچه نتایج این تاپیک را برای همیشه حذف می‌کند، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
+    'این کار تمام تاریخچه نتایج این گفتگو را برای همیشه حذف می‌کند، در صورت اطمینان گزینه حذف را انتخاب کنید.',
 });
 
 export const DeleteViewModal = makeDeleteModal(DefaultDeleteButton, {
