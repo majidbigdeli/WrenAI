@@ -1,9 +1,3 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { DataNode } from 'antd/lib/tree';
-import { Path } from '@/utils/enum';
-import { useParams, useRouter } from 'next/navigation';
-import PlusOutlined from '@ant-design/icons/PlusOutlined';
 import SidebarTree, {
   sidebarCommonStyle,
 } from '@/components/sidebar/SidebarTree';
@@ -11,9 +5,13 @@ import {
   createTreeGroupNode,
   GroupActionButton,
 } from '@/components/sidebar/utils';
+import { Path } from '@/utils/enum';
+import { DataNode } from 'antd/lib/tree';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import TreeTitle from './TreeTitle';
-import Image from 'next/image';
-import { getIconSource } from '@/utils/getIconSource';
+import { MagicPencilOutlined } from '@/utils/svgs/MagicPencilOutlined';
 
 const StyledSidebarTree = styled(SidebarTree)`
   ${sidebarCommonStyle}
@@ -66,7 +64,7 @@ export default function ThreadTree(props: Props) {
         render: () => (
           <GroupActionButton
             size="middle"
-            icon={<Image src={getIconSource('magic-pencil-outlined')} width={18} height={18} alt='new-thread' color='red' />}
+            icon={<MagicPencilOutlined className="gray-8"/>}
             onClick={() => router.push(Path.Home)}
             className="g-1 bg-gray-1"
           >

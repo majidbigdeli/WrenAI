@@ -11,6 +11,7 @@ import SidebarTree, {
 import ThreadTree, { ThreadData } from './home/ThreadTree';
 import Image from 'next/image';
 import { getIconSource } from '@/utils/getIconSource';
+import { Typography } from 'antd';
 
 export interface Props {
   data: {
@@ -88,7 +89,7 @@ export default function Home(props: Props) {
           alt={'agent-filled'}
           width="18"
           height="18" />
-        <span className="text-medium">دستیار مدیر</span>
+        <Typography className="text-bold" style={{ fontSize: 18 }}>دستیار مدیر</Typography>
       </SideBarHead>
       <StyledTreeNodeLink
         className={clsx({

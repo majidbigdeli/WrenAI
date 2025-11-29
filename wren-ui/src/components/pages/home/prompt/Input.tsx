@@ -7,14 +7,15 @@ import { getIconSource } from '@/utils/getIconSource';
 
 const PromptButton = styled(Button)`
   min-width: 72px;
-  .ant-btn {
-    padding: 4px !important; 
-  }
+  padding: 4px; 
+  border-radius: 8px;
 `;
 const StyledInputTextArea=styled(Input.TextArea)`
   border: none;
-  .ant-input:focus, .ant-input-focused {
-    border: none;
+  top:3px;
+  &:focus{
+    border: none !important;
+    box-shadow: unset;
   }
 `
 interface Props {

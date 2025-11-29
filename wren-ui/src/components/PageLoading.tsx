@@ -4,7 +4,7 @@ import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
 
 const Wrapper = styled.div`
   position: absolute;
-  top: 48px;
+  top: 0px;
   left: 0;
   right: 0;
   bottom: 0;

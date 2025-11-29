@@ -104,12 +104,12 @@ export const createTreeGroupNode =
     } = assign(sourceData, updatedData);
 
     const emptyChildren = [
-      {
-        title: `No ${lowerCase(groupName)}`,
-        key: `${groupKey}-empty`,
-        selectable: false,
-        className: 'adm-treeNode adm-treeNode--empty adm-treeNode--selectNode',
-      },
+      // { //TODOSH
+      //   title: `No ${lowerCase(groupName)}`,
+      //   key: `${groupKey}-empty`,
+      //   selectable: false,
+      //   className: 'adm-treeNode adm-treeNode--empty adm-treeNode--selectNode',
+      // },
     ];
     const childrenData = isEmpty(children) ? emptyChildren : children; //TODOSH
 
