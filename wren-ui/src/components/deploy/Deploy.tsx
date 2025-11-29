@@ -47,7 +47,7 @@ export default function Deploy() {
         if (data.deploy?.status === 'FAILED') {
           console.error('Failed to deploy - ', data.deploy?.error);
           message.error(
-            'Failed to deploy. Please check the log for more details.',
+            'استقرار ناموفق بود. لطفاً برای جزئیات بیشتر، گزارش را بررسی کنید.',
           );
         }
       },

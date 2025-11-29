@@ -3,7 +3,8 @@
   "version": "0.31.3",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS=--inspect TZ=UTC yarn dev",
+    "dev": "TZ=UTC next dev",
+    "dev:debug": "NODE_OPTIONS=--inspect yarn dev",
     "build": "NODE_OPTIONS=--max-old-space-size=8192 next build",
     "start": "TZ=UTC next start",
     "lint": "yarn check-types && next lint",

@@ -31,7 +31,7 @@ const DynamicSidebar = (
 ) => {
   const { pathname, ...restProps } = props;
 
-  const getContent = () => {
+  const getContent = () => { //TODOSH routes
     if (pathname.startsWith(Path.Home)) {
       return <Home {...(restProps as HomeSidebarProps)} />;
     }

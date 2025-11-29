@@ -4,17 +4,11 @@ import { useOnboardingStatusQuery } from '@/apollo/client/graphql/onboarding.gen
 import { OnboardingStatus } from '@/apollo/client/graphql/__types__';
 import { Path } from '@/utils/enum';
 
-// const redirectRoute = {
-//   [OnboardingStatus.DATASOURCE_SAVED]: Path.OnboardingModels,
-//   [OnboardingStatus.NOT_STARTED]: Path.OnboardingConnection,
-//   [OnboardingStatus.ONBOARDING_FINISHED]: Path.Modeling,
-//   [OnboardingStatus.WITH_SAMPLE_DATASET]: Path.Modeling,
-// };
 const redirectRoute = {
-  [OnboardingStatus.DATASOURCE_SAVED]: Path.Home,
-  [OnboardingStatus.NOT_STARTED]: Path.Home,
-  [OnboardingStatus.ONBOARDING_FINISHED]: Path.Home,
-  [OnboardingStatus.WITH_SAMPLE_DATASET]: Path.Home,
+  [OnboardingStatus.DATASOURCE_SAVED]: Path.OnboardingModels,
+  [OnboardingStatus.NOT_STARTED]: Path.OnboardingConnection,
+  [OnboardingStatus.ONBOARDING_FINISHED]: Path.Modeling,
+  [OnboardingStatus.WITH_SAMPLE_DATASET]: Path.Modeling,
 };
 
 export const useWithOnboarding = () => {

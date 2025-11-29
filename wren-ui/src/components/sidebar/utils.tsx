@@ -111,7 +111,7 @@ export const createTreeGroupNode =
         className: 'adm-treeNode adm-treeNode--empty adm-treeNode--selectNode',
       },
     ];
-    const childrenData = isEmpty(children) ? emptyChildren : children;
+    const childrenData = isEmpty(children) ? emptyChildren : children; //TODOSH
 
     return [
       {

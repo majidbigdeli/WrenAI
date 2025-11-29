@@ -4,12 +4,13 @@ import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
 import styled from 'styled-components';
 import { Path } from '@/utils/enum';
-import FundViewOutlined from '@ant-design/icons/FundViewOutlined';
 import SidebarTree, {
   StyledTreeNodeLink,
   useSidebarTreeState,
 } from './SidebarTree';
 import ThreadTree, { ThreadData } from './home/ThreadTree';
+import Image from 'next/image';
+import { getIconSource } from '@/utils/getIconSource';
 
 export interface Props {
   data: {
@@ -37,6 +38,16 @@ export const StyledSidebarTree = styled(SidebarTree)`
     }
   }
 `;
+
+const SideBarHead = styled("div")`{
+  background-color: white;
+  height: 64px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #F1F3F8;
+}`
 
 export default function Home(props: Props) {
   const { data, onSelect, onRename, onDelete } = props;
@@ -71,6 +82,14 @@ export default function Home(props: Props) {
 
   return (
     <>
+      <SideBarHead>
+        <Image className="ml-2"
+          src={getIconSource('agent-filled')}
+          alt={'agent-filled'}
+          width="18"
+          height="18" />
+        <span className="text-medium">دستیار مدیر</span>
+      </SideBarHead>
       <StyledTreeNodeLink
         className={clsx({
           'adm-treeNode--selected': router.pathname === Path.HomeDashboard,
@@ -78,7 +97,11 @@ export default function Home(props: Props) {
         })}
         href={Path.HomeDashboard}
       >
-        <FundViewOutlined className="ml-2" />
+        <Image className="ml-2"
+          src={getIconSource('category-outlined')}
+          alt={'category-outlined'}
+          width="18"
+          height="18" />
         <span className="text-medium">داشبورد</span>
       </StyledTreeNodeLink>
       <ThreadTree

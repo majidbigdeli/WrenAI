@@ -51,7 +51,7 @@ export default function Dashboard() {
   } = useDashboardQuery({
     fetchPolicy: 'cache-and-network',
     onError: () => {
-      message.error('Failed to fetch dashboard items.');
+      message.error('دریافت موارد داشبورد ناموفق بود.');
       router.push(Path.Home);
     },
   });
@@ -70,7 +70,7 @@ export default function Dashboard() {
 
   const [updateDashboardItemLayouts] = useUpdateDashboardItemLayoutsMutation({
     onError: () => {
-      message.error('Failed to update dashboard item layouts.');
+      message.error('به‌روزرسانی طرح‌بندی آیتم‌های داشبورد ناموفق بود.');
     },
   });
   const [deleteDashboardItem] = useDeleteDashboardItemMutation({
