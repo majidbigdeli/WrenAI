@@ -33,7 +33,7 @@ export async function getDomainInfoByHost(
 ): Promise<DomainInfoDto> {
   const endpoint =
     process.env.DOMAIN_INFO_API_URL ||
-    'http://192.168.34.184:7014/DomainInfoManagerApi';
+    'http://192.168.11.7:7014/DomainInfoManagerApi';
 
   //host = "salanati.com";
   const urlParam = `${host}`;

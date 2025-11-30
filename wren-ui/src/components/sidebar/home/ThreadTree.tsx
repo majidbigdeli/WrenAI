@@ -5,6 +5,7 @@ import {
   createTreeGroupNode,
   GroupActionButton,
 } from '@/components/sidebar/utils';
+import ReloadOutlined from '@ant-design/icons/ReloadOutlined';
 import { Path } from '@/utils/enum';
 import { DataNode } from 'antd/lib/tree';
 import { useParams, useRouter } from 'next/navigation';
@@ -12,6 +13,10 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TreeTitle from './TreeTitle';
 import { MagicPencilOutlined } from '@/utils/svgs/MagicPencilOutlined';
+import { useSchemaChangeQuery, useTriggerDataSourceDetectionMutation } from '@/apollo/client/graphql/dataSource.generated';
+import { message } from 'antd';
+import { getRelativeTime } from '@/utils/time';
+
 
 const StyledSidebarTree = styled(SidebarTree)`
   ${sidebarCommonStyle}
@@ -55,10 +60,43 @@ export default function ThreadTree(props: Props) {
     onDeleteThread,
   } = props;
 
+  const { data: schemaChangeData, refetch: refetchSchemaChange } =
+    useSchemaChangeQuery({
+      fetchPolicy: 'cache-and-network',
+    });
+
+  const [triggerDataSourceDetection, { loading: isDetecting }] =
+    useTriggerDataSourceDetectionMutation({
+      onError: (error) => console.error(error),
+      onCompleted: async (data) => {
+        if (data.triggerDataSourceDetection) {
+          message.warning('تغییر ساختار داده‌ شناسایی شد.');
+        } else {
+          message.success('هیچ تغییر ساختار داده‌ای وجود ندارد.');
+        }
+        await refetchSchemaChange();
+      },
+    });
+
   const getThreadGroupNode = createTreeGroupNode({
     groupName: 'گفتگوها',
     groupKey: 'threads',
     actions: [
+      {
+        key: 'trigger-schema-detection',
+        disabled: isDetecting,
+        icon: () => (
+          <ReloadOutlined
+            spin={isDetecting}
+            title={
+              schemaChangeData?.schemaChange.lastSchemaChangeTime
+                ? `آخرین به‌روزرسانی ${getRelativeTime(schemaChangeData?.schemaChange.lastSchemaChangeTime)}`
+                : ''
+            }
+            onClick={() => triggerDataSourceDetection()}
+          />
+        ),
+      },
       {
         key: 'new-thread',
         render: () => (
