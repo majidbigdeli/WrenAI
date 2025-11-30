@@ -63,71 +63,71 @@ export enum GeneralErrorCodes {
 }
 
 export const errorMessages = {
-  [GeneralErrorCodes.INTERNAL_SERVER_ERROR]: 'Internal server error',
+  [GeneralErrorCodes.INTERNAL_SERVER_ERROR]: 'خطای داخلی سرور',
 
   // AI service errors
   [GeneralErrorCodes.NO_RELEVANT_DATA]:
-    "I can't find the exact data you're looking for, but feel free to ask about other available topics.",
+    'من نمی‌توانم دادهٔ دقیقی که به دنبال آن هستید پیدا کنم، اما می‌توانید دربارهٔ موضوعات دیگر سوال کنید.',
   [GeneralErrorCodes.NO_RELEVANT_SQL]:
-    "Could you please provide more details or specify the information you're seeking?",
+    'آیا می‌توانید اطلاعات بیشتری ارائه دهید یا مشخص کنید که به چه چیزی نیاز دارید؟',
   [GeneralErrorCodes.NO_CHART]:
-    "The chart couldn't be generated this time. Please try regenerating the chart or rephrasing your question for better results.",
+    'نمودار در این بار تولید نشد. لطفاً دوباره تلاش کنید یا سوال خود را به شکل دیگری بیان کنید تا نتایج بهتری بگیرید.',
 
   // Connector errors
-  [GeneralErrorCodes.CONNECTION_ERROR]: 'Can not connect to data source',
+  [GeneralErrorCodes.CONNECTION_ERROR]: 'نمی‌توان به منبع داده متصل شد',
   // duckdb
   [GeneralErrorCodes.INIT_SQL_ERROR]:
-    'The initializing SQL seems to be invalid, Please check your SQL and try again.',
+    'SQL اولیه به نظر نامعتبر می‌رسد، لطفاً SQL خود را بررسی کرده و دوباره تلاش کنید.',
   [GeneralErrorCodes.SESSION_PROPS_ERROR]:
-    'The session properties seem to be invalid, Please check your session properties and try again.',
+    'به نظر می‌رسد که ویژگی‌های جلسه نامعتبر هستند، لطفاً ویژگی‌های خود را بررسی کرده و دوباره تلاش کنید.',
   // postgres
   [GeneralErrorCodes.CONNECTION_REFUSED]:
-    'Connection refused by the server, Please check your connection settings and try again.',
+    'اتصال توسط سرور رد شد، لطفاً تنظیمات اتصال خود را بررسی کرده و دوباره تلاش کنید.',
 
   // ibis service errors
   [GeneralErrorCodes.IBIS_SERVER_ERROR]:
-    'Error occurred while querying ibis server, please try again later.',
+    'در هنگام پرسش از سرور ایبیس خطایی رخ داده است، لطفاً بعداً دوباره تلاش کنید.',
 
   // calculated field validation
-  [GeneralErrorCodes.DUPLICATED_FIELD_NAME]: 'This field name already exists',
+  [GeneralErrorCodes.DUPLICATED_FIELD_NAME]: 'این نام فیلد قبلاً وجود دارد',
   [GeneralErrorCodes.INVALID_EXPRESSION]:
-    'Invalid expression, please check your expression and try again.',
+    'عبارت نامعتبر است، لطفاً عبارت خود را بررسی کرده و دوباره تلاش کنید.',
   [GeneralErrorCodes.INVALID_CALCULATED_FIELD]:
-    'Can not execute a query when using this calculated field',
+    'نمی‌توان یک پرس و جو را هنگام استفاده از این فیلد محاسبه شده اجرا کرد',
 
-  // when createing views
-  [GeneralErrorCodes.INVALID_VIEW_CREATION]: 'Invalid view creation',
+  // when creating views
+  [GeneralErrorCodes.INVALID_VIEW_CREATION]: 'ایجاد نمای نامعتبر است',
 
   // dry run error
-  [GeneralErrorCodes.DRY_RUN_ERROR]: 'Dry run sql statement error',
-  [GeneralErrorCodes.DRY_PLAN_ERROR]: 'Dry plan error',
+  [GeneralErrorCodes.DRY_RUN_ERROR]: 'خطای بیان SQL در حالت آزمایشی',
+  [GeneralErrorCodes.DRY_PLAN_ERROR]: 'خطای برنامه آزمایشی',
 
   // deploy sql pair error
-  [GeneralErrorCodes.DEPLOY_SQL_PAIR_ERROR]: 'Deploy sql pair error',
-  [GeneralErrorCodes.GENERATE_QUESTIONS_ERROR]: 'Generate questions error',
+  [GeneralErrorCodes.DEPLOY_SQL_PAIR_ERROR]: 'خطای استقرار جفت SQL',
+  [GeneralErrorCodes.GENERATE_QUESTIONS_ERROR]: 'خطا در تولید سوالات',
   [GeneralErrorCodes.INVALID_SQL_ERROR]:
-    'Invalid SQL, please check your SQL syntax',
+    'SQL نامعتبر است، لطفاً سینتاکس SQL خود را بررسی کنید',
 
   // asking task error
   [GeneralErrorCodes.IDENTIED_AS_GENERAL]:
-    'The question is identified as a general question, please follow-up ask with more specific questions.',
+    'سوال به عنوان سوال عمومی شناسایی شده است، لطفاً با سوالات خاص‌تری پیگیری کنید.',
   [GeneralErrorCodes.IDENTIED_AS_MISLEADING_QUERY]:
-    'The question is identified as a misleading query, please follow-up ask with more specific questions.',
+    'سوال به عنوان یک پرسش گمراه‌کننده شناسایی شده است، لطفاً با سوالات خاص‌تری پیگیری کنید.',
   [GeneralErrorCodes.DEPLOY_TIMEOUT_ERROR]:
-    'LLM deployment timed out after 30 seconds',
+    'زمان استقرار LLM پس از ۳۰ ثانیه به پایان رسید',
 
   // api error
-  [GeneralErrorCodes.NON_SQL_QUERY]: 'Cannot generate SQL from this question.',
+  [GeneralErrorCodes.NON_SQL_QUERY]: 'نمی‌توان SQL را از این سوال تولید کرد.',
   [GeneralErrorCodes.NO_DEPLOYMENT_FOUND]:
-    'No deployment found, please deploy your project first',
+    'هیچ استقراری یافت نشد، لطفاً ابتدا پروژه خود را مستقر کنید',
 
   // vega schema error
   [GeneralErrorCodes.FAILED_TO_GENERATE_VEGA_SCHEMA]:
-    'Failed to generate Vega spec',
-  [GeneralErrorCodes.POLLING_TIMEOUT]: 'Polling timeout',
+    'خطا در تولید مشخصات وگا',
+  [GeneralErrorCodes.POLLING_TIMEOUT]: 'زمان‌بندی درخواست به پایان رسید',
 
   // sql execution error
-  [GeneralErrorCodes.SQL_EXECUTION_ERROR]: 'SQL execution error',
+  [GeneralErrorCodes.SQL_EXECUTION_ERROR]: 'خطای اجرای SQL',
 };
 
 export const shortMessages = {
