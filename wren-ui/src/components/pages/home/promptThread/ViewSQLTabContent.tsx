@@ -109,12 +109,12 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
     <div className="text-md gray-10 p-6 pb-4">
       <Alert
         banner
-        className="mb-3 adm-alert-info g-1"
+        className="mb-3 adm-alert-info g-1 bg-gray-2"
         message={
           <>
             شما به طور پیش‌فرض در حال مشاهده‌ی SQL هستید. اگر می‌خواهید این
             پرس‌وجو را روی پایگاه داده‌ی خودتان اجرا کنید، برای دریافت سینتکس
-            دقیق، روی «نمایش SQL اصلی» کلیک کنید.
+            دقیق، روی «نمایش SQL» کلیک کنید.
             {/* <Typography.Link //TODOSH
               className="underline ml-1"
               href="https://docs.getwren.ai/oss/guide/home/wren_sql"
