@@ -20,6 +20,7 @@ export interface DomainInfoDto {
   DbCatalogName: string;
   DbServerAddress: string;
   DbVersion: number;
+  DbPort: string;
   DomainId: string;
   LocalUrl: string;
   PublicUrl: string;
@@ -75,6 +76,7 @@ export async function getDomainInfoByHost(
     DbCatalogName: result.DbCatalogName,
     DbServerAddress: result.DbServerAddress,
     DbVersion: Number(result.DbVersion),
+    DbPort: result.DbPort,
     DomainId: result.DomainId,
     LocalUrl: result.LocalUrl,
     PublicUrl: result.PublicUrl,
@@ -153,19 +155,12 @@ export function buildMsSqlConnectionInfoFromDomainInfo(
   let port: number;
 
   if (dataSource.includes('\\')) {
-    // مثال: "192.168.11.6\\PayamGostarV2"
     const [server, instanceName] = dataSource.split('\\');
 
     host = server;
-    // پورت رو از env یا config بخون، اگر ندادی 1433
     port = Number(process.env.MSSQL_INSTANCE_PORT || '1433');
 
-    // اگر خواستی بعداً این مپ رو داشته باشی:
-    // مثلا MSSQL_INSTANCE_PORT_PayamGostarV2
-    // const key = `MSSQL_INSTANCE_PORT_${instanceName}`;
-    // port = Number(process.env[key] || process.env.MSSQL_INSTANCE_PORT || '1433');
   } else {
-    // این قبلیه: حالت server,port و...
     const hp = extractHostAndPort(dataSource, domain.DbServerAddress, 1433);
     host = hp.host;
     port = hp.port;
@@ -176,14 +171,14 @@ export function buildMsSqlConnectionInfoFromDomainInfo(
   //     domain.DbServerAddress,
   //     1433,
   // );
-  var portString = port.toString();
+  var portString = domain.DbPort ?? port.toString();
   return {
-    host, // تو مثال تو: "192.168.11.6\\PayamGostarV2"
+    host, 
     //@ts-ignore
-    port:portString, // چون پورتی تو کانکشن نیست → 1433
-    user, // "sa"
-    password, // پسوردی که اومده
-    database: dbName, // "PGV2_Dev"
+    port: portString, 
+    user,
+    password,
+    database: dbName, 
     trustServerCertificate: trust,
   };
 }
