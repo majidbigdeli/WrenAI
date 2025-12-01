@@ -424,6 +424,38 @@ export class ProjectResolver {
   }
 
   public async listDataSourceTables(_root: any, _arg, ctx: IContext) {
+    
+    const project = await ctx.projectService.getCurrentProject();
+    const domainInfo = await getDomainInfoByHost(ctx.requestHost);
+
+    const hostKey = ctx.requestHost.toLowerCase();
+    HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = domainInfo.DomainId;
+    project.uniqueId = domainInfo.DomainId;
+    project.host = domainInfo.Url;
+
+    const mssqlConn: MS_SQL_CONNECTION_INFO =
+      buildMsSqlConnectionInfoFromDomainInfo(domainInfo);
+
+    var finalConnectionInfo = mssqlConn;
+    var finalDisplayName = domainInfo.DbCatalogName || finalDisplayName;
+
+    var connectionInfo = encryptConnectionInfo(
+      DataSourceName.MSSQL,
+      finalConnectionInfo,
+    );
+
+    project.uniqueId = domainInfo.DomainId;
+    project.host = domainInfo.Url;
+    project.connectionInfo = connectionInfo;
+    project.displayName = finalDisplayName;
+    
+    await ctx.projectRepository.updateOne(project.id, {
+      host: domainInfo.Url,
+      uniqueId: domainInfo.DomainId,
+      connectionInfo: connectionInfo,
+      displayName: finalDisplayName
+    });
+
     return await ctx.projectService.getProjectDataSourceTables();
   }
 
