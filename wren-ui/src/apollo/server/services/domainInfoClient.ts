@@ -176,10 +176,11 @@ export function buildMsSqlConnectionInfoFromDomainInfo(
   //     domain.DbServerAddress,
   //     1433,
   // );
-
+  var portString = port.toString();
   return {
     host, // تو مثال تو: "192.168.11.6\\PayamGostarV2"
-    port, // چون پورتی تو کانکشن نیست → 1433
+    //@ts-ignore
+    port:portString, // چون پورتی تو کانکشن نیست → 1433
     user, // "sa"
     password, // پسوردی که اومده
     database: dbName, // "PGV2_Dev"
