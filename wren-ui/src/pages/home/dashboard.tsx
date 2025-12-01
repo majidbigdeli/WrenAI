@@ -63,7 +63,7 @@ export default function Dashboard() {
   const [setDashboardSchedule] = useSetDashboardScheduleMutation({
     refetchQueries: ['Dashboard'],
     onCompleted: () => {
-      message.success('Successfully updated dashboard schedule.');
+      message.success('برنامه داشبورد با موفقیت به‌روزرسانی شد.');
     },
     onError: (error) => console.error(error),
   });
@@ -76,7 +76,7 @@ export default function Dashboard() {
   const [deleteDashboardItem] = useDeleteDashboardItemMutation({
     onError: (error) => console.error(error),
     onCompleted: (_, query) => {
-      message.success('Successfully deleted dashboard item.');
+      message.success('مورد داشبورد با موفقیت حذف شد.');
       onRemoveDashboardItemFromQueryCache(query.variables.where.id);
     },
   });

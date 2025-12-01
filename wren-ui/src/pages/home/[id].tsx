@@ -88,7 +88,7 @@ export default function HomeThread() {
 
   const [createViewMutation, { loading: creating }] = useCreateViewMutation({
     onError: (error) => console.error(error),
-    onCompleted: () => message.success('Successfully created view.'),
+    onCompleted: () => message.success('نمای با موفقیت ایجاد شد.'),
   });
   const { data, updateQuery: updateThreadQuery } = useThreadQuery({
     variables: { threadId },
