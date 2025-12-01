@@ -256,16 +256,13 @@ export class ProjectService implements IProjectService {
     let finalDisplayName = projectData.displayName;
     let finalConnectionInfo = projectData.connectionInfo;
 
-    //if (projectData.type === DataSourceName.MSSQL && this.requestHost) {
     const domainInfo = await getDomainInfoByHost(this.requestHost);
 
     const mssqlConn: MS_SQL_CONNECTION_INFO =
       buildMsSqlConnectionInfoFromDomainInfo(domainInfo);
 
     finalConnectionInfo = mssqlConn;
-    // اگر دوست داری اسم پروژه از روی دامنه یا کاتالوگ باشه:
     finalDisplayName = domainInfo.DbCatalogName || finalDisplayName;
-    //}
 
     const projectValue = {
       displayName: finalDisplayName,
