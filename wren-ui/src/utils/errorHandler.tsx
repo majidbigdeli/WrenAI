@@ -217,7 +217,7 @@ class DeleteCalculatedFieldErrorHandler extends ErrorHandler {
   public getErrorMessage(error: GraphQLError) {
     switch (error.extensions?.code) {
       default:
-        return 'Failed to delete calculated field.';
+        return 'حذف فیلد محاسبه‌شده ناموفق بود.';
     }
   }
 }
@@ -226,7 +226,7 @@ class CreateRelationshipErrorHandler extends ErrorHandler {
   public getErrorMessage(error: GraphQLError) {
     switch (error.extensions?.code) {
       default:
-        return 'Failed to create relationship.';
+        return 'در ایجاد رابطه ناموفق بود.';
     }
   }
 }
@@ -235,7 +235,7 @@ class UpdateRelationshipErrorHandler extends ErrorHandler {
   public getErrorMessage(error: GraphQLError) {
     switch (error.extensions?.code) {
       default:
-        return 'Failed to update relationship.';
+        return 'به‌روزرسانی رابطه ناموفق بود.';
     }
   }
 }
@@ -244,7 +244,7 @@ class DeleteRelationshipErrorHandler extends ErrorHandler {
   public getErrorMessage(error: GraphQLError) {
     switch (error.extensions?.code) {
       default:
-        return 'Failed to delete relationship.';
+        return 'حذف رابطه ناموفق بود.';
     }
   }
 }
@@ -253,7 +253,7 @@ class UpdateViewMetadataErrorHandler extends ErrorHandler {
   public getErrorMessage(error: GraphQLError) {
     switch (error.extensions?.code) {
       default:
-        return 'Failed to update view metadata.';
+        return 'به‌روزرسانی فراداده‌های نمایش ناموفق بود.';
     }
   }
 }
@@ -262,7 +262,7 @@ class TriggerDataSourceDetectionErrorHandler extends ErrorHandler {
   public getErrorMessage(error: GraphQLError) {
     switch (error.extensions?.code) {
       default:
-        return 'Failed to scan data source.';
+        return 'اسکن منبع داده ناموفق بود.';
     }
   }
 }
@@ -271,7 +271,7 @@ class ResolveSchemaChangeErrorHandler extends ErrorHandler {
   public getErrorMessage(error: GraphQLError) {
     switch (error.extensions?.code) {
       default:
-        return 'Failed to resolve schema change.';
+        return 'مشکل تغییر ساختار داده حل نشد.';
     }
   }
 }
@@ -280,7 +280,7 @@ class CreateDashboardItemErrorHandler extends ErrorHandler {
   public getErrorMessage(error: GraphQLError) {
     switch (error.extensions?.code) {
       default:
-        return 'Failed to create dashboard item.';
+        return 'ایجاد آیتم داشبورد ناموفق بود.';
     }
   }
 }
