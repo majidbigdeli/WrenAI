@@ -97,7 +97,7 @@ export default function ChartAnswer(props: AnswerResultProps) {
   const [createDashboardItem] = useCreateDashboardItemMutation({
     onError: (error) => console.error(error),
     onCompleted: () => {
-      message.success('Successfully pinned chart to dashboard.');
+      message.success('نمودار با موفقیت به داشبورد پین شد.');
     },
   });
 

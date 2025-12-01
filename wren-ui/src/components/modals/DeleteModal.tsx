@@ -31,7 +31,6 @@ export const makeDeleteModal =
               config?.content ||
               'این برای همیشه حذف خواهد شد، لطفاً تأیید کنید که می‌خواهید آن را حذف کنید.',
 
-            // icon: <ExclamationCircleOutlined />,//TODOSH
             icon: <></>,
             okText: 'حذف',
             onOk: onConfirm,
