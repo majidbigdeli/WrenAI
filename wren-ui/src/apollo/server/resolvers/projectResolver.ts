@@ -19,6 +19,7 @@ import {
   DUCKDB_CONNECTION_INFO,
   Model,
   ModelColumn,
+  MS_SQL_CONNECTION_INFO,
   Project,
 } from '../repositories';
 import {
@@ -37,7 +38,7 @@ import DataSourceSchemaDetector, {
 import { encryptConnectionInfo } from '../dataSource';
 import { TelemetryEvent } from '../telemetry/telemetry';
 import { HOST_PROJECT_UNIQUE_ID_MAP } from '../config';
-import { getDomainInfoByHost } from '../services/domainInfoClient';
+import { buildMsSqlConnectionInfoFromDomainInfo, getDomainInfoByHost } from '../services/domainInfoClient';
 
 const logger = getLogger('DataSourceResolver');
 logger.level = 'debug';
@@ -249,15 +250,15 @@ export class ProjectResolver {
     let project: Project | null;
     try {
       project = await ctx.projectService.getCurrentProject();
-      const hostKey = ctx.requestHost.toLowerCase();
-      var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
+      // const hostKey = ctx.requestHost.toLowerCase();
+      // var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
 
-      if (!cachedUniqueId) {
-        const domainInfo = await getDomainInfoByHost(ctx.requestHost);
-        cachedUniqueId = domainInfo.DomainId;
-        HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
-        await this.deploy(ctx);
-      }
+      // if (!cachedUniqueId) {
+      //   const domainInfo = await getDomainInfoByHost(ctx.requestHost);
+      //   cachedUniqueId = domainInfo.DomainId;
+      //   HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
+      //   await this.deploy(ctx);
+      // }
     } catch (_err: any) {
       const { type, properties } = HARDCODED_MSSQL_DATASOURCE;
       const { displayName, ...connectionInfo } = properties;
@@ -675,6 +676,43 @@ export class ProjectResolver {
 
   private async deploy(ctx: IContext) {
     const project = await ctx.projectService.getCurrentProject();
+    const domainInfo = await getDomainInfoByHost(ctx.requestHost);
+    const hostKey = ctx.requestHost.toLowerCase();
+    HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = domainInfo.DomainId;
+    project.uniqueId = domainInfo.DomainId;
+    project.host = domainInfo.Url;
+
+    const mssqlConn: MS_SQL_CONNECTION_INFO =
+      buildMsSqlConnectionInfoFromDomainInfo(domainInfo);
+
+    var finalConnectionInfo = mssqlConn;
+    var finalDisplayName = domainInfo.DbCatalogName || finalDisplayName;
+
+    var connectionInfo = encryptConnectionInfo(
+      DataSourceName.MSSQL,
+      finalConnectionInfo,
+    );
+
+    await ctx.projectRepository.updateOne(project.id, {
+      host: domainInfo.Url,
+      uniqueId: domainInfo.DomainId,
+      connectionInfo: connectionInfo,
+      displayName: finalDisplayName
+    });
+
+
+
+    // const hostKey = ctx.requestHost.toLowerCase();
+    // var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
+
+    // if (!cachedUniqueId) {
+    //   const domainInfo = await getDomainInfoByHost(ctx.requestHost);
+    //   cachedUniqueId = domainInfo.DomainId;
+    //   HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
+    //   await this.deploy(ctx);
+    // }
+
+
     const { manifest } = await ctx.mdlService.makeCurrentModelMDL(project.id);
     const deployRes = await ctx.deployService.deploy(manifest, project.id);
 
