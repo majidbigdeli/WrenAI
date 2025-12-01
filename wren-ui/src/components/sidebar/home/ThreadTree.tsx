@@ -139,7 +139,7 @@ export default function ThreadTree(props: Props) {
         }),
       }),
     );
-  }, [params?.id, threads]);
+  }, [params?.id, threads, isDetecting]);
 
   return (
     <StyledSidebarTree
