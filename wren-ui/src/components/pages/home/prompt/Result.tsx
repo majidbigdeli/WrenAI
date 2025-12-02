@@ -101,48 +101,63 @@ const makeProcessing = (text: string) => (props: Props) => {
 
 const makeProcessingError =
   (config: { icon: ReactNode; title?: string; description?: string }) =>
-  (props: Props) => {
-    const { onClose, onSelectRecommendedQuestion, data, error } = props;
-    const { message, shortMessage, stacktrace } = error || {};
-    const hasStacktrace = !!stacktrace;
+    (props: Props) => {
+      const { onClose, onSelectRecommendedQuestion, data, error } = props;
+      const { message, shortMessage, stacktrace } = error || {};
+      const hasStacktrace = !!stacktrace;
 
-    const recommendedQuestionProps = getRecommendedQuestionProps(
-      data?.recommendedQuestions,
-    );
+      const recommendedQuestionProps = getRecommendedQuestionProps(
+        data?.recommendedQuestions,
+      );
 
-    return (
-      <Wrapper>
-        <div className="d-flex justify-space-between text-medium mb-2">
-          <div className="d-flex align-center">
-            {config.icon}
-            {config.title || shortMessage}
+      const errorResolver = (error: string) => {
+        // TODOSH must be in error.ts
+        const errors = {
+          "RateLimit": 'شما از حد مجاز استفاده از این کلید API عبور کردید. لطفاً بعد از چند دقیقه دوباره تلاش کنید.'
+        }
+        let resolvedError = error
+        console.log("errorResolver", { error })
+        Object.keys(errors).forEach(key => {
+          if (error.includes(key)) {
+            resolvedError = errors[key]
+          }
+        })
+
+        return resolvedError
+      }
+      return (
+        <Wrapper>
+          <div className="d-flex justify-space-between text-medium mb-2">
+            <div className="d-flex align-center">
+              {config.icon}
+              {config.title || shortMessage}
+            </div>
+            <Button
+              className="adm-btn-no-style gray-7 bg-gray-3 text-sm px-2"
+              type="text"
+              size="small"
+              onClick={onClose}
+            >
+              بستن
+            </Button>
           </div>
-          <Button
-            className="adm-btn-no-style gray-7 bg-gray-3 text-sm px-2"
-            type="text"
-            size="small"
-            onClick={onClose}
-          >
-            بستن
-          </Button>
-        </div>
-        <div className="gray-7">
-          {config.description || data.intentReasoning || message}
-        </div>
-        {hasStacktrace && (
-          <ErrorCollapse className="mt-2" message={stacktrace.join('\n')} />
-        )}
+          <div className="gray-7">
+            {errorResolver(config.description || data.intentReasoning || message)}
+          </div>
+          {hasStacktrace && (
+            <ErrorCollapse className="mt-2" message={stacktrace.join('\n')} />
+          )}
 
-        {recommendedQuestionProps.show && (
-          <RecommendedQuestions
-            className="mt-2"
-            {...recommendedQuestionProps.state}
-            onSelect={onSelectRecommendedQuestion}
-          />
-        )}
-      </Wrapper>
-    );
-  };
+          {recommendedQuestionProps.show && (
+            <RecommendedQuestions
+              className="mt-2"
+              {...recommendedQuestionProps.state}
+              onSelect={onSelectRecommendedQuestion}
+            />
+          )}
+        </Wrapper>
+      );
+    };
 
 const ErrorIcon = () => <CloseCircleFilled className="ml-2 red-5 text-lg" />;
 
