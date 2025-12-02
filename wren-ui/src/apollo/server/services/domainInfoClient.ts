@@ -171,7 +171,7 @@ export function buildMsSqlConnectionInfoFromDomainInfo(
   //     domain.DbServerAddress,
   //     1433,
   // );
-  var portString = domain.DbPort ?? port.toString();
+  var portString = domain.DbPort.toString() ?? port.toString();
   return {
     host, 
     //@ts-ignore
