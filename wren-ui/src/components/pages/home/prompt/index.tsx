@@ -156,7 +156,7 @@ export default forwardRef<Attributes, Props>(function Prompt(props, ref) {
   );
 
   return (
-    <PromptStyle className="d-flex align-end p-3 border border-gray-3 rounded">
+    <PromptStyle className="d-flex align-end p-3 border border-gray-3 rounded bg-gray-1">
       <PromptInput
         question={question}
         isProcessing={isProcessing}

@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import { Button, Tag, Space } from 'antd';
-import StopOutlined from '@ant-design/icons/StopOutlined';
-import ReloadOutlined from '@ant-design/icons/ReloadOutlined';
-import { attachLoading } from '@/utils/helper';
-import { getIsFinished } from '@/hooks/useAskPrompt';
 import { AskingTaskStatus } from '@/apollo/client/graphql/__types__';
+import { getIsFinished } from '@/hooks/useAskPrompt';
+import { attachLoading } from '@/utils/helper';
+import ReloadOutlined from '@ant-design/icons/ReloadOutlined';
+import { Button, Space, Tag } from 'antd';
+import { useState } from 'react';
 import type { PreparedTask, Props } from './index';
 
 export default function PreparationStatus(
@@ -43,7 +42,6 @@ export default function PreparationStatus(
   if (isProcessing) {
     return (
       <Button
-        icon={<StopOutlined />}
         danger
         size="small"
         onClick={onCancel}

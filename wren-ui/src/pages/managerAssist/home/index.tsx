@@ -27,7 +27,7 @@ const Wrapper = ({ children }) => {
     >
       <Logo size={48} color="var(--gray-8)" />
       <div className="text-md text-medium gray-8">
-        اطلاعات بیشتری در مورد داده‌های خود کسب کنید.
+       تنها با یک پرسش گزارش از داده‌هایتان بسازید.
       </div>
       {children}
     </div>

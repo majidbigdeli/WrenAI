@@ -51,6 +51,7 @@ const SampleDatasetPanel = (props: Props) => {
       Modal.confirm({
         title: `Are you sure you want to change to "${template.label}" dataset?`,
         okButtonProps: { danger: true },
+        icon: <></>,
         okText: 'Change',
         onOk: async () => {
           await startSampleDataset({ variables: { data: { name } } });

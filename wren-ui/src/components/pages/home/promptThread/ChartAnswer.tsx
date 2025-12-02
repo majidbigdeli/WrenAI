@@ -172,7 +172,8 @@ export default function ChartAnswer(props: AnswerResultProps) {
     Modal.confirm({
       title: 'آیا مطمئن هستید که می‌خواهید نمودار را دوباره ایجاد کنید؟',
       onOk: onRegenerate,
-      okText: 'ذخیره',
+      icon: <></>,
+      okText: 'تایید',
       cancelText: 'انصراف',
     });
   };
@@ -184,8 +185,9 @@ export default function ChartAnswer(props: AnswerResultProps) {
   const onPin = () => {
     Modal.confirm({
       title: 'آیا مطمئن هستید که می‌خواهید این نمودار را به داشبورد پین کنید؟',
-      okText: 'ذخیره',
+      okText: 'تایید',
       cancelText: 'انصراف',
+      icon: <></>,
       onOk: async () =>
         await createDashboardItem({
           variables: {
@@ -242,9 +244,8 @@ export default function ChartAnswer(props: AnswerResultProps) {
       loading={loading}
       paragraph={{ rows: 4 }}
       title={false}
-      style={{ direction: 'ltr' }}
     >
-      <div className="text-md gray-10 p-6" style={{ direction: 'ltr' }}>
+      <div className="text-md gray-10 p-6">
         {chartDetail?.description}
         {chartSpec ? (
           <ChartWrapper

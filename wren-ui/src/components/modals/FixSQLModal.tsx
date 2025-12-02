@@ -73,7 +73,7 @@ export function FixSQLModal(props: Props) {
 
   return (
     <Modal
-      title="Fix SQL"
+      title="رفع مشکل SQL"
       width={640}
       visible={visible}
       okText="ارسال"

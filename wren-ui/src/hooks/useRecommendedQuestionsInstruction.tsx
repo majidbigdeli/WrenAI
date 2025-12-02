@@ -143,7 +143,7 @@ export default function useRecommendedQuestionsInstruction() {
       children: generating
         ? 'تولید سوالات'
         : showRetry
-          ? 'تلاش محدد'
+          ? 'تلاش مجدد'
           : 'چی بپرسم؟',
     };
   }, [generating, isRegenerate, showRetry, showRecommendedQuestionsPromptMode]);
