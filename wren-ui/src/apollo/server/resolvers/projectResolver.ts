@@ -250,15 +250,6 @@ export class ProjectResolver {
     let project: Project | null;
     try {
       project = await ctx.projectService.getCurrentProject();
-      // const hostKey = ctx.requestHost.toLowerCase();
-      // var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
-
-      // if (!cachedUniqueId) {
-      //   const domainInfo = await getDomainInfoByHost(ctx.requestHost);
-      //   cachedUniqueId = domainInfo.DomainId;
-      //   HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
-      //   await this.deploy(ctx);
-      // }
     } catch (_err: any) {
       const { type, properties } = HARDCODED_MSSQL_DATASOURCE;
       const { displayName, ...connectionInfo } = properties;
@@ -424,38 +415,7 @@ export class ProjectResolver {
   }
 
   public async listDataSourceTables(_root: any, _arg, ctx: IContext) {
-    
-    const project = await ctx.projectService.getCurrentProject();
-    const domainInfo = await getDomainInfoByHost(ctx.requestHost);
-
-    const hostKey = ctx.requestHost.toLowerCase();
-    HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = domainInfo.DomainId;
-    project.uniqueId = domainInfo.DomainId;
-    project.host = domainInfo.Url;
-
-    const mssqlConn: MS_SQL_CONNECTION_INFO =
-      buildMsSqlConnectionInfoFromDomainInfo(domainInfo);
-
-    var finalConnectionInfo = mssqlConn;
-    var finalDisplayName = domainInfo.DbCatalogName || finalDisplayName;
-
-    var connectionInfo = encryptConnectionInfo(
-      DataSourceName.MSSQL,
-      finalConnectionInfo,
-    );
-
-    project.uniqueId = domainInfo.DomainId;
-    project.host = domainInfo.Url;
-    project.connectionInfo = connectionInfo;
-    project.displayName = finalDisplayName;
-    
-    await ctx.projectRepository.updateOne(project.id, {
-      host: domainInfo.Url,
-      uniqueId: domainInfo.DomainId,
-      connectionInfo: connectionInfo,
-      displayName: finalDisplayName
-    });
-
+    await this.deploy(ctx);
     return await ctx.projectService.getProjectDataSourceTables();
   }
 
@@ -485,7 +445,7 @@ export class ProjectResolver {
       });
 
       // async deploy to wren-engine and ai service
-      this.deploy(ctx);
+      await this.deploy(ctx);
       return { models: models, columns };
     } catch (err: any) {
       ctx.telemetry.sendEvent(
@@ -583,7 +543,7 @@ export class ProjectResolver {
         arg.data.relations,
       );
       // async deploy
-      this.deploy(ctx);
+      await this.deploy(ctx);
       ctx.telemetry.sendEvent(eventName, {
         relationCount: savedRelations.length,
       });
@@ -682,7 +642,7 @@ export class ProjectResolver {
     project.host = domainInfo.Url;
     project.connectionInfo = connectionInfo;
     project.displayName = finalDisplayName;
-    
+
     await ctx.projectRepository.updateOne(project.id, {
       host: domainInfo.Url,
       uniqueId: domainInfo.DomainId,
@@ -743,8 +703,6 @@ export class ProjectResolver {
     const domainInfo = await getDomainInfoByHost(ctx.requestHost);
     const hostKey = ctx.requestHost.toLowerCase();
     HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = domainInfo.DomainId;
-    project.uniqueId = domainInfo.DomainId;
-    project.host = domainInfo.Url;
 
     const mssqlConn: MS_SQL_CONNECTION_INFO =
       buildMsSqlConnectionInfoFromDomainInfo(domainInfo);
@@ -757,25 +715,17 @@ export class ProjectResolver {
       finalConnectionInfo,
     );
 
+    project.uniqueId = domainInfo.DomainId;
+    project.host = domainInfo.Url;
+    project.connectionInfo = connectionInfo;
+    project.displayName = finalDisplayName;
+
     await ctx.projectRepository.updateOne(project.id, {
       host: domainInfo.Url,
       uniqueId: domainInfo.DomainId,
       connectionInfo: connectionInfo,
       displayName: finalDisplayName
     });
-
-
-
-    // const hostKey = ctx.requestHost.toLowerCase();
-    // var cachedUniqueId = HOST_PROJECT_UNIQUE_ID_MAP[hostKey];
-
-    // if (!cachedUniqueId) {
-    //   const domainInfo = await getDomainInfoByHost(ctx.requestHost);
-    //   cachedUniqueId = domainInfo.DomainId;
-    //   HOST_PROJECT_UNIQUE_ID_MAP[hostKey] = cachedUniqueId;
-    //   await this.deploy(ctx);
-    // }
-
 
     const { manifest } = await ctx.mdlService.makeCurrentModelMDL(project.id);
     const deployRes = await ctx.deployService.deploy(manifest, project.id);
