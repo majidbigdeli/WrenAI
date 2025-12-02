@@ -35,6 +35,9 @@ const TimelineItem = styled(Timeline.Item)`
     left: unset;
     border-left: unset;
   }
+  .ant-timeline-item-content {
+    margin: 0 26px 0 0;
+  }
 `;
 
 const retrievingNextStates = ProcessStateMachine.getAllNextStates(

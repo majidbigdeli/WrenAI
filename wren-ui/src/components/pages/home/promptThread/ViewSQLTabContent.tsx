@@ -197,7 +197,6 @@ export default function ViewSQLTabContent(props: AnswerResultProps) {
             <BinocularsIcon
               style={{
                 paddingBottom: 2,
-                marginLeft: 8,
               }}
             />
           }
