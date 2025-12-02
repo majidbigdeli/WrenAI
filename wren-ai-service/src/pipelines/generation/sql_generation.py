@@ -1,5 +1,6 @@
 import logging
 import sys
+from pathlib import Path
 from typing import Any
 
 from hamilton import base
@@ -25,62 +26,35 @@ from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
 
+# ===============================
+# Template loading from /template
+# ===============================
+# __file__ = wren-ai-service/src/pipelines/generation/sql_generation.py
+# parents[0] -> .../src/pipelines/generation
+# parents[1] -> .../src/pipelines
+# parents[2] -> .../src
+# parents[3] -> .../wren-ai-service  (root)
+BASE_DIR = Path(__file__).resolve().parents[3]
 
-sql_generation_user_prompt_template = """
-### DATABASE SCHEMA ###
-{% for document in documents %}
-    {{ document }}
-{% endfor %}
-
-{% if calculated_field_instructions %}
-{{ calculated_field_instructions }}
-{% endif %}
-
-{% if metric_instructions %}
-{{ metric_instructions }}
-{% endif %}
-
-{% if json_field_instructions %}
-{{ json_field_instructions }}
-{% endif %}
-
-{% if sql_functions %}
-### SQL FUNCTIONS ###
-{% for function in sql_functions %}
-{{ function }}
-{% endfor %}
-{% endif %}
-
-{% if sql_samples %}
-### SQL SAMPLES ###
-{% for sample in sql_samples %}
-Question:
-{{sample.question}}
-SQL:
-{{sample.sql}}
-{% endfor %}
-{% endif %}
-
-{% if instructions %}
-### USER INSTRUCTIONS ###
-{% for instruction in instructions %}
-{{ loop.index }}. {{ instruction }}
-{% endfor %}
-{% endif %}
-
-### QUESTION ###
-User's Question: {{ query }}
-
-{% if sql_generation_reasoning %}
-### REASONING PLAN ###
-{{ sql_generation_reasoning }}
-{% endif %}
-
-Let's think step by step.
-"""
+TEMPLATE_DIR = BASE_DIR / "template"
+SQL_GENERATION_TEMPLATE_PATH = TEMPLATE_DIR / "sql_generation_user_prompt_template.jinja2"
 
 
-## Start of Pipeline
+def load_template(path: Path) -> str:
+    """Read a template file as UTF-8 text."""
+    if not path.exists():
+        raise FileNotFoundError(f"Template file not found: {path}")
+    return path.read_text(encoding="utf-8")
+
+
+sql_generation_user_prompt_template: str = load_template(SQL_GENERATION_TEMPLATE_PATH)
+
+
+# ===============================
+# Start of Pipeline
+# ===============================
+
+
 @observe(capture_input=False)
 def prompt(
     query: str,
@@ -119,6 +93,7 @@ async def generate_sql(
     generator: Any,
     generator_name: str,
 ) -> dict:
+    # همون رفتاری که قبلاً داشتی، فقط تمپلیتش از فایل میاد
     return await generator(prompt=prompt.get("prompt")), generator_name
 
 
@@ -142,7 +117,9 @@ async def post_process(
     )
 
 
-## End of Pipeline
+# ===============================
+# End of Pipeline
+# ===============================
 
 
 class SQLGeneration(BasicPipeline):
