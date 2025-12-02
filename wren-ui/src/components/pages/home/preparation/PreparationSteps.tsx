@@ -28,7 +28,13 @@ const StyledBadge = styled(Badge)`
   }
 `;
 const TimelineItem = styled(Timeline.Item)`
-  direction: ltr;
+  direction: rtl;
+  .ant-timeline-item-tail {
+    right: 4px;
+    border-right: 2px solid #f0f0f0;
+    left: unset;
+    border-left: unset;
+  }
 `;
 
 const retrievingNextStates = ProcessStateMachine.getAllNextStates(

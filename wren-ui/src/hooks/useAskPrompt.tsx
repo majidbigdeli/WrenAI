@@ -337,9 +337,7 @@ export default function useAskPrompt(threadId?: number) {
     onStopRecommend,
     onStoreThreadQuestions,
     inputProps: {
-      placeholder: threadId
-        ? 'برای بررسی داده‌هایتان، سوالات تکمیلی بنویسید'
-        : 'سؤال‌تان را بنویسید تا با داده‌ها بررسی کنم…',
+      placeholder: 'سؤال‌تان را بنویسید (مثال: گزارش فروش ماهانه)',
     },
   };
 }

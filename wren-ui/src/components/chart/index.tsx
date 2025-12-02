@@ -42,7 +42,7 @@ export default function Chart(props: VegaLiteProps) {
   const {
     className,
     spec,
-    values,
+    values=[],
     width = 600,
     height = 320,
     autoFilter,
@@ -125,7 +125,7 @@ export default function Chart(props: VegaLiteProps) {
   };
 
   const getChartContent = () => {
-    if (values.length === 0) return <div>No available data</div>;
+    if (values.length === 0) return <div dir='rtl'>داده‌ای موجود نیست</div>;
 
     if (parsedError) {
       return (
@@ -152,16 +152,14 @@ export default function Chart(props: VegaLiteProps) {
           message={
             <div className="d-flex align-center justify-space-between">
               <div>
-                There are too many categories to display effectively. Click
-                'Show top 25' to view the top results, or ask a follow-up
-                question to focus on a specific group or filter results.
+            دسته بندی های زیادی برای نمایش موثر وجود دارد. برای مشاهده نتایج برتر، روی 'نمایش ۲۵ مورد برتر' کلیک کنید، یا برای تمرکز روی یک گروه خاص یا فیلتر کردن نتایج، یک سوال تکمیلی بپرسید.
               </div>
               <Button
                 size="small"
                 icon={<EyeOutlined />}
                 onClick={onShowTopCategories}
               >
-                Show top 25
+               نمایش ۲۵ مورد برتر
               </Button>
             </div>
           }

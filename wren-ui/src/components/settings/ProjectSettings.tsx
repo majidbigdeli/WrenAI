@@ -36,6 +36,7 @@ export default function ProjectSettings(props: Props) {
       title: 'Are you sure you want to reset?',
       okButtonProps: { danger: true },
       okText: 'Reset',
+      icon: <></>,
       onOk: async () => {
         await resetCurrentProject();
         client.clearStore();
