@@ -92,7 +92,6 @@ const makeProcessing = (text: string) => (props: Props) => {
           onClick={attachLoading(onStop, setLoading)}
           disabled={loading}
         >
-          <StopOutlined className="ml-1" />
           توقف
         </Button>
       </div>
@@ -124,7 +123,6 @@ const makeProcessingError =
             size="small"
             onClick={onClose}
           >
-            <CloseOutlined className="ml-1" />
             بستن
           </Button>
         </div>
@@ -208,7 +206,6 @@ const GeneralAnswer = (props: Props) => {
           size="small"
           onClick={onClose}
         >
-          <CloseOutlined className="ml-1" />
           بستن
         </Button>
       </div>

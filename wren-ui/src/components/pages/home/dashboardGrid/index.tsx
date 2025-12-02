@@ -36,7 +36,8 @@ const Chart = dynamic(() => import('@/components/chart'), {
 const StyledDashboardGrid = styled.div`
   flex: 1;
   padding: 16px;
-
+  direction: ltr;
+  
   .react-grid-layout {
     width: 100%;
     height: 100%;

@@ -17,6 +17,9 @@ const StyledInputTextArea = styled(Input.TextArea)`
     border: none !important;
     box-shadow: unset;
   }
+  &:disabled {
+    background-color: unset;
+  }
 `;
 interface Props {
   question: string;
@@ -92,6 +95,7 @@ export default function PromptInput(props: Props) {
         }
         onClick={handleAsk}
         disabled={isDisabled}
+        style={{ marginRight: 8 }}
       >
         پرسیدن
       </PromptButton>

@@ -175,7 +175,7 @@ export const DashboardItemDropdown = makeDropdown((props: Props) => {
       ) : (
         <>
           {<EyeInvisibleOutlined className="ml-2" />}
-          Hide categories
+          پنهان کردن دسته‌ها
         </>
       ),
       key: MORE_ACTION.HIDE_CATEGORY,
@@ -185,7 +185,7 @@ export const DashboardItemDropdown = makeDropdown((props: Props) => {
       label: (
         <>
           <ReloadOutlined className="ml-2" />
-          {isSupportCached ? 'Refresh cache' : 'Refresh'}
+          {isSupportCached ? 'تازه کردن حافظه پنهان' : 'تازه کردن'}
         </>
       ),
       key: MORE_ACTION.REFRESH,

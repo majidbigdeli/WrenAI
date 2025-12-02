@@ -51,7 +51,7 @@ const StyledTextArea = styled(Mentions)`
   textarea {
     padding: 16px 16px 16px 20px;
     text-align: left;
-    direction: ltr;
+    direction: rtl;
   }
 `;
 
