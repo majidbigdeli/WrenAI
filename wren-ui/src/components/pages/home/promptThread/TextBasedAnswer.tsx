@@ -231,7 +231,6 @@ export default function TextBasedAnswer(props: AnswerResultProps) {
                 <BinocularsIcon
                   style={{
                     paddingBottom: 2,
-                    marginLeft: 8,
                   }}
                 />
               }
