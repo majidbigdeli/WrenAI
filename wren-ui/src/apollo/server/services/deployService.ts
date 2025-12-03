@@ -73,22 +73,22 @@ export class DeployService implements IDeployService {
     );
   }
 
-  public async deploy(manifest, projectId, force = false) {
+  public async deploy(manifest, projectId, force = true) {
     const eventName = TelemetryEvent.MODELING_DEPLOY_MDL;
     try {
       // generate hash of manifest
       const hash = this.createMDLHash(manifest, projectId);
       logger.debug(`Deploying model, hash: ${hash}`);
 
-      if (!force) {
-        // check if the model current deployment
-        const lastDeploy =
-          await this.deployLogRepository.findLastProjectDeployLog(projectId);
-        if (lastDeploy && lastDeploy.hash === hash) {
-          logger.log(`Model has been deployed, hash: ${hash}`);
-          return { status: DeployStatusEnum.SUCCESS };
-        }
-      }
+      // if (!force) {
+      //   // check if the model current deployment
+      //   const lastDeploy =
+      //     await this.deployLogRepository.findLastProjectDeployLog(projectId);
+      //   if (lastDeploy && lastDeploy.hash === hash) {
+      //     logger.log(`Model has been deployed, hash: ${hash}`);
+      //     return { status: DeployStatusEnum.SUCCESS };
+      //   }
+      // }
       const deployData = {
         manifest,
         hash,
