@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
-import { Button, Space, Typography, message } from 'antd';
+import { Button, Space, Tooltip, Typography, message } from 'antd';
 import CheckCircleOutlined from '@ant-design/icons/CheckCircleOutlined';
 import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
 import WarningOutlined from '@ant-design/icons/WarningOutlined';
 import { SyncStatus } from '@/apollo/client/graphql/__types__';
 import { useDeployMutation } from '@/apollo/client/graphql/deploy.generated';
 import { useDeployStatusContext } from '@/components/deploy/Context';
+import CloudSyncOutlined from '@ant-design/icons/CloudSyncOutlined';
+
 
 const { Text } = Typography;
 
@@ -17,19 +19,19 @@ const getDeployStatus = (deploying: boolean, status: SyncStatus) => {
       [SyncStatus.IN_PROGRESS]: (
         <Space size={[4, 0]}>
           <LoadingOutlined className="ml-1 gray-1" />
-          <Text className="gray-1">Deploying...</Text>
+          <Text className="gray-1">در حال استقرار...</Text>
         </Space>
       ),
       [SyncStatus.SYNCRONIZED]: (
         <Space size={[4, 0]}>
           <CheckCircleOutlined className="ml-1 green-7" />
-          <Text className="gray-1">Synced</Text>
+          <Text className="gray-1">همگام‌سازی شده</Text>
         </Space>
       ),
       [SyncStatus.UNSYNCRONIZED]: (
         <Space size={[4, 0]}>
           <WarningOutlined className="ml-1 gold-6" />
-          <Text className="gray-1">Undeployed changes</Text>
+          <Text className="gray-1">تغییرات اعمال نشده</Text>
         </Space>
       ),
     }[syncStatus] || ''
@@ -80,17 +82,16 @@ export default function Deploy() {
     [SyncStatus.SYNCRONIZED, SyncStatus.IN_PROGRESS].includes(syncStatus);
 
   return (
-    <Space size={[8, 0]}>
-      {getDeployStatus(deploying, syncStatus)}
-      <Button
-        className={`adm-modeling-header-btn ${disabled ? '' : 'gray-10'}`}
+    <Tooltip title={getDeployStatus(deploying, syncStatus)} visible={disabled}>
+      <CloudSyncOutlined
+        className={`${disabled ? '' : 'gray-8'}`}
         disabled={disabled}
         onClick={() => onDeploy()}
-        size="small"
         data-guideid="deploy-model"
-      >
-        Deploy
-      </Button>
-    </Space>
+        style={{
+          fontSize: "18px"
+        }}
+      />
+    </Tooltip>
   );
 }

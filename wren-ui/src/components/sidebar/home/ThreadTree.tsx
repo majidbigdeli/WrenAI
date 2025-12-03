@@ -16,6 +16,7 @@ import { MagicPencilOutlined } from '@/utils/svgs/MagicPencilOutlined';
 import { useSchemaChangeQuery, useTriggerDataSourceDetectionMutation } from '@/apollo/client/graphql/dataSource.generated';
 import { message } from 'antd';
 import { getRelativeTime } from '@/utils/time';
+import Deploy from '@/components/deploy/Deploy';
 
 
 const StyledSidebarTree = styled(SidebarTree)`
@@ -94,7 +95,17 @@ export default function ThreadTree(props: Props) {
                 : ''
             }
             onClick={() => triggerDataSourceDetection()}
+            style={{
+              fontSize: "16px"
+            }}
           />
+        ),
+      },
+      {
+        key: 'deploy',
+        disabled: isDetecting,
+        icon: () => (
+          <Deploy />
         ),
       },
       {
