@@ -27,6 +27,7 @@ import {
 import { DIAGRAM } from '@/apollo/client/graphql/diagram';
 import { LIST_MODELS } from '@/apollo/client/graphql/model';
 import { getRelativeTime } from '@/utils/time';
+import Deploy from '@/components/deploy/Deploy';
 
 interface Props {
   [key: string]: any;
@@ -109,6 +110,13 @@ export default function ModelTree(props: Props) {
             }
             onClick={() => triggerDataSourceDetection()}
           />
+        ),
+      },
+      {
+        key: 'deploy',
+        disabled: isDetecting,
+        icon: () => (
+          <Deploy />
         ),
       },
       {

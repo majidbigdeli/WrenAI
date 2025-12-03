@@ -1,3 +1,4 @@
+import { useSchemaChangeQuery, useTriggerDataSourceDetectionMutation } from '@/apollo/client/graphql/dataSource.generated';
 import SidebarTree, {
   sidebarCommonStyle,
 } from '@/components/sidebar/SidebarTree';
@@ -5,18 +6,16 @@ import {
   createTreeGroupNode,
   GroupActionButton,
 } from '@/components/sidebar/utils';
-import ReloadOutlined from '@ant-design/icons/ReloadOutlined';
 import { Path } from '@/utils/enum';
+import { MagicPencilOutlined } from '@/utils/svgs/MagicPencilOutlined';
+import { getRelativeTime } from '@/utils/time';
+import ReloadOutlined from '@ant-design/icons/ReloadOutlined';
+import { message } from 'antd';
 import { DataNode } from 'antd/lib/tree';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TreeTitle from './TreeTitle';
-import { MagicPencilOutlined } from '@/utils/svgs/MagicPencilOutlined';
-import { useSchemaChangeQuery, useTriggerDataSourceDetectionMutation } from '@/apollo/client/graphql/dataSource.generated';
-import { message } from 'antd';
-import { getRelativeTime } from '@/utils/time';
-import Deploy from '@/components/deploy/Deploy';
 
 
 const StyledSidebarTree = styled(SidebarTree)`
@@ -99,13 +98,6 @@ export default function ThreadTree(props: Props) {
               fontSize: "16px"
             }}
           />
-        ),
-      },
-      {
-        key: 'deploy',
-        disabled: isDetecting,
-        icon: () => (
-          <Deploy />
         ),
       },
       {
