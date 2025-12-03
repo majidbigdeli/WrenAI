@@ -621,7 +621,7 @@ export class ProjectResolver {
 
     const project = await ctx.projectService.getCurrentProject();
 
-    await this.deploy(ctx);
+    //await this.deploy(ctx);
 
     const schemaDetector = new DataSourceSchemaDetector({
       ctx,
