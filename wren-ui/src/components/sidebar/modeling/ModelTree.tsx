@@ -105,7 +105,7 @@ export default function ModelTree(props: Props) {
             spin={isDetecting}
             title={
               schemaChangeData?.schemaChange.lastSchemaChangeTime
-                ? `Last refresh ${getRelativeTime(schemaChangeData?.schemaChange.lastSchemaChangeTime)}`
+                ? `آخرین بروزرسانی ${getRelativeTime(schemaChangeData?.schemaChange.lastSchemaChangeTime)}`
                 : ''
             }
             onClick={() => triggerDataSourceDetection()}

@@ -125,17 +125,17 @@ export const getScheduleText = (schedule: Schedule): string => {
   switch (frequency) {
     case FREQUENCY.DAILY: {
       const time = convertTime(schedule);
-      return `Cache refreshes daily at ${time}`;
+      return `حافظه پنهان روزانه در ${time} به‌روزرسانی می‌شود`;
     }
     case FREQUENCY.WEEKLY: {
       const time = convertTime(schedule);
-      return `Cache refreshes every ${getDayOfWeekText(schedule.day as CacheScheduleDayEnum)} at ${time}`;
+      return `حافظه پنهان هر ${getDayOfWeekText(schedule.day as CacheScheduleDayEnum)} در ${time} بروزرسانی می‌شود`
     }
     case FREQUENCY.CUSTOM: {
-      return `Cache refreshes on custom schedule`;
+      return `حافظه پنهان طبق برنامه‌ی سفارشی بروزرسانی می‌شود`;
     }
     case FREQUENCY.NEVER: {
-      return 'Cache refresh: manual only';
+      return 'بروزرسانی حافظه پنهان: فقط دستی';
     }
     default: {
       return '';
@@ -228,13 +228,13 @@ export default function CacheSettingsDrawer(props: Props) {
           ...values,
           schedule: values.cacheEnabled
             ? {
-                frequency: schedule?.frequency,
-                day: schedule?.day,
-                hour: schedule?.time?.hour(),
-                minute: schedule?.time?.minute(),
-                cron: schedule?.cron,
-                timezone: browserTimeZone,
-              }
+              frequency: schedule?.frequency,
+              day: schedule?.day,
+              hour: schedule?.time?.hour(),
+              minute: schedule?.time?.minute(),
+              cron: schedule?.cron,
+              timezone: browserTimeZone,
+            }
             : null,
         });
         onClose();

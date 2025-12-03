@@ -392,7 +392,7 @@ const PinnedItem = forwardRef(
           </div>
           {lastRefreshTime && (
             <div className="adm-pinned-content-info">
-              Last refreshed: {getCompactTime(lastRefreshTime)}
+              آخرین بروزرسانی: {getCompactTime(lastRefreshTime)}
             </div>
           )}
         </div>
