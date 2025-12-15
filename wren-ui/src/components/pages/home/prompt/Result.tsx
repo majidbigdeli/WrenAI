@@ -1,26 +1,24 @@
-import clsx from 'clsx';
-import { ReactNode, useEffect, useRef, memo, useState } from 'react';
-import { Button } from 'antd';
-import styled from 'styled-components';
-import { PROCESS_STATE } from '@/utils/enum';
-import { attachLoading } from '@/utils/helper';
-import { BrainSVG } from '@/utils/svgs';
-import CloseOutlined from '@ant-design/icons/CloseOutlined';
-import StopOutlined from '@ant-design/icons/StopFilled';
-import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
-import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled';
-import WarningOutlined from '@ant-design/icons/WarningOutlined';
-import MessageOutlined from '@ant-design/icons/MessageOutlined';
-import ErrorCollapse from '@/components/ErrorCollapse';
-import InfoCircleOutlined from '@ant-design/icons/InfoCircleOutlined';
-import RecommendedQuestions, {
-  getRecommendedQuestionProps,
-} from '@/components/pages/home/RecommendedQuestions';
-import MarkdownBlock from '@/components/editor/MarkdownBlock';
 import {
   AskingTaskType,
   RecommendedQuestionsTask,
 } from '@/apollo/client/graphql/__types__';
+import MarkdownBlock from '@/components/editor/MarkdownBlock';
+import ErrorCollapse from '@/components/ErrorCollapse';
+import RecommendedQuestions, {
+  getRecommendedQuestionProps,
+} from '@/components/pages/home/RecommendedQuestions';
+import { PROCESS_STATE } from '@/utils/enum';
+import { attachLoading } from '@/utils/helper';
+import { BrainSVG } from '@/utils/svgs';
+import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled';
+import InfoCircleOutlined from '@ant-design/icons/InfoCircleOutlined';
+import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
+import MessageOutlined from '@ant-design/icons/MessageOutlined';
+import WarningOutlined from '@ant-design/icons/WarningOutlined';
+import { Button } from 'antd';
+import clsx from 'clsx';
+import { memo, ReactNode, useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 const StyledResult = styled.div`
   position: absolute;
@@ -56,6 +54,7 @@ interface Props {
     question: string;
     sql: string;
   }) => void;
+  onRequestRecommendedQuestions: () => void;
   onClose: () => void;
   onStop: () => Promise<void>;
   loading?: boolean;
@@ -101,63 +100,70 @@ const makeProcessing = (text: string) => (props: Props) => {
 
 const makeProcessingError =
   (config: { icon: ReactNode; title?: string; description?: string }) =>
-    (props: Props) => {
-      const { onClose, onSelectRecommendedQuestion, data, error } = props;
-      const { message, shortMessage, stacktrace } = error || {};
-      const hasStacktrace = !!stacktrace;
+  (props: Props) => {
+    const {
+      onClose,
+      onSelectRecommendedQuestion,
+      data,
+      error,
+      onRequestRecommendedQuestions,
+    } = props;
+    const { message, shortMessage, stacktrace } = error || {};
+    const hasStacktrace = !!stacktrace;
 
-      const recommendedQuestionProps = getRecommendedQuestionProps(
-        data?.recommendedQuestions,
-      );
+    const recommendedQuestionProps = getRecommendedQuestionProps(
+      data?.recommendedQuestions,
+    );
 
-      const errorResolver = (error: string) => {
-        // TODOSH must be in error.ts
-        const errors = {
-          "RateLimit": 'شما از حد مجاز استفاده از این کلید API عبور کردید. لطفاً بعد از چند دقیقه دوباره تلاش کنید.'
+    const errorResolver = (error: string) => {
+      // TODOSH must be in error.ts
+      const errors = {
+        RateLimit:
+          'شما از حد مجاز استفاده از این کلید API عبور کردید. لطفاً بعد از چند دقیقه دوباره تلاش کنید.',
+      };
+      let resolvedError = error;
+      Object.keys(errors).forEach((key) => {
+        if (error.includes(key)) {
+          resolvedError = errors[key];
         }
-        let resolvedError = error
-        console.log("errorResolver", { error })
-        Object.keys(errors).forEach(key => {
-          if (error.includes(key)) {
-            resolvedError = errors[key]
-          }
-        })
+      });
 
-        return resolvedError
-      }
-      return (
-        <Wrapper>
-          <div className="d-flex justify-space-between text-medium mb-2">
-            <div className="d-flex align-center">
-              {config.icon}
-              {config.title || shortMessage}
-            </div>
-            <Button
-              className="adm-btn-no-style gray-7 bg-gray-3 text-sm px-2"
-              type="text"
-              size="small"
-              onClick={onClose}
-            >
-              بستن
-            </Button>
-          </div>
-          <div className="gray-7">
-            {errorResolver(config.description || data.intentReasoning || message)}
-          </div>
-          {hasStacktrace && (
-            <ErrorCollapse className="mt-2" message={stacktrace.join('\n')} />
-          )}
-
-          {recommendedQuestionProps.show && (
-            <RecommendedQuestions
-              className="mt-2"
-              {...recommendedQuestionProps.state}
-              onSelect={onSelectRecommendedQuestion}
-            />
-          )}
-        </Wrapper>
-      );
+      return resolvedError;
     };
+    return (
+      <Wrapper>
+        <div className="d-flex justify-space-between text-medium mb-2">
+          <div className="d-flex align-center">
+            {config.icon}
+            {config.title || shortMessage}
+          </div>
+          <Button
+            className="adm-btn-no-style gray-7 bg-gray-3 text-sm px-2"
+            type="text"
+            size="small"
+            onClick={onClose}
+          >
+            بستن
+          </Button>
+        </div>
+        <div className="gray-7">
+          {errorResolver(config.description || data.intentReasoning || message)}
+        </div>
+        {hasStacktrace && (
+          <ErrorCollapse className="mt-2" message={stacktrace.join('\n')} />
+        )}
+
+        {recommendedQuestionProps.show && (
+          <RecommendedQuestions
+            className="mt-2"
+            {...recommendedQuestionProps.state}
+            onSelect={onSelectRecommendedQuestion}
+            onRequestRecommendedQuestions={onRequestRecommendedQuestions}
+          />
+        )}
+      </Wrapper>
+    );
+  };
 
 const ErrorIcon = () => <CloseCircleFilled className="ml-2 red-5 text-lg" />;
 
@@ -183,7 +189,13 @@ const IntentionFinished = (props: Props) => {
 };
 
 const GeneralAnswer = (props: Props) => {
-  const { onClose, onSelectRecommendedQuestion, data, loading } = props;
+  const {
+    onClose,
+    onSelectRecommendedQuestion,
+    data,
+    loading,
+    onRequestRecommendedQuestions,
+  } = props;
   const $wrapper = useRef<HTMLDivElement>(null);
 
   const { originalQuestion, askingStreamTask, recommendedQuestions } = data;
@@ -252,6 +264,7 @@ const GeneralAnswer = (props: Props) => {
         <RecommendedQuestions
           {...recommendedQuestionProps.state}
           onSelect={onSelectRecommendedQuestion}
+          onRequestRecommendedQuestions={onRequestRecommendedQuestions}
         />
       )}
     </Wrapper>

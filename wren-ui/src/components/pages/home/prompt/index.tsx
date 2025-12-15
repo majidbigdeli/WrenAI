@@ -28,6 +28,7 @@ interface Props {
   onStopPolling: () => void;
   onStopStreaming: () => void;
   onStopRecommend: () => void;
+  onStartRecommend: () => void;
   data: AskPromptData;
   loading: boolean;
   inputProps: {
@@ -62,6 +63,7 @@ export default forwardRef<Attributes, Props>(function Prompt(props, ref) {
     onCreateResponse,
     onStopStreaming,
     onStopRecommend,
+    onStartRecommend,
     inputProps,
   } = props;
   const askProcessState = useAskProcessState();
@@ -181,6 +183,7 @@ export default forwardRef<Attributes, Props>(function Prompt(props, ref) {
           loading={loading}
           processState={currentProcessState}
           onSelectRecommendedQuestion={selectRecommendedQuestion}
+          onRequestRecommendedQuestions={onStartRecommend}
           onIntentSQLAnswer={intentSQLAnswer}
           onClose={closeResult}
           onStop={stopProcess}

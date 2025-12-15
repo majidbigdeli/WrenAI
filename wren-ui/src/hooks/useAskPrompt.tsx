@@ -245,9 +245,10 @@ export default function useAskPrompt(threadId?: number) {
 
   useEffect(() => {
     // handle instant recommended questions
-    if (isNeedRecommendedQuestions(askingTask)) {
-      startRecommendedQuestions();
-    }
+    // TODOSH auto recommendation disabled
+    // if (isNeedRecommendedQuestions(askingTask)) {
+    //   startRecommendedQuestions();
+    // }
   }, [askingTask?.type]);
 
   useEffect(() => {
@@ -321,6 +322,12 @@ export default function useAskPrompt(threadId?: number) {
   const onStopStreaming = () => askingStreamTaskResult.reset();
 
   const onStopRecommend = () => instantRecommendedQuestionsResult.stopPolling();
+  //TODOSH on ddemand recommendation
+  const onStartRecommend = () => {
+    if (isNeedRecommendedQuestions(askingTask)) {
+      startRecommendedQuestions();
+    }
+  };
 
   const onStoreThreadQuestions = (questions: string[]) =>
     setThreadQuestions(questions);
@@ -335,6 +342,7 @@ export default function useAskPrompt(threadId?: number) {
     onStopPolling,
     onStopStreaming,
     onStopRecommend,
+    onStartRecommend,
     onStoreThreadQuestions,
     inputProps: {
       placeholder: 'سؤال‌تان را بنویسید (مثال: گزارش فروش ماهانه)',

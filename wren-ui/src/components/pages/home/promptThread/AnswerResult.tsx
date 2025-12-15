@@ -126,17 +126,16 @@ const QuestionTitle = (props) => {
 };
 
 const renderRecommendedQuestions = (
-  isLastThreadResponse: boolean,
   recommendedQuestionProps,
   onSelect: RecommendedQuestionsProps['onSelect'],
+  onRequestRecommendedQuestions: () => void,
 ) => {
-  if (!isLastThreadResponse || !recommendedQuestionProps.show) return null;
-
   return (
     <RecommendedQuestions
-      className="mt-5 mb-4"
+      className="mt-1 mb-2"
       {...recommendedQuestionProps.state}
       onSelect={onSelect}
+      onRequestRecommendedQuestions={onRequestRecommendedQuestions}
     />
   );
 };
@@ -224,7 +223,6 @@ export default function AnswerResult(props: Props) {
       const debouncedGenerateAnswer = debounce(
         () => {
           onGenerateTextBasedAnswer(id);
-          onGenerateThreadRecommendedQuestions();
         },
         250,
         { leading: false, trailing: true },
@@ -252,7 +250,6 @@ export default function AnswerResult(props: Props) {
     askingTask?.status === AskingTaskStatus.FINISHED ||
     isAnswerPrepared ||
     isBreakdownOnly;
-
   return (
     <div style={resultStyle} data-jsid="answerResult">
       {isAdjustment && <AdjustmentInformation adjustment={adjustment} />}
@@ -303,9 +300,9 @@ export default function AnswerResult(props: Props) {
             </Tabs.TabPane>
           </StyledTabs>
           {renderRecommendedQuestions(
-            isLastThreadResponse,
             recommendedQuestionProps,
             onSelectRecommendedQuestion,
+            onGenerateThreadRecommendedQuestions,
           )}
         </>
       )}

@@ -13,7 +13,7 @@ export type IterableComponent<T = any> = {
 
 export const makeIterable = (Template: React.FC<IterableComponent<any>>) => {
   const Iterator = (props: Props) => {
-    const { data, keyIndex = 'key', ...restProps } = props;
+    const { data = [], keyIndex = 'key', ...restProps } = props;
     const result = data.map((item, index) => {
       const key =
         typeof keyIndex === 'function' ? keyIndex(item) : item[keyIndex];

@@ -1,13 +1,14 @@
-import clsx from 'clsx';
-import styled from 'styled-components';
-import { useMemo } from 'react';
-import { Skeleton } from 'antd';
-import BulbOutlined from '@ant-design/icons/BulbOutlined';
-import { makeIterable } from '@/utils/iteration';
 import {
   RecommendedQuestionsTask,
   RecommendedQuestionsTaskStatus,
 } from '@/apollo/client/graphql/__types__';
+import { getIconSource } from '@/utils/getIconSource';
+import { makeIterable } from '@/utils/iteration';
+import { Button, Skeleton } from 'antd';
+import clsx from 'clsx';
+import Image from 'next/image';
+import { useMemo } from 'react';
+import styled from 'styled-components';
 
 export interface SelectQuestionProps {
   question: string;
@@ -25,6 +26,7 @@ interface Props {
   };
   className?: string;
   onSelect: ({ question, sql }: SelectQuestionProps) => void;
+  onRequestRecommendedQuestions: () => void;
 }
 
 const StyledSkeleton = styled(Skeleton)`
@@ -73,7 +75,7 @@ const QuestionItem = (props: {
         className="cursor-pointer hover:text"
         onClick={() => onSelect({ question, sql })}
       >
-        {question}
+        {index + 1}- {question}
       </span>
     </div>
   );
@@ -81,7 +83,13 @@ const QuestionItem = (props: {
 const QuestionList = makeIterable(QuestionItem);
 
 export default function RecommendedQuestions(props: Props) {
-  const { items, loading, className, onSelect } = props;
+  const {
+    items = [],
+    loading,
+    className,
+    onSelect,
+    onRequestRecommendedQuestions,
+  } = props;
 
   const data = useMemo(
     () => items.map(({ question, sql }) => ({ question, sql })),
@@ -89,12 +97,30 @@ export default function RecommendedQuestions(props: Props) {
   );
 
   return (
-    <div className={clsx('bg-gray-2 rounded p-3', className)}>
-      <div className="mb-2">
-        <BulbOutlined className="ml-1 gray-6" />
-        <b className="text-semi-bold text-sm gray-7">سوالات پیشنهادی</b>
+    <div className={clsx('d-flex rounded py-3 g-3 flex-column', className)}>
+      <div>
+        <Button
+          type="ghost"
+          color="white"
+          size="middle"
+          icon={
+            <Image
+              className="ml-1"
+              src={getIconSource('agent-filled')}
+              alt={'agent-filled'}
+              color="red"
+              width="12"
+              height="12"
+            />
+          }
+          onClick={onRequestRecommendedQuestions}
+        >
+          <p className="text-semi-bold" style={{ margin: 0 }}>
+            درخواست سوالات پیشنهادی
+          </p>
+        </Button>
       </div>
-      <div className="pl-1 gray-8">
+      <div className="gray-8">
         <StyledSkeleton
           active
           loading={loading}
