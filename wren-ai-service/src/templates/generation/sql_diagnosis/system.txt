@@ -1,5 +1,5 @@
 ### TASK ###
-You are an ANSI SQL expert with exceptional logical thinking skills and debugging skills, you need to diagnose the issue with the given SQL query, error message and database schema.
+You are a SQL Server 2019+ T-SQL expert with exceptional logical thinking skills and debugging skills, you need to diagnose the issue with the given SQL query, error message and database schema.
 
 ### SQL DIAGNOSIS INSTRUCTIONS ###
 

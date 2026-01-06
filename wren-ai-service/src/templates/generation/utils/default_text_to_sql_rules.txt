@@ -1,57 +1,30 @@
 
-### SQL RULES ###
-- ONLY USE SELECT statements, NO DELETE, UPDATE OR INSERT etc. statements that might change the data in the database.
+### SQL SERVER (T-SQL) RULES ###
+- Target dialect: SQL Server 2019 or later (T-SQL). Do NOT use PostgreSQL/MySQL syntax.
+- ONLY USE SELECT statements; never generate INSERT/UPDATE/DELETE or DDL.
 - ONLY USE the tables and columns mentioned in the database schema.
-- ONLY USE "*" if the user query asks for all the columns of a table.
-- ONLY CHOOSE columns belong to the tables mentioned in the database schema.
-- DON'T INCLUDE comments in the generated SQL query.
-- YOU MUST USE "JOIN" if you choose columns from multiple tables!
-- PREFER USING CTEs over subqueries.
-- When generating SQL query, always:
-    - Put double quotes around column and table names.
-    - Put single quotes around string literals.
-    - Never quote numeric literals.
-    For example: SELECT "customers"."customer_name" FROM "customers" WHERE "customers"."city" = 'Taipei' and "customers"."year" = 1992;
-- YOU MUST USE "lower(<table_name>.<column_name>) like lower(<value>)" function or "lower(<table_name>.<column_name>) = lower(<value>)" function for case-insensitive comparison!
-    - Use "lower(<table_name>.<column_name>) LIKE lower(<value>)" when:
-        - The user requests a pattern or partial match.
-        - The value is not specific enough to be a single, exact value.
-        - Wildcards (%) are needed to capture the pattern.
-    - Use "lower(<table_name>.<column_name>) = lower(<value>)" when:
-        - The user requests an exact, specific value.
-        - There is no ambiguity or pattern in the value.
-- If the column is date/time related field, and it is a INT/BIGINT/DOUBLE/FLOAT type, please use the appropriate function mentioned in the SQL FUNCTIONS section to cast the column to "TIMESTAMP" type first before using it in the query
-    - example: TO_TIMESTAMP_MILLIS("<timestamp_column>")  # if the timestamp_column is in milliseconds
-    - example: TO_TIMESTAMP_SECONDS("<timestamp_column>")  # if the timestamp_column is in seconds
-    - example: TO_TIMESTAMP_MICROS("<timestamp_column>")  # if the timestamp_column is in microseconds
-- ALWAYS CAST the date/time related field to "TIMESTAMP WITH TIME ZONE" type when using them in the query
-    - example 1: CAST(properties_closedate AS TIMESTAMP WITH TIME ZONE)
-    - example 2: CAST('2024-11-09 00:00:00' AS TIMESTAMP WITH TIME ZONE)
-    - example 3: CAST(DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') AS TIMESTAMP WITH TIME ZONE)
-- If the user asks for a specific date, please give the date range in SQL query
-    - example: "What is the total revenue for the month of 2024-11-01?"
-    - answer: "SELECT SUM(r.PriceSum) FROM Revenue r WHERE CAST(r.PurchaseTimestamp AS TIMESTAMP WITH TIME ZONE) >= CAST('2024-11-01 00:00:00' AS TIMESTAMP WITH TIME ZONE) AND CAST(r.PurchaseTimestamp AS TIMESTAMP WITH TIME ZONE) < CAST('2024-11-02 00:00:00' AS TIMESTAMP WITH TIME ZONE)"
-- USE THE VIEW TO SIMPLIFY THE QUERY.
-- DON'T MISUSE THE VIEW NAME. THE ACTUAL NAME IS FOLLOWING THE CREATE VIEW STATEMENT.
-- ONLY USE table/column alias in the final SELECT clause; don't use table/columnalias in the other clauses.
-- Refer to the value of alias from the comment section of the corresponding table or column in the DATABASE SCHEMA section for reference when using alias in the final SELECT clause.
-  - EXAMPLE
-    DATABASE SCHEMA
-    /* {"alias":"_orders","description":"A model representing the orders data."} */
-    CREATE TABLE orders (
-      -- {"description":"A column that represents the timestamp when the order was approved.","alias":"_timestamp"}
-      ApprovedTimestamp TIMESTAMP
-    }
-
-    SQL
-    SELECT "_orders"."ApprovedTimestamp" AS "_timestamp" FROM "orders" AS "_orders";
-- DON'T USE '.' in column/table alias, replace '.' with '_' in column/table alias.
-- DON'T USE "FILTER(WHERE <expression>)" clause in the generated SQL query.
-- DON'T USE "EXTRACT(EPOCH FROM <expression>)" clause in the generated SQL query.
-- DON'T USE "EXTRACT()" function with INTERVAL data types as arguments
-- DON'T USE INTERVAL or generate INTERVAL-like expression in the generated SQL query.
-- DON'T USE "TO_CHAR" function in the generated SQL query.
-- Aggregate functions are not allowed in the WHERE clause. Instead, they belong in the HAVING clause, which is used to filter after aggregation.
-- You can only add "ORDER BY" and "LIMIT" to the final "UNION" result.
-- For the ranking problem, you must use the ranking function, `DENSE_RANK()` to rank the results and then use `WHERE` clause to filter the results.
-- For the ranking problem, you must add the ranking column to the final SELECT clause.
+- Select explicit columns; use * ONLY when the user explicitly requests all columns.
+- Qualify identifiers with schema when provided (e.g., dbo.TableName). Use square brackets for identifiers that need quoting; do NOT use double quotes for identifiers.
+- Use single quotes for string literals; never quote numeric literals.
+- When selecting from multiple tables, YOU MUST USE explicit JOINs and proper ON conditions.
+- Prefer CTEs over deeply nested subqueries when shaping intermediate results.
+- Use TOP (N) or TOP (@n) to limit rows. For pagination use ORDER BY ... OFFSET @offset ROWS FETCH NEXT @pageSize ROWS ONLY. Do NOT use LIMIT, RETURNING, ILIKE, SERIAL, ARRAY_AGG, or other non–SQL Server syntax.
+- For case-insensitive matching, use LIKE with optional LOWER() if needed by collation; include '%' wildcards for partial matches. Example: LOWER(t.Column) LIKE LOWER('%value%').
+- Safe casting/conversion: prefer TRY_CONVERT or TRY_CAST for user-provided values. Example: TRY_CONVERT(int, t.ColInt).
+- Date/time handling:
+  - Prefer DATETIME2 or DATETIMEOFFSET types.
+  - Use DATEADD and DATEDIFF for arithmetic; use EOMONTH and DATEFROMPARTS when appropriate.
+  - Avoid INTERVAL, EXTRACT, TO_CHAR/TO_TIMESTAMP, and TIMESTAMP WITH TIME ZONE syntax.
+  - For timezone shifts use SWITCHOFFSET/TODATETIMEOFFSET when applicable.
+  - For single-day filters, use >= start-of-day AND < DATEADD(day, 1, start-of-day).
+- Aggregations belong in HAVING, not WHERE.
+- String aggregation: use STRING_AGG(expression, ',') WITHIN GROUP (ORDER BY ... ) when ordering is required.
+- Window/ranking problems: use DENSE_RANK()/ROW_NUMBER()/RANK() as appropriate; include the ranking column in the final SELECT and filter with an outer query/WHERE on the rank when needed.
+- JSON handling: use JSON_VALUE/JSON_QUERY for extraction; use OPENJSON when parsing arrays/objects; use FOR JSON for serialization.
+- Avoid comments in generated SQL.
+- Do NOT generate FILTER(WHERE ...), EXTRACT(...), INTERVAL-like expressions, or other non–T-SQL constructs.
+- Use table/column aliases without dots (replace '.' with '_'); keep aliases meaningful and consistent across the query.
+- Validation before returning the SQL:
+  - Ensure no LIMIT/RETURNING/ILIKE/TO_CHAR/INTERVAL/EXTRACT syntax remains.
+  - Ensure TOP or OFFSET/FETCH is used for row limits when needed.
+  - Ensure schema-qualified identifiers (e.g., dbo.) are used when available and aliases are consistent.
