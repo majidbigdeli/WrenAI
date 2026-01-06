@@ -1,0 +1,12 @@
+### Inputs ###
+User's question: {{ query }}
+SQL: {{ sql }}
+Data: 
+columns: {{ sql_data.columns }}
+rows: {{ sql_data.data }}
+Language: {{ language }}
+Current Time: {{ current_time }}
+
+Custom Instruction: {{ custom_instruction }}
+
+Please think step by step and answer the user's question.

@@ -23,66 +23,16 @@ from src.pipelines.generation.utils.sql import (
 )
 from src.pipelines.retrieval.sql_functions import SqlFunction
 from src.pipelines.retrieval.sql_knowledge import SqlKnowledge
+from src.templates import load_template
 from src.utils import trace_cost
 from src.web.v1.services.ask import AskHistory
 
 logger = logging.getLogger("wren-ai-service")
 
 
-text_to_sql_with_followup_user_prompt_template = """
-### TASK ###
-Given the following user's follow-up question and previous SQL query and summary,
-generate one SQL query to best answer user's question.
-
-### DATABASE SCHEMA ###
-{% for document in documents %}
-    {{ document }}
-{% endfor %}
-
-{% if calculated_field_instructions %}
-{{ calculated_field_instructions }}
-{% endif %}
-
-{% if metric_instructions %}
-{{ metric_instructions }}
-{% endif %}
-
-{% if json_field_instructions %}
-{{ json_field_instructions }}
-{% endif %}
-
-{% if sql_functions %}
-### SQL FUNCTIONS ###
-{% for function in sql_functions %}
-{{ function }}
-{% endfor %}
-{% endif %}
-
-{% if sql_samples %}
-### SQL SAMPLES ###
-{% for sample in sql_samples %}
-Summary:
-{{sample.summary}}
-SQL:
-{{sample.sql}}
-{% endfor %}
-{% endif %}
-
-{% if instructions %}
-### USER INSTRUCTIONS ###
-{% for instruction in instructions %}
-{{ loop.index }}. {{ instruction }}
-{% endfor %}
-{% endif %}
-
-### QUESTION ###
-User's Follow-up Question: {{ query }}
-
-### REASONING PLAN ###
-{{ sql_generation_reasoning }}
-
-Let's think step by step.
-"""
+text_to_sql_with_followup_user_prompt_template = load_template(
+    "generation/followup_sql_generation/user.txt"
+)
 
 
 ## Start of Pipeline

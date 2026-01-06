@@ -1,0 +1,3 @@
+SQL: {{sql}}
+
+Let's think step by step.

@@ -22,6 +22,7 @@ from src.pipelines.generation.utils.sql import (
 )
 from src.pipelines.retrieval.sql_functions import SqlFunction
 from src.pipelines.retrieval.sql_knowledge import SqlKnowledge
+from src.templates import load_template, render_template
 from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
@@ -32,72 +33,15 @@ def get_sql_regeneration_system_prompt(
 ) -> str:
     text_to_sql_rules = get_text_to_sql_rules(sql_knowledge)
 
-    return f"""
-### TASK ###
-You are a great ANSI SQL expert. Now you are given database schema, SQL generation reasoning and an original SQL query, 
-please carefully review the reasoning, and then generate a new SQL query that matches the reasoning.
-While generating the new SQL query, you should use the original SQL query as a reference.
-While generating the new SQL query, make sure to use the database schema to generate the SQL query.
-
-{text_to_sql_rules}
-
-### FINAL ANSWER FORMAT ###
-The final answer must be a ANSI SQL query in JSON format:
-
-{{
-    "sql": <SQL_QUERY_STRING>
-}}
-"""
+    return render_template(
+        "generation/sql_regeneration/system.txt",
+        text_to_sql_rules=text_to_sql_rules,
+    )
 
 
-sql_regeneration_user_prompt_template = """
-### DATABASE SCHEMA ###
-{% for document in documents %}
-    {{ document }}
-{% endfor %}
-
-{% if calculated_field_instructions %}
-{{ calculated_field_instructions }}
-{% endif %}
-
-{% if metric_instructions %}
-{{ metric_instructions }}
-{% endif %}
-
-{% if json_field_instructions %}
-{{ json_field_instructions }}
-{% endif %}
-
-{% if sql_functions %}
-### SQL FUNCTIONS ###
-{% for function in sql_functions %}
-{{ function }}
-{% endfor %}
-{% endif %}
-
-{% if sql_samples %}
-### SQL SAMPLES ###
-{% for sample in sql_samples %}
-Question:
-{{sample.question}}
-SQL:
-{{sample.sql}}
-{% endfor %}
-{% endif %}
-
-{% if instructions %}
-### USER INSTRUCTIONS ###
-{% for instruction in instructions %}
-{{ loop.index }}. {{ instruction }}
-{% endfor %}
-{% endif %}
-
-### QUESTION ###
-SQL generation reasoning: {{ sql_generation_reasoning }}
-Original SQL query: {{ sql }}
-
-Let's think step by step.
-"""
+sql_regeneration_user_prompt_template = load_template(
+    "generation/sql_regeneration/user.txt"
+)
 
 
 ## Start of Pipeline

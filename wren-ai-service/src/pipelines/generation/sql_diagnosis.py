@@ -13,51 +13,19 @@ from pydantic import BaseModel
 from src.core.pipeline import BasicPipeline
 from src.core.provider import LLMProvider
 from src.pipelines.common import clean_up_new_lines
+from src.templates import load_template
 from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
 
 
-sql_diagnosis_system_prompt = """
-### TASK ###
-You are an ANSI SQL expert with exceptional logical thinking skills and debugging skills, you need to diagnose the issue with the given SQL query, error message and database schema.
+sql_diagnosis_system_prompt = load_template(
+    "generation/sql_diagnosis/system.txt"
+)
 
-### SQL DIAGNOSIS INSTRUCTIONS ###
-
-1. First, think hard about the error message, and analyze the invalid SQL query to figure out the root cause and which part is incorrect.
-2. Then, map the incorrect part of the invalid SQL query to the corresponding part of the original SQL query.
-3. Then, return the reasoning behind the diagnosis.(You should give me the part of the original SQL query that is incorrect and the reason why it is incorrect)
-4. Reasoning should be in the language same as the language user provided in the INPUTS section.
-5. Reasoning should be concise and to the point and within 50 words.
-
-### FINAL ANSWER FORMAT ###
-The final answer must be in JSON format:
-
-{
-    "reasoning": <REASONING_STRING>
-}
-"""
-
-sql_diagnosis_user_prompt_template = """
-### DATABASE SCHEMA ###
-{% for document in documents %}
-    {{ document }}
-{% endfor %}
-
-### INPUTS ###
-Original SQL:
-{{ original_sql }}
-
-Invalid SQL:
-{{ invalid_sql }}
-
-Error Message:
-{{ error_message }}
-
-Language: {{ language }}
-
-Please think step by step.
-"""
+sql_diagnosis_user_prompt_template = load_template(
+    "generation/sql_diagnosis/user.txt"
+)
 
 
 ## Start of Pipeline

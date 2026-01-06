@@ -11,44 +11,20 @@ from langfuse.decorators import observe
 from src.core.pipeline import BasicPipeline
 from src.core.provider import LLMProvider
 from src.pipelines.common import clean_up_new_lines
+from src.templates import load_template
 from src.utils import trace_cost
 from src.web.v1.services.ask import AskHistory
 
 logger = logging.getLogger("wren-ai-service")
 
 
-data_assistance_system_prompt = """
-### TASK ###
-You are a data analyst great at answering user's questions about given database schema.
-Please carefully read user's question and database schema to answer it in easy to understand manner
-using the Markdown format. Your goal is to help guide user understand its database!
+data_assistance_system_prompt = load_template(
+    "generation/data_assistance/system.txt"
+)
 
-### INSTRUCTIONS ###
-
-- Answer must be in the same language user specified.
-- There should be proper line breaks, whitespace, and Markdown formatting(headers, lists, tables, etc.) in your response.
-- If the language is Traditional/Simplified Chinese, Korean, or Japanese, the maximum response length is 150 words; otherwise, the maximum response length is 110 words.
-- MUST NOT add SQL code in your response.
-- If the user provides a custom instruction, it should be followed strictly and you should use it to change the style of response.
-
-### OUTPUT FORMAT ###
-Please provide your response in proper Markdown format without ```markdown``` tags.
-"""
-
-data_assistance_user_prompt_template = """
-### DATABASE SCHEMA ###
-{% for db_schema in db_schemas %}
-    {{ db_schema }}
-{% endfor %}
-
-### INPUT ###
-User's question: {{query}}
-Language: {{language}}
-
-Custom Instruction: {{ custom_instruction }}
-
-Please think step by step
-"""
+data_assistance_user_prompt_template = load_template(
+    "generation/data_assistance/user.txt"
+)
 
 
 ## Start of Pipeline

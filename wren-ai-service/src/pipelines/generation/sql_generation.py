@@ -22,63 +22,15 @@ from src.pipelines.generation.utils.sql import (
 )
 from src.pipelines.retrieval.sql_functions import SqlFunction
 from src.pipelines.retrieval.sql_knowledge import SqlKnowledge
+from src.templates import load_template
 from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
 
 
-sql_generation_user_prompt_template = """
-### DATABASE SCHEMA ###
-{% for document in documents %}
-    {{ document }}
-{% endfor %}
-
-{% if calculated_field_instructions %}
-{{ calculated_field_instructions }}
-{% endif %}
-
-{% if metric_instructions %}
-{{ metric_instructions }}
-{% endif %}
-
-{% if json_field_instructions %}
-{{ json_field_instructions }}
-{% endif %}
-
-{% if sql_functions %}
-### SQL FUNCTIONS ###
-{% for function in sql_functions %}
-{{ function }}
-{% endfor %}
-{% endif %}
-
-{% if sql_samples %}
-### SQL SAMPLES ###
-{% for sample in sql_samples %}
-Question:
-{{sample.question}}
-SQL:
-{{sample.sql}}
-{% endfor %}
-{% endif %}
-
-{% if instructions %}
-### USER INSTRUCTIONS ###
-{% for instruction in instructions %}
-{{ loop.index }}. {{ instruction }}
-{% endfor %}
-{% endif %}
-
-### QUESTION ###
-User's Question: {{ query }}
-
-{% if sql_generation_reasoning %}
-### REASONING PLAN ###
-{{ sql_generation_reasoning }}
-{% endif %}
-
-Let's think step by step.
-"""
+sql_generation_user_prompt_template = load_template(
+    "generation/sql_generation/user.txt"
+)
 
 
 ## Start of Pipeline

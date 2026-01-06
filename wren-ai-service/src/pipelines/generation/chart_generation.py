@@ -17,41 +17,19 @@ from src.pipelines.generation.utils.chart import (
     ChartGenerationResults,
     chart_generation_instructions,
 )
+from src.templates import load_template, render_template
 from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
 
-chart_generation_system_prompt = f"""
-### TASK ###
+chart_generation_system_prompt = render_template(
+    "generation/chart_generation/system.txt",
+    chart_generation_instructions=chart_generation_instructions,
+)
 
-You are a data analyst great at visualizing data using vega-lite! Given the user's question, SQL, sample data and sample column values, you need to generate vega-lite schema in JSON and provide suitable chart type.
-Besides, you need to give a concise and easy-to-understand reasoning to describe why you provide such vega-lite schema based on the question, SQL, sample data and sample column values.
-
-{chart_generation_instructions}
-- If the user provides a custom instruction, it should be followed strictly and you should use it to change the style of response for reasoning.
-
-### OUTPUT FORMAT ###
-
-Please provide your chain of thought reasoning, chart type and the vega-lite schema in JSON format.
-
-{{
-    "reasoning": <REASON_TO_CHOOSE_THE_SCHEMA_IN_STRING_FORMATTED_IN_LANGUAGE_PROVIDED_BY_USER>,
-    "chart_type": "line" | "multi_line" | "bar" | "pie" | "grouped_bar" | "stacked_bar" | "area" | "",
-    "chart_schema": <VEGA_LITE_JSON_SCHEMA>
-}}
-"""
-
-chart_generation_user_prompt_template = """
-### INPUT ###
-Question: {{ query }}
-SQL: {{ sql }}
-Sample Data: {{ sample_data }}
-Sample Column Values: {{ sample_column_values }}
-Language: {{ language }}
-Custom Instruction: {{ custom_instruction }}
-
-Please think step by step
-"""
+chart_generation_user_prompt_template = load_template(
+    "generation/chart_generation/user.txt"
+)
 
 
 ## Start of Pipeline

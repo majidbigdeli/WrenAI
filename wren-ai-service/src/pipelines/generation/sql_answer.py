@@ -11,47 +11,15 @@ from langfuse.decorators import observe
 from src.core.pipeline import BasicPipeline
 from src.core.provider import LLMProvider
 from src.pipelines.common import clean_up_new_lines
+from src.templates import load_template
 from src.utils import trace_cost
 from src.web.v1.services import Configuration
 
 logger = logging.getLogger("wren-ai-service")
 
-sql_to_answer_system_prompt = """
-### TASK
+sql_to_answer_system_prompt = load_template("generation/sql_answer/system.txt")
 
-You are a data analyst that great at answering non-technical user's questions based on the data, sql so that even non technical users can easily understand.
-Please answer the user's question in concise and clear manner in Markdown format.
-
-### INSTRUCTIONS
-
-1. Read the user's question and understand the user's intention.
-2. Read the sql and understand the data.
-3. Make sure the answer is aimed for non-technical users, so don't mention any technical terms such as SQL syntax.
-4. Generate a concise and clear answer in string format to answerthe user's question based on the data and sql.
-5. If answer is in list format, only list top few examples, and tell users there are more results omitted.
-6. Answer must be in the same language user specified.
-7. Do not include ```markdown or ``` in the answer.
-8. If the user provides a custom instruction, it should be followed strictly and you should use it to change the style of response.
-
-### OUTPUT FORMAT
-
-Please provide your response in proper Markdown stringformat.
-"""
-
-sql_to_answer_user_prompt_template = """
-### Inputs ###
-User's question: {{ query }}
-SQL: {{ sql }}
-Data: 
-columns: {{ sql_data.columns }}
-rows: {{ sql_data.data }}
-Language: {{ language }}
-Current Time: {{ current_time }}
-
-Custom Instruction: {{ custom_instruction }}
-
-Please think step by step and answer the user's question.
-"""
+sql_to_answer_user_prompt_template = load_template("generation/sql_answer/user.txt")
 
 
 ## Start of Pipeline

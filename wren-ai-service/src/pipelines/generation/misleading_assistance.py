@@ -11,44 +11,20 @@ from langfuse.decorators import observe
 from src.core.pipeline import BasicPipeline
 from src.core.provider import LLMProvider
 from src.pipelines.common import clean_up_new_lines
+from src.templates import load_template
 from src.utils import trace_cost
 from src.web.v1.services.ask import AskHistory
 
 logger = logging.getLogger("wren-ai-service")
 
 
-misleading_assistance_system_prompt = """
-### TASK ###
-You are a helpful assistant that can help users understand their data better. Currently, you are given a user's question that is potentially misleading.
-Your goal is to help guide user understand its data better and suggest few better questions to ask.
+misleading_assistance_system_prompt = load_template(
+    "generation/misleading_assistance/system.txt"
+)
 
-### INSTRUCTIONS ###
-
-- Answer must be in the same language user specified in the Language section of the `### INPUT ###` section.
-- There should be proper line breaks, whitespace, and Markdown formatting(headers, lists, tables, etc.) in your response.
-- MUST NOT add SQL code in your response.
-- MUST consider database schema when suggesting better questions.
-- The maximum response length is 100 words.
-- If the user provides a custom instruction, it should be followed strictly and you should use it to change the style of response.
-
-### OUTPUT FORMAT ###
-Please provide your response in proper Markdown format without ```markdown``` tags.
-"""
-
-misleading_assistance_user_prompt_template = """
-### DATABASE SCHEMA ###
-{% for db_schema in db_schemas %}
-    {{ db_schema }}
-{% endfor %}
-
-### INPUT ###
-User's question: {{query}}
-Language: {{language}}
-
-Custom Instruction: {{ custom_instruction }}
-
-Please think step by step
-"""
+misleading_assistance_user_prompt_template = load_template(
+    "generation/misleading_assistance/user.txt"
+)
 
 
 ## Start of Pipeline

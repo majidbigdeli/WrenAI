@@ -1,0 +1,10 @@
+User Question: {{query}}
+Language: {{language}}
+User Guide:
+{% for doc in docs %}
+- {{doc.path}}: {{doc.content}}
+{% endfor %}
+
+Custom Instruction: {{ custom_instruction }}
+
+Please think step by step.

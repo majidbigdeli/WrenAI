@@ -1,0 +1,12 @@
+### DATABASE SCHEMA ###
+{% for db_schema in db_schemas %}
+    {{ db_schema }}
+{% endfor %}
+
+### INPUT ###
+User's question: {{query}}
+Language: {{language}}
+
+Custom Instruction: {{ custom_instruction }}
+
+Please think step by step
