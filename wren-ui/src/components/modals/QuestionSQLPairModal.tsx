@@ -215,7 +215,7 @@ export default function QuestionSQLPairModal(props: Props) {
                 className="text-sm gray-7 text-left"
               >
                 عبارت SQL مورد استفاده در اینجا از <b>SQL</b> پیروی می‌کند، که
-                بر مبنای ANSI SQL بوده و برای AI بهینه‌سازی شده است.{` `}
+                بر مبنای T SQL بوده و برای AI بهینه‌سازی شده است.{` `}
                 <Typography.Link
                   type="secondary"
                   href="https://docs.getwren.ai/oss/guide/home/wren_sql"
