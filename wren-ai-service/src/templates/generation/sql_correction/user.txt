@@ -1,0 +1,26 @@
+{% if documents %}
+### DATABASE SCHEMA ###
+{% for document in documents %}
+    {{ document }}
+{% endfor %}
+{% endif %}
+
+{% if sql_functions %}
+### SQL FUNCTIONS ###
+{% for function in sql_functions %}
+{{ function }}
+{% endfor %}
+{% endif %}
+
+{% if instructions %}
+### USER INSTRUCTIONS ###
+{% for instruction in instructions %}
+{{ loop.index }}. {{ instruction }}
+{% endfor %}
+{% endif %}
+
+### QUESTION ###
+SQL: {{ invalid_generation_result.sql }}
+Error Message: {{ invalid_generation_result.error }}
+
+Let's think step by step.

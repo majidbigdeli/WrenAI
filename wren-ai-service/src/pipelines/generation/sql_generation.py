@@ -15,13 +15,15 @@ from src.pipelines.common import clean_up_new_lines, retrieve_metadata
 from src.pipelines.generation.utils.sql import (
     SQL_GENERATION_MODEL_KWARGS,
     SQLGenPostProcessor,
-    calculated_field_instructions,
     construct_instructions,
-    json_field_instructions,
-    metric_instructions,
-    sql_generation_system_prompt,
+    get_calculated_field_instructions,
+    get_json_field_instructions,
+    get_metric_instructions,
+    get_sql_generation_system_prompt,
 )
 from src.pipelines.retrieval.sql_functions import SqlFunction
+from src.pipelines.retrieval.sql_knowledge import SqlKnowledge
+from src.templates import load_template
 from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
@@ -36,23 +38,9 @@ logger = logging.getLogger("wren-ai-service")
 # parents[3] -> .../wren-ai-service  (root)
 BASE_DIR = Path(__file__).resolve().parents[3]
 
-TEMPLATE_DIR = BASE_DIR / "template"
-SQL_GENERATION_TEMPLATE_PATH = TEMPLATE_DIR / "sql_generation_user_prompt_template.jinja2"
-
-
-def load_template(path: Path) -> str:
-    """Read a template file as UTF-8 text."""
-    if not path.exists():
-        raise FileNotFoundError(f"Template file not found: {path}")
-    return path.read_text(encoding="utf-8")
-
-
-sql_generation_user_prompt_template: str = load_template(SQL_GENERATION_TEMPLATE_PATH)
-
-
-# ===============================
-# Start of Pipeline
-# ===============================
+sql_generation_user_prompt_template = load_template(
+    "generation/sql_generation/user.txt"
+)
 
 
 @observe(capture_input=False)
@@ -67,6 +55,7 @@ def prompt(
     has_metric: bool = False,
     has_json_field: bool = False,
     sql_functions: list[SqlFunction] | None = None,
+    sql_knowledge: SqlKnowledge | None = None,
 ) -> dict:
     _prompt = prompt_builder.run(
         query=query,
@@ -76,10 +65,16 @@ def prompt(
             instructions=instructions,
         ),
         calculated_field_instructions=(
-            calculated_field_instructions if has_calculated_field else ""
+            get_calculated_field_instructions(sql_knowledge)
+            if has_calculated_field
+            else ""
         ),
-        metric_instructions=(metric_instructions if has_metric else ""),
-        json_field_instructions=(json_field_instructions if has_json_field else ""),
+        metric_instructions=(
+            get_metric_instructions(sql_knowledge) if has_metric else ""
+        ),
+        json_field_instructions=(
+            get_json_field_instructions(sql_knowledge) if has_json_field else ""
+        ),
         sql_samples=sql_samples,
         sql_functions=sql_functions,
     )
@@ -92,9 +87,12 @@ async def generate_sql(
     prompt: dict,
     generator: Any,
     generator_name: str,
+    sql_knowledge: SqlKnowledge | None = None,
 ) -> dict:
-    # همون رفتاری که قبلاً داشتی، فقط تمپلیتش از فایل میاد
-    return await generator(prompt=prompt.get("prompt")), generator_name
+    current_system_prompt = get_sql_generation_system_prompt(sql_knowledge)
+    return await generator(
+        prompt=prompt.get("prompt"), current_system_prompt=current_system_prompt
+    ), generator_name
 
 
 @observe(capture_input=False)
@@ -136,7 +134,7 @@ class SQLGeneration(BasicPipeline):
 
         self._components = {
             "generator": llm_provider.get_generator(
-                system_prompt=sql_generation_system_prompt,
+                system_prompt=get_sql_generation_system_prompt(None),
                 generation_kwargs=SQL_GENERATION_MODEL_KWARGS,
             ),
             "generator_name": llm_provider.get_model(),
@@ -166,6 +164,7 @@ class SQLGeneration(BasicPipeline):
         use_dry_plan: bool = False,
         allow_dry_plan_fallback: bool = True,
         allow_data_preview: bool = False,
+        sql_knowledge: SqlKnowledge | None = None,
     ):
         logger.info("SQL Generation pipeline is running...")
 
@@ -191,6 +190,7 @@ class SQLGeneration(BasicPipeline):
                 "allow_dry_plan_fallback": allow_dry_plan_fallback,
                 "data_source": metadata.get("data_source", "local_file"),
                 "allow_data_preview": allow_data_preview,
+                "sql_knowledge": sql_knowledge,
                 **self._components,
             },
         )

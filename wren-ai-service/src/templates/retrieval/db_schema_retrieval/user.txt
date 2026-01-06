@@ -1,0 +1,8 @@
+### Database Schema ###
+
+{% for db_schema in db_schemas %}
+    {{ db_schema }}
+{% endfor %}
+
+### INPUT ###
+{{ question }}

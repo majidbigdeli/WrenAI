@@ -12,37 +12,16 @@ from pydantic import BaseModel
 from src.core.pipeline import BasicPipeline
 from src.core.provider import LLMProvider
 from src.pipelines.common import clean_up_new_lines
+from src.templates import load_template
 from src.utils import trace_cost
 from src.web.v1.services import Configuration
 
 logger = logging.getLogger("wren-ai-service")
 
 
-sql_question_system_prompt = """
-### TASK ###
+sql_question_system_prompt = load_template("generation/sql_question/system.txt")
 
-You are a data analyst great at translating any SQL query into a question that can be answered by the given SQL query.
-
-### INSTRUCTIONS ###
-
-- The question should be in the language of the user provided
-- The question should be a single sentence, concise, and easy to understand
-
-### OUTPUT FORMAT ###
-
-Please return the result in the following JSON format:
-
-{
-    "question": <QUESTION_STRING_IN_USER_LANGUAGE>
-}
-"""
-
-sql_question_user_prompt_template = """
-SQL: {{sql}}
-Language: {{language}}
-
-Let's think step by step.
-"""
+sql_question_user_prompt_template = load_template("generation/sql_question/user.txt")
 
 
 ## Start of Pipeline

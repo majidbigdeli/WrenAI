@@ -17,64 +17,21 @@ from src.pipelines.generation.utils.chart import (
     ChartGenerationResults,
     chart_generation_instructions,
 )
+from src.templates import load_template, render_template
 from src.utils import trace_cost
 from src.web.v1.services.chart_adjustment import ChartAdjustmentOption
 
 logger = logging.getLogger("wren-ai-service")
 
 
-chart_adjustment_system_prompt = f"""
-### TASK ###
+chart_adjustment_system_prompt = render_template(
+    "generation/chart_adjustment/system.txt",
+    chart_generation_instructions=chart_generation_instructions,
+)
 
-You are a data analyst great at visualizing data using vega-lite! Given the user's question, SQL, sample data, sample column values, original vega-lite schema and adjustment options, 
-you need to re-generate vega-lite schema in JSON and provide suitable chart type.
-Besides, you need to give a concise and easy-to-understand reasoning to describe why you provide such vega-lite schema based on the question, SQL, sample data, sample column values, original vega-lite schema and adjustment options.
-
-{chart_generation_instructions}
-- If you think the adjustment options are not suitable for the data, you can return an empty string for the schema and chart type and give reasoning to explain why.
-
-### OUTPUT FORMAT ###
-
-Please provide your chain of thought reasoning, chart type and the vega-lite schema in JSON format.
-
-{{
-    "reasoning": <REASON_TO_CHOOSE_THE_SCHEMA_IN_STRING_FORMATTED_IN_LANGUAGE_PROVIDED_BY_USER>,
-    "chart_type": "line" | "multi_line" | "bar" | "pie" | "grouped_bar" | "stacked_bar" | "area" | "",
-    "chart_schema": <VEGA_LITE_JSON_SCHEMA>
-}}
-"""
-
-chart_adjustment_user_prompt_template = """
-### INPUT ###
-Original Question: {{ query }}
-Original SQL: {{ sql }}
-Original Vega-Lite Schema: {{ chart_schema }}
-Sample Data: {{ sample_data }}
-Sample Column Values: {{ sample_column_values }}
-Language: {{ language }}
-
-Adjustment Options:
-- Chart Type: {{ adjustment_option.chart_type }}
-{% if adjustment_option.chart_type != "pie" %}
-{% if adjustment_option.x_axis %}
-- X Axis: {{ adjustment_option.x_axis }}
-{% endif %}
-{% if adjustment_option.y_axis %}
-- Y Axis: {{ adjustment_option.y_axis }}
-{% endif %}
-{% endif %}
-{% if adjustment_option.x_offset and adjustment_option.chart_type == "grouped_bar" %}
-- X Offset: {{ adjustment_option.x_offset }}
-{% endif %}
-{% if adjustment_option.color and adjustment_option.chart_type != "area" %}
-- Color: {{ adjustment_option.color }}
-{% endif %}
-{% if adjustment_option.theta and adjustment_option.chart_type == "pie" %}
-- Theta: {{ adjustment_option.theta }}
-{% endif %}
-
-Please think step by step
-"""
+chart_adjustment_user_prompt_template = load_template(
+    "generation/chart_adjustment/user.txt"
+)
 
 
 ## Start of Pipeline

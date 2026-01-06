@@ -1,0 +1,9 @@
+### INPUT ###
+Question: {{ query }}
+SQL: {{ sql }}
+Sample Data: {{ sample_data }}
+Sample Column Values: {{ sample_column_values }}
+Language: {{ language }}
+Custom Instruction: {{ custom_instruction }}
+
+Please think step by step

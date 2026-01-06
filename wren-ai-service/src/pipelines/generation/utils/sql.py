@@ -12,6 +12,8 @@ from src.core.engine import (
     Engine,
     clean_generation_result,
 )
+from src.pipelines.retrieval.sql_knowledge import SqlKnowledge
+from src.templates import load_template, render_template
 from src.web.v1.services.ask import AskHistory
 
 logger = logging.getLogger("wren-ai-service")
@@ -210,16 +212,77 @@ class SQLGenPostProcessor:
         return valid_generation_result, invalid_generation_result
 
 
-def construct_instructions(
-    instructions: list[dict] | None = None,
-):
-    _instructions = []
-    if instructions:
-        _instructions += [
-            instruction.get("instruction") for instruction in instructions
-        ]
+_DEFAULT_TEXT_TO_SQL_RULES = load_template("generation/utils/default_text_to_sql_rules.txt")
 
-    return _instructions
+
+_DEFAULT_CALCULATED_FIELD_INSTRUCTIONS = load_template("generation/utils/default_calculated_field_instructions.txt")
+
+_DEFAULT_METRIC_INSTRUCTIONS = load_template("generation/utils/default_metric_instructions.txt")
+
+_DEFAULT_JSON_FIELD_INSTRUCTIONS = load_template("generation/utils/default_json_field_instructions.txt")
+
+sql_samples_instructions = load_template("generation/utils/sql_samples_instructions.txt")
+
+
+sql_generation_reasoning_system_prompt = load_template("generation/utils/sql_generation_reasoning_system_prompt.txt")
+
+
+def _extract_from_sql_knowledge(
+    sql_knowledge: SqlKnowledge | None, attribute_name: str, default_value: str
+) -> str:
+    if sql_knowledge is None:
+        return default_value
+
+    value = getattr(sql_knowledge, attribute_name, "")
+    return value if value and value.strip() else default_value
+
+
+def get_text_to_sql_rules(sql_knowledge: SqlKnowledge | None = None) -> str:
+    if sql_knowledge is not None:
+        return _extract_from_sql_knowledge(
+            sql_knowledge, "text_to_sql_rule", _DEFAULT_TEXT_TO_SQL_RULES
+        )
+
+    return _DEFAULT_TEXT_TO_SQL_RULES
+
+
+def get_calculated_field_instructions(sql_knowledge: SqlKnowledge | None = None) -> str:
+    if sql_knowledge is not None:
+        return _extract_from_sql_knowledge(
+            sql_knowledge,
+            "calculated_field_instructions",
+            _DEFAULT_CALCULATED_FIELD_INSTRUCTIONS,
+        )
+
+    return _DEFAULT_CALCULATED_FIELD_INSTRUCTIONS
+
+
+def get_metric_instructions(sql_knowledge: SqlKnowledge | None = None) -> str:
+    if sql_knowledge is not None:
+        return _extract_from_sql_knowledge(
+            sql_knowledge, "metric_instructions", _DEFAULT_METRIC_INSTRUCTIONS
+        )
+
+    return _DEFAULT_METRIC_INSTRUCTIONS
+
+
+def get_json_field_instructions(sql_knowledge: SqlKnowledge | None = None) -> str:
+    if sql_knowledge is not None:
+        return _extract_from_sql_knowledge(
+            sql_knowledge, "json_field_instructions", _DEFAULT_JSON_FIELD_INSTRUCTIONS
+        )
+
+    return _DEFAULT_JSON_FIELD_INSTRUCTIONS
+
+
+def get_sql_generation_system_prompt(sql_knowledge: SqlKnowledge | None = None) -> str:
+    text_to_sql_rules = get_text_to_sql_rules(sql_knowledge)
+
+    return render_template(
+        "generation/utils/sql_generation_system_prompt.txt",
+        text_to_sql_rules=text_to_sql_rules,
+    )
+
 
 
 class SqlGenerationResult(BaseModel):
@@ -235,6 +298,18 @@ SQL_GENERATION_MODEL_KWARGS = {
         },
     }
 }
+
+
+def construct_instructions(
+    instructions: list[dict] | None = None,
+):
+    _instructions = []
+    if instructions:
+        _instructions += [
+            instruction.get("instruction") for instruction in instructions
+        ]
+
+    return _instructions
 
 
 def construct_ask_history_messages(

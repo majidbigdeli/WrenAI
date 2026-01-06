@@ -15,6 +15,7 @@ from src.pipelines.generation.utils.sql import (
     construct_instructions,
     sql_generation_reasoning_system_prompt,
 )
+from src.templates import load_template
 from src.utils import trace_cost
 from src.web.v1.services import Configuration
 from src.web.v1.services.ask import AskHistory
@@ -22,44 +23,9 @@ from src.web.v1.services.ask import AskHistory
 logger = logging.getLogger("wren-ai-service")
 
 
-sql_generation_reasoning_user_prompt_template = """
-### DATABASE SCHEMA ###
-{% for document in documents %}
-    {{ document }}
-{% endfor %}
-
-{% if sql_samples %}
-### SQL SAMPLES ###
-{% for sql_sample in sql_samples %}
-Question:
-{{sql_sample.question}}
-SQL:
-{{sql_sample.sql}}
-{% endfor %}
-{% endif %}
-
-{% if instructions %}
-### USER INSTRUCTIONS ###
-{% for instruction in instructions %}
-{{ loop.index }}. {{ instruction }}
-{% endfor %}
-{% endif %}
-
-### User's QUERY HISTORY ###
-{% for history in histories %}
-Question:
-{{ history.question }}
-SQL:
-{{ history.sql }}
-{% endfor %}
-
-### QUESTION ###
-User's Question: {{ query }}
-Language: {{ language }}
-Current Time: {{ current_time }}
-
-Let's think step by step.
-"""
+sql_generation_reasoning_user_prompt_template = load_template(
+    "generation/followup_sql_generation_reasoning/user.txt"
+)
 
 
 ## Start of Pipeline
