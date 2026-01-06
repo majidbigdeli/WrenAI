@@ -1,0 +1,4 @@
+SQL: {{sql}}
+Language: {{language}}
+
+Let's think step by step.

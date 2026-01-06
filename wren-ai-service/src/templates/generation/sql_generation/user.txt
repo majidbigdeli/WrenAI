@@ -1,0 +1,50 @@
+### DATABASE SCHEMA ###
+{% for document in documents %}
+    {{ document }}
+{% endfor %}
+
+{% if calculated_field_instructions %}
+{{ calculated_field_instructions }}
+{% endif %}
+
+{% if metric_instructions %}
+{{ metric_instructions }}
+{% endif %}
+
+{% if json_field_instructions %}
+{{ json_field_instructions }}
+{% endif %}
+
+{% if sql_functions %}
+### SQL FUNCTIONS ###
+{% for function in sql_functions %}
+{{ function }}
+{% endfor %}
+{% endif %}
+
+{% if sql_samples %}
+### SQL SAMPLES ###
+{% for sample in sql_samples %}
+Question:
+{{sample.question}}
+SQL:
+{{sample.sql}}
+{% endfor %}
+{% endif %}
+
+{% if instructions %}
+### USER INSTRUCTIONS ###
+{% for instruction in instructions %}
+{{ loop.index }}. {{ instruction }}
+{% endfor %}
+{% endif %}
+
+### QUESTION ###
+User's Question: {{ query }}
+
+{% if sql_generation_reasoning %}
+### REASONING PLAN ###
+{{ sql_generation_reasoning }}
+{% endif %}
+
+Let's think step by step.

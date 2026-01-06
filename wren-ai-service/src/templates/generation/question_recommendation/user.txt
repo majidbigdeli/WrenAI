@@ -1,0 +1,17 @@
+
+{% if previous_questions %}
+Previous Questions: {{previous_questions}}
+{% endif %}
+
+{% if categories %}
+Categories: {{categories}}
+{% endif %}
+
+{% if documents %}
+### DATABASE SCHEMA ###
+{% for document in documents %}
+    {{ document }}
+{% endfor %}
+{% endif %}
+
+Please generate {{max_questions}} insightful questions for each of the {{max_categories}} categories based on the provided data model. Both the questions and category names should be translated into {{language}}{% if user_question %} and be related to the user's question{% endif %}. The output format should maintain the structure but with localized text.

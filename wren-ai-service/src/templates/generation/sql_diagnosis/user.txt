@@ -1,0 +1,18 @@
+### DATABASE SCHEMA ###
+{% for document in documents %}
+    {{ document }}
+{% endfor %}
+
+### INPUTS ###
+Original SQL:
+{{ original_sql }}
+
+Invalid SQL:
+{{ invalid_sql }}
+
+Error Message:
+{{ error_message }}
+
+Language: {{ language }}
+
+Please think step by step.

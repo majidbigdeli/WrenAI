@@ -12,47 +12,19 @@ from pydantic import BaseModel
 from src.core.pipeline import BasicPipeline
 from src.core.provider import LLMProvider
 from src.pipelines.common import clean_up_new_lines
+from src.templates import load_template
 from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
 
 
-sql_tables_extraction_system_prompt = """
-### TASK ###
+sql_tables_extraction_system_prompt = load_template(
+    "generation/sql_tables_extraction/system.txt"
+)
 
-You are a data analyst great at extracting a list of tables from any SQL query.
-
-### EXAMPLES ###
-
-SQL: SELECT * FROM table1
-Output: {
-    "tables": ["table1"]
-}
-
-SQL: SELECT * FROM table1, table2
-Output: {
-    "tables": ["table1", "table2"]
-}
-
-SQL: SELECT * FROM table1 JOIN table2 ON table1.id = table2.id
-Output: {
-    "tables": ["table1", "table2"]
-}
-
-### OUTPUT FORMAT ###
-
-Please return the result in the following JSON format:
-
-{
-    "tables": <LIST_OF_TABLES_IN_STRING_FORMAT>
-}
-"""
-
-sql_tables_extraction_user_prompt_template = """
-SQL: {{sql}}
-
-Let's think step by step.
-"""
+sql_tables_extraction_user_prompt_template = load_template(
+    "generation/sql_tables_extraction/user.txt"
+)
 
 
 ## Start of Pipeline

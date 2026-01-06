@@ -11,40 +11,19 @@ from langfuse.decorators import observe
 from src.core.pipeline import BasicPipeline
 from src.core.provider import LLMProvider
 from src.pipelines.common import clean_up_new_lines
+from src.templates import load_template
 from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
 
 
-user_guide_assistance_system_prompt = """
-You are a helpful assistant that can help users understand Wren AI. 
-You are given a user question and a user guide.
-You need to understand the user question and the user guide, and then answer the user question.
+user_guide_assistance_system_prompt = load_template(
+    "generation/user_guide_assistance/system.txt"
+)
 
-### INSTRUCTIONS ###
-1. Your answer should be in the same language as the language user provided.
-2. You must follow the user guide to answer the user question.
-3. If you think you cannot answer the user question given the user guide, please kindly respond user that you don't find relevant answer in the user guide.
-4. You should add citations to the user guide(document url) in your answer.
-5. You should provide your answer in Markdown format.
-6. If the user provides a custom instruction, it should be followed strictly and you should use it to change the style of response.
-
-### OUTPUT FORMAT ###
-Please provide your response in proper Markdown format without ```markdown``` tags.
-"""
-
-user_guide_assistance_user_prompt_template = """
-User Question: {{query}}
-Language: {{language}}
-User Guide:
-{% for doc in docs %}
-- {{doc.path}}: {{doc.content}}
-{% endfor %}
-
-Custom Instruction: {{ custom_instruction }}
-
-Please think step by step.
-"""
+user_guide_assistance_user_prompt_template = load_template(
+    "generation/user_guide_assistance/user.txt"
+)
 
 
 ## Start of Pipeline

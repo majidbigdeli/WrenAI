@@ -1,0 +1,6 @@
+### Input:
+User's prompt: {{ user_prompt }}
+Picked models: {{ picked_models }}
+Localization Language: {{ language }}
+
+Please provide a brief description for the model and each column based on the user's prompt.

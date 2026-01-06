@@ -20,6 +20,7 @@ from src.pipelines.generation.utils.sql import (
 )
 from src.pipelines.retrieval.sql_functions import SqlFunction
 from src.pipelines.retrieval.sql_knowledge import SqlKnowledge
+from src.templates import load_template, render_template
 from src.utils import trace_cost
 
 logger = logging.getLogger("wren-ai-service")
@@ -28,57 +29,15 @@ logger = logging.getLogger("wren-ai-service")
 def get_sql_correction_system_prompt(sql_knowledge: SqlKnowledge | None = None) -> str:
     text_to_sql_rules = get_text_to_sql_rules(sql_knowledge)
 
-    return f"""
-### TASK ###
-You are an ANSI SQL expert with exceptional logical thinking skills and debugging skills, you need to fix the syntactically incorrect ANSI SQL query.
-
-### SQL CORRECTION INSTRUCTIONS ###
-
-1. First, think hard about the error message, and figure out the root cause first(please use the DATABASE SCHEMA, SQL FUNCTIONS and USER INSTRUCTIONS to help you figure out the root cause).
-2. Then, generate the syntactically correct ANSI SQL query to correct the error.
-
-### SQL RULES ###
-Make sure you follow the SQL Rules strictly.
-
-{text_to_sql_rules}
-
-### FINAL ANSWER FORMAT ###
-The final answer must be in JSON format:
-
-{{
-    "sql": <CORRECTED_SQL_QUERY_STRING>
-}}
-"""
+    return render_template(
+        "generation/sql_correction/system.txt",
+        text_to_sql_rules=text_to_sql_rules,
+    )
 
 
-sql_correction_user_prompt_template = """
-{% if documents %}
-### DATABASE SCHEMA ###
-{% for document in documents %}
-    {{ document }}
-{% endfor %}
-{% endif %}
-
-{% if sql_functions %}
-### SQL FUNCTIONS ###
-{% for function in sql_functions %}
-{{ function }}
-{% endfor %}
-{% endif %}
-
-{% if instructions %}
-### USER INSTRUCTIONS ###
-{% for instruction in instructions %}
-{{ loop.index }}. {{ instruction }}
-{% endfor %}
-{% endif %}
-
-### QUESTION ###
-SQL: {{ invalid_generation_result.sql }}
-Error Message: {{ invalid_generation_result.error }}
-
-Let's think step by step.
-"""
+sql_correction_user_prompt_template = load_template(
+    "generation/sql_correction/user.txt"
+)
 
 
 ## Start of Pipeline
