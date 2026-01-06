@@ -38,29 +38,9 @@ logger = logging.getLogger("wren-ai-service")
 # parents[3] -> .../wren-ai-service  (root)
 BASE_DIR = Path(__file__).resolve().parents[3]
 
-<<<<<<< HEAD
 sql_generation_user_prompt_template = load_template(
     "generation/sql_generation/user.txt"
 )
-=======
-TEMPLATE_DIR = BASE_DIR / "template"
-SQL_GENERATION_TEMPLATE_PATH = TEMPLATE_DIR / "sql_generation_user_prompt_template.jinja2"
-
-
-def load_template(path: Path) -> str:
-    """Read a template file as UTF-8 text."""
-    if not path.exists():
-        raise FileNotFoundError(f"Template file not found: {path}")
-    return path.read_text(encoding="utf-8")
-
-
-sql_generation_user_prompt_template: str = load_template(SQL_GENERATION_TEMPLATE_PATH)
-
-
-# ===============================
-# Start of Pipeline
-# ===============================
->>>>>>> 1fcd5766 (.)
 
 
 @observe(capture_input=False)
@@ -109,15 +89,10 @@ async def generate_sql(
     generator_name: str,
     sql_knowledge: SqlKnowledge | None = None,
 ) -> dict:
-<<<<<<< HEAD
     current_system_prompt = get_sql_generation_system_prompt(sql_knowledge)
     return await generator(
         prompt=prompt.get("prompt"), current_system_prompt=current_system_prompt
     ), generator_name
-=======
-    # همون رفتاری که قبلاً داشتی، فقط تمپلیتش از فایل میاد
-    return await generator(prompt=prompt.get("prompt")), generator_name
->>>>>>> 1fcd5766 (.)
 
 
 @observe(capture_input=False)

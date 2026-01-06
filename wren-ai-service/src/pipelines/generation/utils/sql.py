@@ -212,7 +212,6 @@ class SQLGenPostProcessor:
         return valid_generation_result, invalid_generation_result
 
 
-<<<<<<< HEAD
 _DEFAULT_TEXT_TO_SQL_RULES = load_template("generation/utils/default_text_to_sql_rules.txt")
 
 
@@ -283,16 +282,6 @@ def get_sql_generation_system_prompt(sql_knowledge: SqlKnowledge | None = None) 
         "generation/utils/sql_generation_system_prompt.txt",
         text_to_sql_rules=text_to_sql_rules,
     )
-=======
-def construct_instructions(
-    instructions: list[dict] | None = None,
-):
-    _instructions = []
-    if instructions:
-        _instructions += [
-            instruction.get("instruction") for instruction in instructions
-        ]
->>>>>>> 1fcd5766 (.)
 
 
 
