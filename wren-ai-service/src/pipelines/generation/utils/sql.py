@@ -37,19 +37,19 @@ class SQLGenPostProcessor:
         allow_data_preview: bool = False,
     ) -> dict:
         try:
-            cleaned_generation_result = clean_generation_result(replies[0])
+            raw_generation_result = replies[0]
+            cleaned_generation_result = clean_generation_result(raw_generation_result)
 
             # test if cleaned_generation_result in string format is actually a dictionary with key 'sql'
             if cleaned_generation_result.startswith("{"):
-                cleaned_generation_result = orjson.loads(cleaned_generation_result)[
-                    "sql"
-                ]
+                cleaned_generation_result = orjson.loads(cleaned_generation_result)["sql"]
 
             (
                 valid_generation_result,
                 invalid_generation_result,
             ) = await self._classify_generation_result(
                 cleaned_generation_result,
+                raw_generation_result=str(raw_generation_result),
                 project_id=project_id,
                 use_dry_plan=use_dry_plan,
                 allow_dry_plan_fallback=allow_dry_plan_fallback,
@@ -72,6 +72,7 @@ class SQLGenPostProcessor:
     async def _classify_generation_result(
         self,
         generation_result: str,
+        raw_generation_result: str | None = None,
         project_id: str | None = None,
         use_dry_plan: bool = False,
         allow_dry_plan_fallback: bool = True,
@@ -93,12 +94,12 @@ class SQLGenPostProcessor:
 
                 if dry_plan_result:
                     valid_generation_result = {
-                        "sql": generation_result,
+                        "sql": raw_generation_result or generation_result,
                         "correlation_id": "",
                     }
                 else:
                     invalid_generation_result = {
-                        "sql": generation_result,
+                        "sql": raw_generation_result or generation_result,
                         "type": "TIME_OUT"
                         if error_message.startswith("Request timed out")
                         else "DRY_PLAN",
@@ -116,19 +117,20 @@ class SQLGenPostProcessor:
 
                 if success:
                     valid_generation_result = {
-                        "sql": generation_result,
+                        "sql": raw_generation_result or generation_result,
                         "correlation_id": addition.get("correlation_id", ""),
                     }
                 else:
                     error_message = addition.get("error_message", "")
                     invalid_generation_result = {
-                        "sql": addition.get("error_sql", generation_result),
-                        "original_sql": generation_result,
+                        "sql": raw_generation_result or generation_result,
+                        "original_sql": raw_generation_result or generation_result,
                         "type": "TIME_OUT"
                         if error_message.startswith("Request timed out")
                         else "DRY_RUN",
                         "error": error_message,
                         "correlation_id": addition.get("correlation_id", ""),
+                        "engine_sql": addition.get("error_sql"),
                     }
             else:
                 has_data, _, addition = await self._engine.execute_sql(
@@ -141,7 +143,7 @@ class SQLGenPostProcessor:
 
                 if has_data:
                     valid_generation_result = {
-                        "sql": generation_result,
+                        "sql": raw_generation_result or generation_result,
                         "correlation_id": addition.get("correlation_id", ""),
                     }
                 else:
@@ -152,8 +154,8 @@ class SQLGenPostProcessor:
                         else "PREVIEW_FAILED"
                     )
                     invalid_generation_result = {
-                        "sql": addition.get("error_sql", generation_result),
-                        "original_sql": generation_result,
+                        "sql": raw_generation_result or addition.get("error_sql", generation_result),
+                        "original_sql": raw_generation_result or generation_result,
                         "type": "TIME_OUT"
                         if error_message.startswith("Request timed out")
                         else preview_data_status,
