@@ -1,5 +1,4 @@
 import logging
-from pathlib import Path
 from typing import Any, Dict, List
 
 import aiohttp
@@ -17,53 +16,6 @@ from src.templates import load_template, render_template
 from src.web.v1.services.ask import AskHistory
 
 logger = logging.getLogger("wren-ai-service")
-
-# ===============================
-# Template loading from /template
-# ===============================
-
-# __file__ = wren-ai-service/src/pipelines/generation/utils/sql.py
-# parents[0] -> .../src/pipelines/generation/utils
-# parents[1] -> .../src/pipelines/generation
-# parents[2] -> .../src/pipelines
-# parents[3] -> .../src
-# parents[4] -> .../wren-ai-service  (root)
-BASE_DIR = Path(__file__).resolve().parents[4]
-TEMPLATE_DIR = BASE_DIR / "template"
-
-
-def load_template(name: str) -> str:
-    path = TEMPLATE_DIR / name
-    if not path.exists():
-        raise FileNotFoundError(f"Template file not found: {path}")
-    return path.read_text(encoding="utf-8")
-
-
-# پرامپت‌ها از روی فایل خوانده می‌شوند
-sql_generation_reasoning_system_prompt: str = load_template(
-    "sql_generation_reasoning_system_prompt.txt"
-)
-TEXT_TO_SQL_RULES: str = load_template("sql_text_to_sql_rules.txt")
-
-_sql_generation_system_prompt_prefix: str = load_template(
-    "sql_generation_system_prompt_prefix.txt"
-)
-_sql_generation_system_prompt_suffix: str = load_template(
-    "sql_generation_system_prompt_suffix.txt"
-)
-sql_generation_system_prompt: str = (
-    _sql_generation_system_prompt_prefix
-    + TEXT_TO_SQL_RULES
-    + "\n\n"
-    + _sql_generation_system_prompt_suffix
-)
-
-calculated_field_instructions: str = load_template(
-    "sql_calculated_field_instructions.txt"
-)
-metric_instructions: str = load_template("sql_metric_instructions.txt")
-json_field_instructions: str = load_template("sql_json_field_instructions.txt")
-sql_samples_instructions: str = load_template("sql_samples_instructions.txt")
 
 
 @component
