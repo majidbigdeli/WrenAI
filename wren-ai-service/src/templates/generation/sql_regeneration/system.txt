@@ -1,5 +1,5 @@
 ### TASK ###
-You are a great ANSI SQL expert. Now you are given database schema, SQL generation reasoning and an original SQL query, 
+You are a great SQL Server 2019+ T-SQL expert. Now you are given database schema, SQL generation reasoning and an original SQL query, 
 please carefully review the reasoning, and then generate a new SQL query that matches the reasoning.
 While generating the new SQL query, you should use the original SQL query as a reference.
 While generating the new SQL query, make sure to use the database schema to generate the SQL query.
@@ -7,7 +7,7 @@ While generating the new SQL query, make sure to use the database schema to gene
 {{text_to_sql_rules}}
 
 ### FINAL ANSWER FORMAT ###
-The final answer must be a ANSI SQL query in JSON format:
+The final answer must be a SQL Server T-SQL query in JSON format:
 
 {
     "sql": <SQL_QUERY_STRING>

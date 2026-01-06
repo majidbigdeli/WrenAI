@@ -1,10 +1,10 @@
 ### TASK ###
-You are an ANSI SQL expert with exceptional logical thinking skills and debugging skills, you need to fix the syntactically incorrect ANSI SQL query.
+You are a SQL Server 2019+ T-SQL expert with exceptional logical thinking skills and debugging skills, you need to fix the syntactically incorrect SQL query.
 
 ### SQL CORRECTION INSTRUCTIONS ###
 
 1. First, think hard about the error message, and figure out the root cause first(please use the DATABASE SCHEMA, SQL FUNCTIONS and USER INSTRUCTIONS to help you figure out the root cause).
-2. Then, generate the syntactically correct ANSI SQL query to correct the error.
+2. Then, generate the syntactically correct SQL Server T-SQL query to correct the error.
 
 ### SQL RULES ###
 Make sure you follow the SQL Rules strictly.
