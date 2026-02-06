@@ -1,8 +1,6 @@
 package commands
 
 import (
-	"context"
-	"errors"
 	"fmt"
 	"os"
 	"os/signal"
@@ -16,7 +14,6 @@ import (
 	"github.com/common-nighthawk/go-figure"
 	"github.com/manifoldco/promptui"
 	"github.com/pterm/pterm"
-	openai "github.com/sashabaranov/go-openai"
 )
 
 func prepareProjectDir() string {
@@ -76,22 +73,11 @@ func askForLLMProvider() (string, error) {
 
 func askForAPIKey() (string, error) {
 	// let users know we're asking for an API key
-	fmt.Println("Please provide your OpenAI API key")
-	fmt.Println("Please use the key with full permission, more details at https://help.openai.com/en/articles/8867743-assign-api-key-permissions")
-
-	validate := func(input string) error {
-		// check if input is a valid API key
-		// OpenAI API keys are starting with "sk-"
-		if !strings.HasPrefix(input, "sk-") {
-			return errors.New("invalid API key")
-		}
-		return nil
-	}
+	fmt.Println("Please provide your API key")
 
 	prompt := promptui.Prompt{
-		Label:    "OpenAI API key",
-		Validate: validate,
-		Mask:     '*',
+		Label: "API key",
+		Mask:  '*',
 	}
 
 	result, err := prompt.Run()
@@ -259,12 +245,6 @@ func Launch() {
 			return
 		}
 
-		// check if OpenAI API key is valid
-		shouldReturn = validateOpenaiApiKey(openaiApiKey)
-		if shouldReturn {
-			return
-		}
-
 		// ask for OpenAI generation model
 		pterm.Print("\n")
 		openaiGenerationModel, shouldReturn = getOpenaiGenerationModel()
@@ -426,12 +406,7 @@ func getOpenaiApiKey() (string, bool) {
 		pterm.Print("\n")
 		openaiApiKey, _ = askForAPIKey()
 	} else {
-		// validate if input args is a valid API key
-		if !strings.HasPrefix(openaiApiKey, "sk-") {
-			pterm.Error.Println("Invalid API key, API key should start with 'sk-'")
-			return "", true
-		}
-		pterm.Info.Println("OpenAI API key is provided")
+		pterm.Info.Println("API key is provided")
 	}
 	return openaiApiKey, false
 }
@@ -460,33 +435,7 @@ func getLLMProvider() (string, bool) {
 	return llmProvider, false
 }
 
-func validateOpenaiApiKey(apiKey string) bool {
-	// validate if input api key is valid by sending a hello request
-	pterm.Info.Println("Sending a hello request to OpenAI...")
-	client := openai.NewClient(apiKey)
-	resp, err := client.CreateChatCompletion(
-		context.Background(),
-		openai.ChatCompletionRequest{
-			Model: openai.GPT4oMini20240718,
-			Messages: []openai.ChatCompletionMessage{
-				{
-					Role:    openai.ChatMessageRoleUser,
-					Content: "Hello!",
-				},
-			},
-		},
-	)
-
-	// insufficient credit balance error
-	if err != nil {
-		pterm.Error.Println("Invalid API key", err)
-		_, _ = fmt.Scanln()
-		return true
-	}
-
-	pterm.Info.Println("Valid API key, Response:", resp.Choices[0].Message.Content)
-	return false
-}
+// validateOpenaiApiKey is intentionally omitted to allow non-OpenAI API keys.
 
 func getDbtProfileAndTarget() (string, string, error) {
 	// ask for profile name and target
